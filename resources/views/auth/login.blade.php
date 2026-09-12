@@ -17,11 +17,11 @@
         <div class="auth-card">
             <div class="auth-side">
                 <h2>Selamat datang kembali.</h2>
-                <p>Kelola aplikasi Anda dengan tampilan admin yang modern, cepat, dan responsif.</p>
+                <p>Kelola konten dan informasi website profil Disdukcapil dengan tampilan admin yang modern, cepat, dan responsif.</p>
                 <ul>
                     <li><i class="fas fa-gauge-high"></i> Dashboard ringkas</li>
-                    <li><i class="fas fa-users-gear"></i> Manajemen user dan role</li>
-                    <li><i class="fas fa-bars"></i> Menu sidebar dinamis</li>
+                    <li><i class="fas fa-users-gear"></i> Manajemen berita & pengumuman</li>
+                    <li><i class="fas fa-bars"></i> Pengelolaan galeri & profil dinas</li>
                 </ul>
             </div>
 

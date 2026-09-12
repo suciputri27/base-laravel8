@@ -8,6 +8,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileDinasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -79,4 +80,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+    Route::get('/profiledinas', [ProfileDinasController::class, 'index'])->name('profiledinas.index');
+    Route::get('/profiledinas/paginate', [ProfileDinasController::class, 'paginate'])->name('profiledinas.paginate');
+    Route::get('/profiledinas/create', [ProfileDinasController::class, 'create'])->name('profiledinas.create');
+    Route::post('/profiledinas', [ProfileDinasController::class, 'store'])->name('profiledinas.store');
+    Route::get('/profiledinas/{profiledinas}/edit', [ProfileDinasController::class, 'edit'])->name('profiledinas.edit');
+    Route::put('/profiledinas/{profiledinas}', [ProfileDinasController::class, 'update'])->name('profiledinas.update');
+    Route::delete('/profiledinas/{profiledinas}', [ProfileDinasController::class, 'destroy'])->name('profiledinas.destroy');
 });
