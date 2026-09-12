@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(DocumentationMenuSeeder::class);
+        $this->call(ContentSeeder::class);
 
         $superAdmin = User::firstOrCreate(
             ['email' => 'admin@baseapp.test'],
