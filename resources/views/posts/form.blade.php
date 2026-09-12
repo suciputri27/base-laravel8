@@ -8,7 +8,7 @@
         <h5 class="mb-0">{{ isset($post) ? 'Edit Berita' : 'Tambah Berita' }}</h5>
     </div>
     <div class="card-body">
-        <form id="postForm" action="{{ $formAction }}" method="POST" enctype="multipart/form-data">
+        <form id="postForm" action="{{ $formAction }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
             @if($formMethod === 'PUT')
                 <input type="hidden" name="_method" value="PUT">

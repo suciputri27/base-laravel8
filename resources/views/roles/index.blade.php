@@ -34,7 +34,7 @@
     <div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="roleForm" action="{{ route('roles.store') }}" method="POST">
+                <form id="roleForm" action="{{ route('roles.store') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" name="_method" id="roleMethod" value="POST">
 

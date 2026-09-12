@@ -35,7 +35,7 @@
     <div class="modal fade" id="categoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="categoryForm" action="{{ route('categories.store') }}" method="POST">
+                <form id="categoryForm" action="{{ route('categories.store') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" name="_method" id="categoryMethod" value="POST">
 

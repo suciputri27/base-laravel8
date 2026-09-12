@@ -31,7 +31,7 @@
 
                 <div id="globalAlert" class="d-none"></div>
 
-                <form id="registerForm" action="{{ route('register.submit') }}" method="POST">
+                <form id="registerForm" action="{{ route('register.submit') }}" method="POST" novalidate>
                     @csrf
 
                     <div class="form-group">

@@ -35,7 +35,7 @@
     <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="userForm" action="{{ route('users.store') }}" method="POST">
+                <form id="userForm" action="{{ route('users.store') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" name="_method" id="userMethod" value="POST">
 

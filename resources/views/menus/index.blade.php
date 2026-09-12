@@ -38,7 +38,7 @@
     <div class="modal fade" id="menuModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="menuForm" action="{{ route('menus.store') }}" method="POST">
+                <form id="menuForm" action="{{ route('menus.store') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" name="_method" id="menuMethod" value="POST">
 

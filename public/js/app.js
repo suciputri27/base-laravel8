@@ -86,6 +86,30 @@
         }
     }
 
+    function validationMessages(payload) {
+        if (!payload || payload.errors === null || typeof payload.errors !== 'object' || Array.isArray(payload.errors)) {
+            return [];
+        }
+
+        var messages = [];
+
+        Object.keys(payload.errors).forEach(function (field) {
+            var errors = payload.errors[field];
+
+            if (Array.isArray(errors)) {
+                errors.forEach(function (message) {
+                    if (typeof message === 'string' && message) {
+                        messages.push(message);
+                    }
+                });
+            } else if (typeof errors === 'string' && errors) {
+                messages.push(errors);
+            }
+        });
+
+        return messages;
+    }
+
     function handleResponse(response, options) {
         return response.json().then(function (payload) {
             if (response.ok && payload.success) {
@@ -95,8 +119,13 @@
                 return;
             }
 
-            var message = payload.message || 'Terjadi kesalahan.';
+            var messages = validationMessages(payload);
+            var message = messages.length
+                ? messages.join('\n')
+                : (payload.message || 'Terjadi kesalahan.');
+
             if (options.onError) {
+                payload.message = message;
                 options.onError(payload, response.status);
             } else {
                 showAlert('danger', message);
@@ -129,14 +158,6 @@
 
         submit: function (form, options) {
             var settings = options || {};
-            var method = form.getAttribute('method') || 'POST';
-            var spoof = form.querySelector('input[name="_method"]');
-
-            if (spoof) {
-                method = spoof.value;
-            }
-
-            method = method.toUpperCase();
             var url = form.getAttribute('action') || window.location.href;
             var data = new FormData(form);
             var button = form.querySelector('button[type="submit"]');
@@ -144,7 +165,7 @@
             setButtonLoading(button, true, settings.loadingText || 'Memproses...');
 
             fetch(url, {
-                method: method,
+                method: 'POST',
                 body: data,
                 headers: jsonHeaders()
             })
@@ -204,6 +225,7 @@
             var onComplete = settings.onComplete;
             var extraParams = settings.extraParams || {};
             var emptyMessage = settings.emptyMessage || 'Belum ada data.';
+            var emptySearchMessage = settings.emptySearchMessage || 'Data tidak ditemukan.';
             var errorMessage = settings.errorMessage || 'Gagal memuat data.';
 
             var nextCursor = null;
@@ -221,8 +243,8 @@
                 return ths.length || 1;
             }
 
-            function emptyRow() {
-                return '<tr class="table-state-row"><td colspan="' + colSpan() + '"><i class="fas fa-inbox"></i> ' + escapeHtml(emptyMessage) + '</td></tr>';
+            function emptyRow(message) {
+                return '<tr class="table-state-row"><td colspan="' + colSpan() + '"><i class="fas fa-inbox"></i> ' + escapeHtml(message || emptyMessage) + '</td></tr>';
             }
 
             function setStatus(html, state) {
@@ -245,6 +267,10 @@
 
             function showEndStatus() {
                 setStatus('<i class="fas fa-check-circle"></i> Semua data sudah dimuat', 'end');
+            }
+
+            function showEmptyStatus() {
+                hideStatus();
             }
 
             function showErrorStatus() {
@@ -310,7 +336,7 @@
                         var rows = data.data || [];
 
                         if (rows.length === 0 && reset) {
-                            body.innerHTML = emptyRow();
+                            body.innerHTML = emptyRow(search ? emptySearchMessage : emptyMessage);
                             showEmptyStatus();
                         } else {
                             rows.forEach(function (item) {
