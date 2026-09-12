@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuSeeder::class);
         $this->call(DocumentationMenuSeeder::class);
         $this->call(ContentSeeder::class);
+        $this->call(SettingMenuSeeder::class);
 
         $superAdmin = User::firstOrCreate(
             ['email' => 'admin@baseapp.test'],

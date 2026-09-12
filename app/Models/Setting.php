@@ -6,26 +6,24 @@ use App\Traits\EncryptableIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProfileDinas extends Model
+class Setting extends Model
 {
     use HasFactory, EncryptableIdTrait;
+
+    protected $table = 'profile_dinas';
 
     protected $fillable = [
         'nama_website',
         'tentang',
+        'profile',
         'email',
         'alamat',
         'no_telepon',
         'no_whatsapp',
         'twitter',
         'facebook',
-        'instagram',
-        'tiktok',
         'youtube',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
+        'tiktok',
     ];
 
     protected $hidden = [

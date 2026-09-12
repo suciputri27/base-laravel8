@@ -6,11 +6,11 @@ use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\MenuRepositoryInterface;
 use App\Repositories\Contracts\PostRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\Contracts\ProfileDinasRepositoryInterface;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Eloquent\MenuRepository;
 use App\Repositories\Eloquent\PostRepository;
-use App\Repositories\Eloquent\ProfileDinasRepository;
+use App\Repositories\Eloquent\SettingRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
-        $this->app->bind(ProfileDinasRepositoryInterface::class, ProfileDinasRepository::class);
+        $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
     }
 
     public function boot()
