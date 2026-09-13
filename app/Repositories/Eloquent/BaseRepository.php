@@ -6,6 +6,7 @@ use App\Helpers\CursorPaginationHelper;
 use App\Repositories\Contracts\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 abstract class BaseRepository implements BaseRepositoryInterface
 {
@@ -46,24 +47,54 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     public function create(array $data): Model
     {
-        return $this->model->create($data);
+        $model = $this->model->newInstance();
+        $model->fill($data);
+        $model->forceFill($this->auditAttributes(true));
+        $model->save();
+
+        return $model;
     }
 
     public function update(int $id, array $data): Model
     {
         $model = $this->findOrFail($id);
-        $model->update($data);
+        $model->fill($data);
+        $model->forceFill($this->auditAttributes(false));
+        $model->save();
 
         return $model->refresh();
     }
 
     public function delete(int $id): bool
     {
-        return (bool) $this->model->destroy($id);
+        $model = $this->findOrFail($id);
+
+        if ($this->usesSoftDeletes($model)) {
+            $model->forceFill(['deleted_by' => auth()->id()]);
+            $model->save();
+        }
+
+        return (bool) $model->delete();
     }
 
     public function getPaginated(array $options = []): array
     {
         return CursorPaginationHelper::paginate($this->newQuery(), $options);
+    }
+
+    protected function auditAttributes(bool $isCreate): array
+    {
+        $attributes = ['updated_by' => auth()->id()];
+
+        if ($isCreate) {
+            $attributes['created_by'] = auth()->id();
+        }
+
+        return $attributes;
+    }
+
+    protected function usesSoftDeletes(Model $model): bool
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive($model), true);
     }
 }
