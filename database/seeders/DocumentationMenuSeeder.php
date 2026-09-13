@@ -29,6 +29,7 @@ class DocumentationMenuSeeder extends Seeder
             ['name' => 'RBAC dan Permission', 'icon' => 'fas fa-user-shield', 'route_or_url' => 'docs.rbac', 'order_no' => 6],
             ['name' => 'Modul Kategori dan Berita', 'icon' => 'fas fa-newspaper', 'route_or_url' => 'docs.modul-kategori-berita', 'order_no' => 7],
             ['name' => 'Panduan Module Baru', 'icon' => 'fas fa-map', 'route_or_url' => 'docs.panduan-module', 'order_no' => 8],
+            ['name' => 'Soft Delete', 'icon' => 'fas fa-trash-restore', 'route_or_url' => 'docs.softdelete', 'order_no' => 9],
         ];
 
         foreach ($items as $item) {

@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/docs/rbac', 'docs.rbac')->name('docs.rbac');
     Route::view('/docs/modul-kategori-berita', 'docs.modul-kategori-berita')->name('docs.modul-kategori-berita');
     Route::view('/docs/panduan-module', 'docs.panduan-module')->name('docs.panduan-module');
+    Route::view('/docs/softdelete', 'docs.softdelete')->name('docs.softdelete');
 
     Route::middleware('permission:users.view')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
