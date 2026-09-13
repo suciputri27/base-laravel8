@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 interface BaseRepositoryInterface
@@ -16,6 +17,12 @@ interface BaseRepositoryInterface
     public function update(int $id, array $data): Model;
 
     public function delete(int $id): bool;
+
+    public function getTrashed(): Collection;
+
+    public function restore(int $id): bool;
+
+    public function forceDelete(int $id): bool;
 
     public function getPaginated(array $options = []): array;
 

@@ -72,4 +72,31 @@ class MenuController extends Controller
             'message' => 'Menu berhasil dihapus.',
         ]);
     }
+
+    public function trashed(): View
+    {
+        $menus = $this->menuService->getTrashed();
+
+        return view('menus.trashed', compact('menus'));
+    }
+
+    public function restore(string $menu): JsonResponse
+    {
+        $this->menuService->restore(id_decode($menu));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu berhasil dikembalikan.',
+        ]);
+    }
+
+    public function forceDelete(string $menu): JsonResponse
+    {
+        $this->menuService->forceDelete(id_decode($menu));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu berhasil dihapus permanen.',
+        ]);
+    }
 }

@@ -9,6 +9,9 @@
             <h5 class="mb-0">Data User</h5>
             <div class="d-flex align-items-center">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari nama atau email..." style="width: 240px; margin-right: 8px;">
+                <a href="{{ route('users.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
+                    <i class="fas fa-trash-restore"></i> Sampah
+                </a>
                 <button type="button" class="btn btn-primary btn-sm" onclick="openUserModal()">
                     <i class="fas fa-plus"></i> Tambah
                 </button>

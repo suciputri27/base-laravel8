@@ -76,4 +76,31 @@ class UserController extends Controller
             'message' => 'User berhasil dihapus.',
         ]);
     }
+
+    public function trashed(): View
+    {
+        $users = $this->userService->getTrashed();
+
+        return view('users.trashed', compact('users'));
+    }
+
+    public function restore(string $user): JsonResponse
+    {
+        $this->userService->restore(id_decode($user));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User berhasil dikembalikan.',
+        ]);
+    }
+
+    public function forceDelete(string $user): JsonResponse
+    {
+        $this->userService->forceDelete(id_decode($user));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User berhasil dihapus permanen.',
+        ]);
+    }
 }

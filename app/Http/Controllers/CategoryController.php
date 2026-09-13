@@ -67,4 +67,31 @@ class CategoryController extends Controller
             'message' => 'Kategori berhasil dihapus.',
         ]);
     }
+
+    public function trashed(): View
+    {
+        $categories = $this->categoryService->getTrashed();
+
+        return view('categories.trashed', compact('categories'));
+    }
+
+    public function restore(string $category): JsonResponse
+    {
+        $this->categoryService->restore(id_decode($category));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kategori berhasil dikembalikan.',
+        ]);
+    }
+
+    public function forceDelete(string $category): JsonResponse
+    {
+        $this->categoryService->forceDelete(id_decode($category));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kategori berhasil dihapus permanen.',
+        ]);
+    }
 }

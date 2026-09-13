@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Helpers\CursorPaginationHelper;
 use App\Repositories\Contracts\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -75,6 +76,21 @@ abstract class BaseRepository implements BaseRepositoryInterface
         }
 
         return (bool) $model->delete();
+    }
+
+    public function getTrashed(): Collection
+    {
+        return $this->model->onlyTrashed()->get();
+    }
+
+    public function restore(int $id): bool
+    {
+        return (bool) $this->model->withTrashed()->findOrFail($id)->restore();
+    }
+
+    public function forceDelete(int $id): bool
+    {
+        return (bool) $this->model->withTrashed()->findOrFail($id)->forceDelete();
     }
 
     public function getPaginated(array $options = []): array

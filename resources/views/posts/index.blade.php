@@ -9,6 +9,9 @@
             <h5 class="mb-0">Data Berita</h5>
             <div class="d-flex align-items-center">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari berita..." style="width: 240px; margin-right: 8px;">
+                <a href="{{ route('posts.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
+                    <i class="fas fa-trash-restore"></i> Sampah
+                </a>
                 <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah Berita
                 </a>

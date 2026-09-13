@@ -88,4 +88,31 @@ class PostController extends Controller
             'message' => 'Berita berhasil dihapus.',
         ]);
     }
+
+    public function trashed(): View
+    {
+        $posts = $this->postService->getTrashed();
+
+        return view('posts.trashed', compact('posts'));
+    }
+
+    public function restore(string $post): JsonResponse
+    {
+        $this->postService->restore(id_decode($post));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil dikembalikan.',
+        ]);
+    }
+
+    public function forceDelete(string $post): JsonResponse
+    {
+        $this->postService->forceDelete(id_decode($post));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil dihapus permanen.',
+        ]);
+    }
 }

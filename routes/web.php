@@ -39,18 +39,24 @@ Route::middleware('auth')->group(function () {
     Route::middleware('permission:users.view')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/users/paginate', [UserController::class, 'paginate'])->name('users.paginate');
+        Route::get('/users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
     });
     Route::post('/users', [UserController::class, 'store'])->name('users.store')->middleware('permission:users.create');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('permission:users.edit');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('permission:users.delete');
+    Route::post('/users/{user}/restore', [UserController::class, 'restore'])->name('users.restore')->middleware('permission:users.edit');
+    Route::delete('/users/{user}/force-delete', [UserController::class, 'forceDelete'])->name('users.force-delete')->middleware('permission:users.delete');
 
     Route::middleware('permission:menus.view')->group(function () {
         Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');
         Route::get('/menus/paginate', [MenuController::class, 'paginate'])->name('menus.paginate');
+        Route::get('/menus/trashed', [MenuController::class, 'trashed'])->name('menus.trashed');
     });
     Route::post('/menus', [MenuController::class, 'store'])->name('menus.store')->middleware('permission:menus.create');
     Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('menus.update')->middleware('permission:menus.edit');
     Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy')->middleware('permission:menus.delete');
+    Route::post('/menus/{menu}/restore', [MenuController::class, 'restore'])->name('menus.restore')->middleware('permission:menus.edit');
+    Route::delete('/menus/{menu}/force-delete', [MenuController::class, 'forceDelete'])->name('menus.force-delete')->middleware('permission:menus.delete');
 
     Route::middleware('permission:roles.view')->group(function () {
         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
@@ -70,17 +76,23 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/paginate', [CategoryController::class, 'paginate'])->name('categories.paginate');
+    Route::get('/categories/trashed', [CategoryController::class, 'trashed'])->name('categories.trashed');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::post('/categories/{category}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
+    Route::delete('/categories/{category}/force-delete', [CategoryController::class, 'forceDelete'])->name('categories.force-delete');
 
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/paginate', [PostController::class, 'paginate'])->name('posts.paginate');
+    Route::get('/posts/trashed', [PostController::class, 'trashed'])->name('posts.trashed');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::post('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::delete('/posts/{post}/force-delete', [PostController::class, 'forceDelete'])->name('posts.force-delete');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting', [SettingController::class, 'update'])->name('setting.update');

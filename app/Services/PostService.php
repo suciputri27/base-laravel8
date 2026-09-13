@@ -48,13 +48,18 @@ class PostService extends BaseService
 
     public function delete(int $id): bool
     {
-        $model = $this->repository->findOrFail($id);
+        return $this->repository->delete($id);
+    }
+
+    public function forceDelete(int $id): bool
+    {
+        $model = $this->repository->newQuery()->withTrashed()->findOrFail($id);
 
         if ($model->thumbnail) {
             FileUploadHelper::delete($model->thumbnail);
         }
 
-        return $this->repository->delete($id);
+        return $this->repository->forceDelete($id);
     }
 
     public function paginate(array $options = []): array

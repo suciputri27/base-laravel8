@@ -9,6 +9,9 @@
             <h5 class="mb-0">Data Menu</h5>
             <div class="d-flex align-items-center">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari menu..." style="width: 240px; margin-right: 8px;">
+                <a href="{{ route('menus.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
+                    <i class="fas fa-trash-restore"></i> Sampah
+                </a>
                 <button type="button" class="btn btn-primary btn-sm" onclick="openMenuModal()">
                     <i class="fas fa-plus"></i> Tambah
                 </button>

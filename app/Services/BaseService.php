@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Contracts\BaseRepositoryInterface;
 use App\Services\Contracts\BaseServiceInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 abstract class BaseService implements BaseServiceInterface
 {
@@ -32,6 +33,21 @@ abstract class BaseService implements BaseServiceInterface
     public function delete(int $id): bool
     {
         return $this->repository->delete($id);
+    }
+
+    public function getTrashed(): Collection
+    {
+        return $this->repository->getTrashed();
+    }
+
+    public function restore(int $id): bool
+    {
+        return $this->repository->restore($id);
+    }
+
+    public function forceDelete(int $id): bool
+    {
+        return $this->repository->forceDelete($id);
     }
 
     public function paginate(array $options = []): array
