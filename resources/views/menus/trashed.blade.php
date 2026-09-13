@@ -61,17 +61,23 @@
         }
 
         function forceDeleteMenu(encryptedId) {
-            if (!confirm('Yakin ingin menghapus menu ini secara permanen?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('menus') }}/' + encryptedId + '/force-delete',
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    window.location.reload();
+            App.confirm({
+                title: 'Hapus Permanen',
+                text: 'Data yang dihapus permanen tidak bisa dikembalikan.',
+                confirmButtonText: 'Ya, hapus permanen'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('menus') }}/' + encryptedId + '/force-delete',
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        window.location.reload();
+                    }
+                });
             });
         }
     </script>

@@ -9,9 +9,11 @@
             <h5 class="mb-0">Data Menu</h5>
             <div class="d-flex align-items-center">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari menu..." style="width: 240px; margin-right: 8px;">
-                <a href="{{ route('menus.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
-                    <i class="fas fa-trash-restore"></i> Sampah
-                </a>
+                @if(auth()->user()->hasRole('Super Admin'))
+                    <a href="{{ route('menus.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
+                        <i class="fas fa-trash-restore"></i> Sampah
+                    </a>
+                @endif
                 <button type="button" class="btn btn-primary btn-sm" onclick="openMenuModal()">
                     <i class="fas fa-plus"></i> Tambah
                 </button>
@@ -152,17 +154,23 @@
         }
 
         function deleteMenu(encryptedId) {
-            if (!confirm('Yakin ingin menghapus menu ini?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('menus') }}/' + encryptedId,
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    menuTable.reset();
+            App.confirm({
+                title: 'Hapus Menu',
+                text: 'Data akan dipindahkan ke sampah.',
+                confirmButtonText: 'Ya, hapus'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('menus') }}/' + encryptedId,
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        menuTable.reset();
+                    }
+                });
             });
         }
 

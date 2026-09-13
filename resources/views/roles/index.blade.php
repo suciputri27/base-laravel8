@@ -107,17 +107,23 @@
         }
 
         function deleteRole(encryptedId) {
-            if (!confirm('Yakin ingin menghapus role ini?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('roles') }}/' + encryptedId,
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    roleTable.reset();
+            App.confirm({
+                title: 'Hapus Role',
+                text: 'Role akan dihapus secara permanen.',
+                confirmButtonText: 'Ya, hapus'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('roles') }}/' + encryptedId,
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        roleTable.reset();
+                    }
+                });
             });
         }
 

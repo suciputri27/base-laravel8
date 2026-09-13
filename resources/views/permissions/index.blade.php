@@ -89,17 +89,23 @@
         }
 
         function deletePermission(encryptedId) {
-            if (!confirm('Yakin ingin menghapus permission ini?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('permissions') }}/' + encryptedId,
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    permissionTable.reset();
+            App.confirm({
+                title: 'Hapus Permission',
+                text: 'Permission akan dihapus secara permanen.',
+                confirmButtonText: 'Ya, hapus'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('permissions') }}/' + encryptedId,
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        permissionTable.reset();
+                    }
+                });
             });
         }
 

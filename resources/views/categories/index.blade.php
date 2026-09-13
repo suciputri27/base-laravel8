@@ -9,9 +9,11 @@
             <h5 class="mb-0">Data Kategori</h5>
             <div class="d-flex align-items-center">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari kategori..." style="width: 240px; margin-right: 8px;">
-                <a href="{{ route('categories.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
-                    <i class="fas fa-trash-restore"></i> Sampah
-                </a>
+                @if(auth()->user()->hasRole('Super Admin'))
+                    <a href="{{ route('categories.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
+                        <i class="fas fa-trash-restore"></i> Sampah
+                    </a>
+                @endif
                 <button type="button" class="btn btn-primary btn-sm" onclick="openCategoryModal()">
                     <i class="fas fa-plus"></i> Tambah
                 </button>
@@ -113,17 +115,23 @@
         }
 
         function deleteCategory(encryptedId) {
-            if (!confirm('Yakin ingin menghapus kategori ini?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('categories') }}/' + encryptedId,
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    categoryTable.reset();
+            App.confirm({
+                title: 'Hapus Kategori',
+                text: 'Data akan dipindahkan ke sampah.',
+                confirmButtonText: 'Ya, hapus'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('categories') }}/' + encryptedId,
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        categoryTable.reset();
+                    }
+                });
             });
         }
 

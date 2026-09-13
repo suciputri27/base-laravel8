@@ -59,17 +59,23 @@
         }
 
         function forceDeleteCategory(encryptedId) {
-            if (!confirm('Yakin ingin menghapus kategori ini secara permanen?')) {
-                return;
-            }
-
-            App.submitData({
-                url: '{{ url('categories') }}/' + encryptedId + '/force-delete',
-                method: 'DELETE',
-                onSuccess: function (response) {
-                    App.alert('success', response.message);
-                    window.location.reload();
+            App.confirm({
+                title: 'Hapus Permanen',
+                text: 'Data yang dihapus permanen tidak bisa dikembalikan.',
+                confirmButtonText: 'Ya, hapus permanen'
+            }).then(function (result) {
+                if (!result.isConfirmed) {
+                    return;
                 }
+
+                App.submitData({
+                    url: '{{ url('categories') }}/' + encryptedId + '/force-delete',
+                    method: 'DELETE',
+                    onSuccess: function (response) {
+                        App.alert('success', response.message);
+                        window.location.reload();
+                    }
+                });
             });
         }
     </script>

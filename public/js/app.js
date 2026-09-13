@@ -150,11 +150,28 @@
         }
     }
 
+    function confirmDialog(options) {
+        var settings = options || {};
+
+        return Swal.fire({
+            title: settings.title || 'Apakah Anda yakin?',
+            text: settings.text || '',
+            icon: settings.icon || 'warning',
+            showCancelButton: true,
+            confirmButtonText: settings.confirmButtonText || 'Ya, lanjutkan',
+            cancelButtonText: settings.cancelButtonText || 'Batal',
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true
+        });
+    }
+
     window.App = {
         escapeHtml: escapeHtml,
         alert: showAlert,
         redirect: redirect,
         debounce: debounce,
+        confirm: confirmDialog,
 
         submit: function (form, options) {
             var settings = options || {};
