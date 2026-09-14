@@ -15,8 +15,11 @@ class CreateJenisDokumenTable extends Migration
     {
         Schema::create('jenis_dokumen', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_dokumen');
-            $table->boolean('type')->default(true);
+            $table->string('jenis_dokumen'); 
+            $table->unsignedTinyInteger('type')->comment('1 = peraturan, 2 = dokumen');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

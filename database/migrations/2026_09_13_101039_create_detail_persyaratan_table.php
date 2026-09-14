@@ -18,6 +18,9 @@ class CreateDetailPersyaratanTable extends Migration
             $table->unsignedBigInteger('pelayanan_id')->nullable();
             $table->unsignedBigInteger('persyaratan_id')->nullable();
             $table->string('berkas')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
 
             $table->index('pelayanan_id');

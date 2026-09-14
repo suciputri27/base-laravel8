@@ -33,7 +33,7 @@
 <div class="modal fade" id="StrukturModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="StrukturForm" action="{{ route('struktur_organisasi.store') }}" method="POST" novalidate>
+            <form id="StrukturForm" action="{{ route('struktur_organisasi.store') }}" method="POST" enctype="multipart/form-data" novalidate>
                 @csrf
                 <input type="hidden" name="_method" id="StrukturMethod" value="POST">
 
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mt-3">
                         <label class="form-label">Status</label>
                         <select name="status" id="StatusIsActive" class="form-control">
                             <option value="1">Aktif</option>
@@ -80,30 +80,95 @@
 @push('scripts')
 <script>
     function StrukturRow(item) {
-        var thumbnail = item.thumbnail_url
-                ? '<img src="' + App.escapeHtml(item.thumbnail_url) + '" alt="" class="post-thumb">'
+        var berkas = item.berkas_url
+                ? '<img src="' + App.escapeHtml(item.berkas_url) + '" alt="" class="post-thumb">'
                 : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
 
-        var status = item.status ?
+        var status = item.status == 1 ?
             '<span class="badge badge-success">Aktif</span>' :
             '<span class="badge badge-danger">Nonaktif</span>';
 
         return '<tr>' +
-            '<td>' + thumbnail + '</td>' +
+            '<td>' + berkas + '</td>' +
             '<td>' + status + '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-name="' + App.escapeHtml(item.name) + '" data-description="' + App.escapeHtml(item.description || '') + '" data-active="' + (item.is_active ? '1' : '0') + '"><i class="fas fa-edit"></i></button> ' +
+            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-berkas-url="' + App.escapeHtml(item.berkas_url || '') + '" data-status="' + item.status + '"><i class="fas fa-edit"></i></button> ' +
             '<button type="button" class="btn btn-danger btn-sm" onclick="deleteStruktur(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
             '</td>' +
             '</tr>';
     }
 
+    // ==== Dropzone berkas: klik, drag & drop, preview ====
+    var berkasInput = document.getElementById('berkasInput');
+    var berkasDropzone = document.getElementById('berkasDropzone');
+    var berkasDropzoneInner = document.getElementById('berkasDropzoneInner');
+    var berkasPreview = document.getElementById('berkasPreview');
+    var berkasPreviewImage = document.getElementById('berkasPreviewImage');
+    var berkasRemove = document.getElementById('berkasRemove');
+
+    berkasDropzone.addEventListener('click', function () {
+        berkasInput.click();
+    });
+
+    berkasInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            showBerkasPreview(this.files[0]);
+        }
+    });
+
+    ['dragover', 'dragenter'].forEach(function (eventName) {
+        berkasDropzone.addEventListener(eventName, function (e) {
+            e.preventDefault();
+            berkasDropzone.classList.add('dragover');
+        });
+    });
+
+    ['dragleave', 'drop'].forEach(function (eventName) {
+        berkasDropzone.addEventListener(eventName, function (e) {
+            e.preventDefault();
+            berkasDropzone.classList.remove('dragover');
+        });
+    });
+
+    berkasDropzone.addEventListener('drop', function (e) {
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            berkasInput.files = e.dataTransfer.files;
+            showBerkasPreview(e.dataTransfer.files[0]);
+        }
+    });
+
+    berkasRemove.addEventListener('click', function (e) {
+        e.stopPropagation();
+        berkasInput.value = '';
+        berkasDropzoneInner.classList.remove('d-none');
+        berkasPreview.classList.add('d-none');
+        berkasPreviewImage.src = '';
+    });
+
+    function showBerkasPreview(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            berkasPreviewImage.src = e.target.result;
+            berkasDropzoneInner.classList.add('d-none');
+            berkasPreview.classList.remove('d-none');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resetBerkasDropzone() {
+        berkasInput.value = '';
+        berkasPreviewImage.src = '';
+        berkasDropzoneInner.classList.remove('d-none');
+        berkasPreview.classList.add('d-none');
+    }
+    // ==== end dropzone ====
+
     function openStrukturModal() {
         document.getElementById('StrukturMethod').value = 'POST';
         document.getElementById('StrukturForm').action = '{{ route('struktur_organisasi.store') }}';
         document.getElementById('StrukturModalTitle').textContent = 'Tambah Struktur Organisasi';
-        document.getElementById('berkasInput').value = '';
         document.getElementById('StatusIsActive').value = '1';
+        resetBerkasDropzone();
         new bootstrap.Modal(document.getElementById('StrukturModal')).show();
     }
 
@@ -111,14 +176,22 @@
         document.getElementById('StrukturMethod').value = 'PUT';
         document.getElementById('StrukturForm').action = '{{ url('struktur_organisasi') }}/' + encryptedId;
         document.getElementById('StrukturModalTitle').textContent = 'Edit Struktur Organisasi';
-        document.getElementById('berkasInput').value = button.getAttribute('data-berkas');
-        document.getElementById('StrukturIsActive').value = button.getAttribute('data-active');
+        document.getElementById('StatusIsActive').value = button.getAttribute('data-status');
+
+        resetBerkasDropzone();
+        var berkasUrl = button.getAttribute('data-berkas-url');
+        if (berkasUrl) {
+            berkasPreviewImage.src = berkasUrl;
+            berkasDropzoneInner.classList.add('d-none');
+            berkasPreview.classList.remove('d-none');
+        }
+
         new bootstrap.Modal(document.getElementById('StrukturModal')).show();
     }
 
     function deleteStruktur(encryptedId) {
         App.confirm({
-            title: 'Hapus Kategori',
+            title: 'Hapus Struktur Organisasi',
             confirmButtonText: 'Ya, hapus'
         }).then(function(result) {
             if (!result.isConfirmed) {
@@ -156,8 +229,8 @@
     });
 
     var StrukturTable = App.infiniteScroll({
-        container: '#StrukturScroll',
-        body: '#StrukturTableBody',
+        container: '#strukturScroll',
+        body: '#strukturTableBody',
         endpoint: '{{ route('struktur_organisasi.paginate') }}',
         pageSize: 10,
         rowRenderer: StrukturRow

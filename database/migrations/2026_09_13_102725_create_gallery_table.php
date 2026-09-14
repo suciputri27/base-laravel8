@@ -17,6 +17,9 @@ class CreateGalleryTable extends Migration
             $table->id();
             $table->string('judul');
             $table->string('berkas')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,9 @@ class CreateStrukturOrganisasiTable extends Migration
             $table->id();
             $table->string('berkas')->nullable();
             $table->string('status')->default('draft');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
         });
     }

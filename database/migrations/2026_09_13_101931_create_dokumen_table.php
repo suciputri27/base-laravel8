@@ -19,6 +19,9 @@ class CreateDokumenTable extends Migration
             $table->string('nama_dokumen');
             $table->longText('deskripsi')->nullable();
             $table->string('berkas')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
         });
     }

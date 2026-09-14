@@ -4,7 +4,8 @@ namespace App\Services;
 
 use App\Helpers\FileUploadHelper;
 use App\Repositories\Contracts\StrukturOrganisasiRepositoryInterface;
-use Illuminate\Http\UploadedFile;
+use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Support\Str;
 
 class StrukturOrganisasiService extends BaseService
 {
@@ -16,9 +17,10 @@ class StrukturOrganisasiService extends BaseService
     public function create(array $data)
     {
         if (isset($data['berkas']) && $data['berkas'] instanceof UploadedFile) {
+            dd('masuk sini', $data['berkas']); // debug sementara
             $data['berkas'] = FileUploadHelper::upload($data['berkas'], 'struktur_organisasi');
         }
-
+    
         return $this->repository->create($data);
     }
 
@@ -27,8 +29,8 @@ class StrukturOrganisasiService extends BaseService
         $model = $this->repository->findOrFail($id);
 
         if (isset($data['berkas']) && $data['berkas'] instanceof UploadedFile) {
-            if ($model->thumbnail) {
-                FileUploadHelper::delete($model->thumbnail);
+            if ($model->berkas) {
+                FileUploadHelper::delete($model->berkas);
             }
 
             $data['berkas'] = FileUploadHelper::upload($data['berkas'], 'struktur_organisasi');
@@ -38,38 +40,26 @@ class StrukturOrganisasiService extends BaseService
 
         return $this->repository->update($id, $data);
     }
-
-    public function delete(int $id): bool
-    {
-        return $this->repository->delete($id);
-    }
-
-    public function forceDelete(int $id): bool
-    {
-        $model = $this->repository->newQuery()->withTrashed()->findOrFail($id);
-
-        if ($model->thumbnail) {
-            FileUploadHelper::delete($model->thumbnail);
-        }
-
-        return $this->repository->forceDelete($id);
-    }
-
     public function paginate(array $options = []): array
     {
         // $options['search_columns'] = ['title', 'slug', 'excerpt'];
 
         $result = parent::paginate($options);
 
-        $result['data'] = $result['data']->map(function ($post) {
+        $result['data'] = $result['data']->map(function ($struktur) {
             return [
-                'encrypted_id' => id_encode((int) $post->id),
-                'thumbnail' => $post->berkas,
-                'thumbnail_url' => $post->berkas ? storage_url($post->berkas) : null,
-                'status' => $post->status
+                'encrypted_id' => id_encode((int) $struktur->id),
+                'thumbnail' => $struktur->berkas,
+                'thumbnail_url' => $struktur->berkas ? storage_url($struktur->berkas) : null,
+                'status' => $struktur->status
             ];
         })->values();
 
         return $result;
+    }
+
+    public function all()
+    {
+        return $this->repository->newQuery()->where('status', 1)->orderBy('created_at', 'desc')->get();
     }
 }

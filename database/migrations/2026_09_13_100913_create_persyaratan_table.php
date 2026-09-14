@@ -16,6 +16,9 @@ class CreatePersyaratanTable extends Migration
         Schema::create('persyaratan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_persyaratan');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
