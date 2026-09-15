@@ -22,6 +22,7 @@ class CreateDetailPersyaratanTable extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('pelayanan_id');
             $table->foreign('pelayanan_id')->references('id')->on('pelayanan')->onDelete('set null');

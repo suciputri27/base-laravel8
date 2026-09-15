@@ -100,9 +100,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/struktur', [StrukturOrganisasiController::class, 'index'])->name('struktur_organisasi.index');
     Route::get('/struktur/paginate', [StrukturOrganisasiController::class, 'paginate'])->name('struktur_organisasi.paginate');
-    Route::get('/struktur/create', [StrukturOrganisasiController::class, 'create'])->name('struktur_organisasi.create');
     Route::post('/struktur', [StrukturOrganisasiController::class, 'store'])->name('struktur_organisasi.store');
-    Route::get('/struktur/{struktur}/edit', [StrukturOrganisasiController::class, 'edit'])->name('struktur_organisasi.edit');
     Route::put('/struktur/{struktur}', [StrukturOrganisasiController::class, 'update'])->name('struktur_organisasi.update');
     Route::delete('/struktur/{struktur}', [StrukturOrganisasiController::class, 'destroy'])->name('struktur_organisasi.destroy');
+
 });

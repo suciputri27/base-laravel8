@@ -4,8 +4,7 @@ namespace App\Services;
 
 use App\Helpers\FileUploadHelper;
 use App\Repositories\Contracts\StrukturOrganisasiRepositoryInterface;
-use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class StrukturOrganisasiService extends BaseService
 {
@@ -17,7 +16,6 @@ class StrukturOrganisasiService extends BaseService
     public function create(array $data)
     {
         if (isset($data['berkas']) && $data['berkas'] instanceof UploadedFile) {
-            dd('masuk sini', $data['berkas']); // debug sementara
             $data['berkas'] = FileUploadHelper::upload($data['berkas'], 'struktur_organisasi');
         }
     
@@ -49,8 +47,8 @@ class StrukturOrganisasiService extends BaseService
         $result['data'] = $result['data']->map(function ($struktur) {
             return [
                 'encrypted_id' => id_encode((int) $struktur->id),
-                'thumbnail' => $struktur->berkas,
-                'thumbnail_url' => $struktur->berkas ? storage_url($struktur->berkas) : null,
+                'berkas' => $struktur->berkas,
+                'berkas_url' => $struktur->berkas ? storage_url($struktur->berkas) : null,
                 'status' => $struktur->status
             ];
         })->values();

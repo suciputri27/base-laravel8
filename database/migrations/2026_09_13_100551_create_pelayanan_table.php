@@ -17,6 +17,7 @@ class CreatePelayananTable extends Migration
             $table->id();
             $table->string('nama_pelayanan');
             $table->longText('deskripsi')->nullable();
+            $table->string('status')->default('draft');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

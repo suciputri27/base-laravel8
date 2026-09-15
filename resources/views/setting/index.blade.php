@@ -41,8 +41,25 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="tentang">Tentang Website</label>
+                    <label class="form-label" for="tentang">Tentang Disdukcapil</label>
                     <textarea name="tentang" id="tentang" class="form-control" rows="4">{{ $setting->tentang ?? '' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tentang">Visi</label>
+                    <textarea name="visi" id="visi" class="form-control" rows="4">{{ $setting->tentang ?? '' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tentang">Misi</label>
+                    <textarea name="misi" id="misi" class="form-control" rows="6">{{ $setting->tentang ?? '' }}</textarea>
+                </div>
+            </div>
+
+            <div class="bento-card span-5">
+                <div class="settings-section-title">
+                    <i class="fas fa-location-dot"></i>
+                    <h4>Kontak &amp; Lokasi</h4>
                 </div>
 
                 <div class="form-group">
@@ -51,13 +68,6 @@
                         <i class="fas fa-envelope"></i>
                         <input type="email" name="email" id="email" class="form-control" value="{{ $setting->email ?? '' }}">
                     </div>
-                </div>
-            </div>
-
-            <div class="bento-card span-5">
-                <div class="settings-section-title">
-                    <i class="fas fa-location-dot"></i>
-                    <h4>Kontak &amp; Lokasi</h4>
                 </div>
 
                 <div class="form-group">
