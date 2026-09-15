@@ -16,7 +16,7 @@ class CreateJenisDokumenTable extends Migration
         Schema::create('jenis_dokumen', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_dokumen'); 
-            $table->string('status')->default('draft');
+            $table->boolean('is_active')->default(true);
             $table->unsignedTinyInteger('type')->comment('1 = peraturan, 2 = dokumen');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

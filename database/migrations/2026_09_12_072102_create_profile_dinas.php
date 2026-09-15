@@ -17,7 +17,11 @@ class CreateProfileDinas extends Migration
             $table->id();
             $table->string('nama_website');
             $table->longText('tentang');
-            $table->text('profile')->nullable();
+            $table->longText('visi')->nullable();
+            $table->longText('misi')->nullable();
+            $table->longText('motto')->nullable();
+            $table->longText('tupoksi')->nullable();
+            $table->longText('sejarah')->nullable();
             $table->string('email')->nullable();
             $table->text('alamat');
             $table->string('no_telepon')->nullable();

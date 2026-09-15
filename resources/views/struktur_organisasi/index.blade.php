@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-group mt-3">
                         <label class="form-label">Status</label>
-                        <select name="status" id="StatusIsActive" class="form-control">
+                        <select name="is_active" id="StrukturIsActive" class="form-control">
                             <option value="1">Aktif</option>
                             <option value="0">Nonaktif</option>
                         </select>
@@ -84,15 +84,15 @@
                 ? '<img src="' + App.escapeHtml(item.berkas_url) + '" alt="" class="post-thumb">'
                 : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
 
-        var status = item.status == 1 ?
-            '<span class="badge badge-success">Aktif</span>' :
-            '<span class="badge badge-danger">Nonaktif</span>';
+                var status = item.is_active
+                ? '<span class="badge badge-success">Aktif</span>'
+                : '<span class="badge badge-danger">Nonaktif</span>';
 
         return '<tr>' +
             '<td>' + berkas + '</td>' +
             '<td>' + status + '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-berkas-url="' + App.escapeHtml(item.berkas_url || '') + '" data-status="' + item.status + '"><i class="fas fa-edit"></i></button> ' +
+            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-berkas-url="' + App.escapeHtml(item.berkas_url || '') + '" data-active="' + item.is_active + '"><i class="fas fa-edit"></i></button> ' +
             '<button type="button" class="btn btn-danger btn-sm" onclick="deleteStruktur(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
             '</td>' +
             '</tr>';
@@ -167,7 +167,7 @@
         document.getElementById('StrukturMethod').value = 'POST';
         document.getElementById('StrukturForm').action = '{{ route('struktur_organisasi.store') }}';
         document.getElementById('StrukturModalTitle').textContent = 'Tambah Struktur Organisasi';
-        document.getElementById('StatusIsActive').value = '1';
+        document.getElementById('StrukturIsActive').value = '1';
         resetBerkasDropzone();
         new bootstrap.Modal(document.getElementById('StrukturModal')).show();
     }
@@ -176,7 +176,7 @@
         document.getElementById('StrukturMethod').value = 'PUT';
         document.getElementById('StrukturForm').action = '{{ url('struktur') }}/' + encryptedId;
         document.getElementById('StrukturModalTitle').textContent = 'Edit Struktur Organisasi';
-        document.getElementById('StatusIsActive').value = button.getAttribute('data-status');
+        document.getElementById('StrukturIsActive').value = button.getAttribute('data-active');
 
         resetBerkasDropzone();
         var berkasUrl = button.getAttribute('data-berkas-url');

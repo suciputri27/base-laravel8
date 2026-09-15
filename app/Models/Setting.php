@@ -15,7 +15,11 @@ class Setting extends Model
     protected $fillable = [
         'nama_website',
         'tentang',
-        'profile',
+        'visi',
+        'misi',
+        'motto',
+        'tupoksi',
+        'sejarah',
         'email',
         'alamat',
         'no_telepon',

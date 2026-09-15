@@ -16,7 +16,7 @@ class CreateStrukturOrganisasiTable extends Migration
         Schema::create('struktur_organisasi', function (Blueprint $table) {
             $table->id();
             $table->string('berkas')->nullable();
-            $table->string('status')->default('draft');
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

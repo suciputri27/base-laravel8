@@ -11,8 +11,12 @@ class Pelayanan extends Model
 {
     use HasFactory, EncryptableIdTrait, SoftDeletes;
 
+    protected $table = 'pelayanan'; 
+
     protected $fillable = [
-        'nama_pelayanan'
+        'nama_pelayanan',
+        'deskripsi',
+        'status'
     ];
 
     protected $hidden = [

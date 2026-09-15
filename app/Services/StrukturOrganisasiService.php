@@ -49,7 +49,7 @@ class StrukturOrganisasiService extends BaseService
                 'encrypted_id' => id_encode((int) $struktur->id),
                 'berkas' => $struktur->berkas,
                 'berkas_url' => $struktur->berkas ? storage_url($struktur->berkas) : null,
-                'status' => $struktur->status
+                'is_active' => (bool) $struktur->is_active
             ];
         })->values();
 

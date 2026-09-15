@@ -15,7 +15,7 @@ class Struktur_organisasi extends Model
 
     protected $fillable = [
         'berkas',
-        'status'
+        'is_active',
     ];
 
     protected $hidden = [

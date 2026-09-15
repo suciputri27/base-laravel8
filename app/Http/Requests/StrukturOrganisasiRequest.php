@@ -16,7 +16,7 @@ class StrukturOrganisasiRequest extends FormRequest
     {
         $rules = [
             'berkas' => ['nullable', 'image', 'mimes:jpeg,png,webp,gif', 'max:2048'],
-            'status' => ['required', 'integer'],
+            'is_active' => ['nullable', 'boolean'],
         ];
     
         return $rules;

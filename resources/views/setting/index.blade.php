@@ -46,13 +46,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="tentang">Visi</label>
-                    <textarea name="visi" id="visi" class="form-control" rows="4">{{ $setting->tentang ?? '' }}</textarea>
+                    <label class="form-label" for="visi">Visi</label>
+                    <textarea name="visi" id="visi" class="form-control" rows="4">{{ $setting->visi ?? '' }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="tentang">Misi</label>
-                    <textarea name="misi" id="misi" class="form-control" rows="6">{{ $setting->tentang ?? '' }}</textarea>
+                    <label class="form-label" for="misi">Misi</label>
+                    <textarea name="misi" id="misi" class="form-control" rows="7">{{ $setting->misi ?? '' }}</textarea>
                 </div>
             </div>
 
@@ -96,7 +96,40 @@
                     </div>
                 </div>
             </div>
-
+            <div class="bento-card span-12">
+                <div class="settings-section-title">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h4>Motto dan Tupoksi</h4>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group mb-0">
+                            <label class="form-label" for="motto">Motto</label>
+                                <textarea name="motto" id="motto" class="form-control" rows="8">{{ $setting->motto ?? '' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-0">
+                            <label class="form-label" for="tupoksi">Tugas Pokok dan Fungsi (Tupoksi)</label>
+                                    <textarea name="tupoksi" id="tupoksi" class="form-control" rows="8">{{ $setting->tupoksi ?? '' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bento-card span-12">
+                <div class="settings-section-title">
+                    <i class="fa-solid fa-bars-progress"></i>
+                    <h4>Sejarah</h4>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label class="form-label" for="sejarah">Sejarah</label>
+                                <textarea name="sejarah" id="sejarah" class="form-control" rows="10">{{ $setting->sejarah ?? '' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="bento-card span-12">
                 <div class="settings-section-title">
                     <i class="fas fa-share-nodes"></i>

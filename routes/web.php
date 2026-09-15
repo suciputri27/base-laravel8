@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
@@ -103,5 +104,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/struktur', [StrukturOrganisasiController::class, 'store'])->name('struktur_organisasi.store');
     Route::put('/struktur/{struktur}', [StrukturOrganisasiController::class, 'update'])->name('struktur_organisasi.update');
     Route::delete('/struktur/{struktur}', [StrukturOrganisasiController::class, 'destroy'])->name('struktur_organisasi.destroy');
+
+    Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
+    Route::get('/pelayanan/paginate', [PelayananController::class, 'paginate'])->name('pelayanan.paginate');
+    Route::get('/pelayanan/trashed', [PelayananController::class, 'trashed'])->name('pelayanan.trashed')->middleware('role:Super Admin');
+    Route::post('/pelayanan', [PelayananController::class, 'store'])->name('pelayanan.store');
+    Route::put('/pelayanan/{pelayanan}', [PelayananController::class, 'update'])->name('pelayanan.update');
+    Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
+    Route::post('/pelayanan/{pelayanan}/restore', [PelayananController::class, 'restore'])->name('pelayanan.restore')->middleware('role:Super Admin');
+    Route::delete('/pelayanan/{pelayanan}/force-delete', [PelayananController::class, 'forceDelete'])->name('pelayanan.force-delete')->middleware('role:Super Admin');
 
 });

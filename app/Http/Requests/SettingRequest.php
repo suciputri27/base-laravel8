@@ -16,6 +16,11 @@ class SettingRequest extends FormRequest
         return [
             'nama_website' => ['required', 'string', 'max:255'],
             'tentang' => ['required', 'string'],
+            'visi' => ['nullable', 'string'],
+            'misi' => ['nullable', 'string'],
+            'motto' => ['nullable', 'string'],
+            'tupoksi' => ['nullable', 'string'],
+            'sejarah' => ['nullable', 'string'],
             'email' => ['nullable', 'email', 'max:255'],
             'alamat' => ['required', 'string'],
             'no_telepon' => ['nullable', 'string', 'regex:/^[0-9]{6,15}$/'],
