@@ -16,7 +16,11 @@ class Pelayanan extends Model
     protected $fillable = [
         'nama_pelayanan',
         'deskripsi',
-        'status'
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected $hidden = [
@@ -26,4 +30,9 @@ class Pelayanan extends Model
     protected $appends = [
         'encrypted_id',
     ];
+
+    public function detail_pesyaratan()
+    {
+        return $this->hasMany(Detail_persyaratan::class);
+    }
 }

@@ -58,6 +58,6 @@ class StrukturOrganisasiService extends BaseService
 
     public function all()
     {
-        return $this->repository->newQuery()->where('status', 1)->orderBy('created_at', 'desc')->get();
+        return $this->repository->newQuery()->where('is_active', true)->orderBy('created_at', 'desc')->get();
     }
 }

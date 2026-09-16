@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Sampah Pelayanan')
-@section('page-title', 'Sampah Pelayanan')
+@section('title', 'Sampah Persyaratan')
+@section('page-title', 'Sampah Persyaratan')
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Pelayanan Terhapus</h5>
+            <h5 class="mb-0">Persyaratan Terhapus</h5>
             <a href="{{ route('pelayanan.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
@@ -15,21 +15,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nama Pelayanan</th>
-                        <th>Deskripsi</th>
+                        <th>Nama Persyaratan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($pelayanan as $pelayanan)
+                    @forelse($persyaratan as $persyaratan)
                         <tr>
-                            <td>{{ $pelayanan->nama_pelayanan }}</td>
-                            <td>{{ $pelayanan->deskripsi }}</td>
+                            <td>{{ $persyaratan->nama_persyaratan }}</td>
                             <td>
-                                <button type="button" class="btn btn-success btn-sm" onclick="restorePelayanan('{{ $pelayanan->encrypted_id }}')">
+                                <button type="button" class="btn btn-success btn-sm" onclick="restorePersyaratan('{{ $persyaratan->encrypted_id }}')">
                                     <i class="fas fa-undo"></i> Pulihkan
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="forceDeletePelayanan('{{ $pelayanan->encrypted_id }}')">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="forceDeletePersyaratan('{{ $persyaratan->encrypted_id }}')">
                                     <i class="fas fa-trash"></i> Hapus Permanen
                                 </button>
                             </td>
@@ -47,9 +45,9 @@
 
 @push('scripts')
     <script>
-        function restorePelayanan(encryptedId) {
+        function restorePersyaratan(encryptedId) {
             App.submitData({
-                url: '{{ url('pelayanan') }}/' + encryptedId + '/restore',
+                url: '{{ url('persyaratan') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -58,7 +56,7 @@
             });
         }
 
-        function forceDeletePelayanan(encryptedId) {
+        function forceDeletePersyaratan(encryptedId) {
             App.confirm({
                 title: 'Hapus Permanen',
                 text: 'Data yang dihapus permanen tidak bisa dikembalikan.',
@@ -69,7 +67,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('pelayanan') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('persyaratan') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

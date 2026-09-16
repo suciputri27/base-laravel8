@@ -84,7 +84,7 @@
                 ? '<img src="' + App.escapeHtml(item.berkas_url) + '" alt="" class="post-thumb">'
                 : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
 
-                var status = item.is_active
+        var status = item.is_active
                 ? '<span class="badge badge-success">Aktif</span>'
                 : '<span class="badge badge-danger">Nonaktif</span>';
 
@@ -92,7 +92,7 @@
             '<td>' + berkas + '</td>' +
             '<td>' + status + '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-berkas-url="' + App.escapeHtml(item.berkas_url || '') + '" data-active="' + item.is_active + '"><i class="fas fa-edit"></i></button> ' +
+            '<button type="button" class="btn btn-secondary btn-sm" onclick="editStruktur(\'' + item.encrypted_id + '\', this)" data-berkas-url="' + App.escapeHtml(item.berkas_url || '') + '" data-active="' + (item.is_active ? '1' : '0') + '"><i class="fas fa-edit"></i></button> ' +
             '<button type="button" class="btn btn-danger btn-sm" onclick="deleteStruktur(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
             '</td>' +
             '</tr>';

@@ -41,6 +41,6 @@ class PelayananService extends BaseService
 
     public function all()
     {
-        return $this->repository->newQuery()->where('status', true)->orderBy('nama_pelayanan')->get();
+        return $this->repository->newQuery()->where('is_active', true)->orderBy('nama_pelayanan')->get();
     }
 }

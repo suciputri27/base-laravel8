@@ -21,10 +21,10 @@ class PelayananRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
-            $rules['nama_pelayanan'][] = 'unique:pelayanan,nama_pelayanan';
+            $rules['name'][] = 'unique:pelayanan,nama_pelayanan';
         } else {
             $id = $this->route('pelayanan') ? id_decode((string) $this->route('pelayanan')) : null;
-            $rules['nama_pelayanan'][] = Rule::unique('pelayanan', 'nama_pelayanan')->ignore($id);
+            $rules['name'][] = Rule::unique('categories', 'nama_pelayanan')->ignore($id);
         }
 
         return $rules;

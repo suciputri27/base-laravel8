@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -113,5 +114,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
     Route::post('/pelayanan/{pelayanan}/restore', [PelayananController::class, 'restore'])->name('pelayanan.restore')->middleware('role:Super Admin');
     Route::delete('/pelayanan/{pelayanan}/force-delete', [PelayananController::class, 'forceDelete'])->name('pelayanan.force-delete')->middleware('role:Super Admin');
+
+    Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan.index');
+    Route::get('/persyaratan/paginate', [PersyaratanController::class, 'paginate'])->name('persyaratan.paginate');
+    Route::get('/persyaratan/trashed', [PersyaratanController::class, 'trashed'])->name('persyaratan.trashed')->middleware('role:Super Admin');
+    Route::post('/persyaratan', [PersyaratanController::class, 'store'])->name('persyaratan.store');
+    Route::put('/persyaratan/{persyaratan}', [PersyaratanController::class, 'update'])->name('persyaratan.update');
+    Route::delete('/persyaratan/{persyaratan}', [PersyaratanController::class, 'destroy'])->name('persyaratan.destroy');
+    Route::post('/persyaratan/{persyaratan}/restore', [PersyaratanController::class, 'restore'])->name('persyaratan.restore')->middleware('role:Super Admin');
+    Route::delete('/persyaratan/{persyaratan}/force-delete', [PersyaratanController::class, 'forceDelete'])->name('persyaratan.force-delete')->middleware('role:Super Admin');
 
 });

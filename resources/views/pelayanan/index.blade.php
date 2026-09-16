@@ -86,7 +86,7 @@
                 '<td>' + App.escapeHtml(item.deskripsi || '-') + '</td>' +
                 '<td>' + status + '</td>' +
                 '<td>' +
-                    '<button type="button" class="btn btn-secondary btn-sm" onclick="editPelayanan(\'' + item.encrypted_id + '\', this)" data-name="' + App.escapeHtml(item.nama_pelayanan) + '" data-description="' + App.escapeHtml(item.deskripsi || '') + '" data-active="' + (item.status ? '1' : '0') + '"><i class="fas fa-edit"></i></button> ' +
+                    '<button type="button" class="btn btn-secondary btn-sm" onclick="editPelayanan(\'' + item.encrypted_id + '\', this)" data-name="' + App.escapeHtml(item.nama_pelayanan) + '" data-description="' + App.escapeHtml(item.deskripsi || '') + '" data-active="' + (item.is_active ? '1' : '0') + '"><i class="fas fa-edit"></i></button> ' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deletePelayanan(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
                 '</td>' +
             '</tr>';

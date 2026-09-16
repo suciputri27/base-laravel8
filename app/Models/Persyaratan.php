@@ -11,8 +11,15 @@ class Persyaratan extends Model
 {
     use HasFactory, EncryptableIdTrait, SoftDeletes;
 
+    protected $table = 'persyaratan'; 
+
     protected $fillable = [
-        'nama_persyaratan'
+        'nama_persyaratan',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected $hidden = [
@@ -22,4 +29,9 @@ class Persyaratan extends Model
     protected $appends = [
         'encrypted_id',
     ];
+
+    public function detail_persyaratan()
+    {
+        return $this->hasMany(Detail_persyaratan::class);
+    }
 }
