@@ -64,7 +64,7 @@
                 '<td>' + status + '</td>' +
                 '<td>' + App.escapeHtml(item.published_at || '-') + '</td>' +
                 '<td>' +
-                    '<a class="btn btn-secondary btn-sm" href="' + '{{ url('posts') }}/' + item.encrypted_id + '/edit' + '"><i class="fas fa-edit"></i></a> ' +
+                    '<a class="btn btn-secondary btn-sm" href="' + '{{ url('admin/posts') }}/' + item.encrypted_id + '/edit' + '"><i class="fas fa-edit"></i></a> ' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deletePost(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
                 '</td>' +
             '</tr>';
@@ -81,7 +81,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('posts') }}/' + encryptedId,
+                    url: '{{ url('admin/posts') }}/' + encryptedId,
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

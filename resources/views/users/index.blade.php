@@ -112,7 +112,7 @@
 
         function editUser(encryptedId, button) {
             document.getElementById('userMethod').value = 'PUT';
-            document.getElementById('userForm').action = '{{ url('users') }}/' + encryptedId;
+            document.getElementById('userForm').action = '{{ url('admin/users') }}/' + encryptedId;
             document.getElementById('userModalTitle').textContent = 'Edit User';
             document.getElementById('userName').value = button.getAttribute('data-name');
             document.getElementById('userEmail').value = button.getAttribute('data-email');
@@ -132,7 +132,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('users') }}/' + encryptedId,
+                    url: '{{ url('admin/users') }}/' + encryptedId,
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

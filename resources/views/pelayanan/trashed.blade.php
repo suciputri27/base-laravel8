@@ -49,7 +49,7 @@
     <script>
         function restorePelayanan(encryptedId) {
             App.submitData({
-                url: '{{ url('pelayanan') }}/' + encryptedId + '/restore',
+                url: '{{ url('admin/pelayanan') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -69,7 +69,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('pelayanan') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('admin/pelayanan') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

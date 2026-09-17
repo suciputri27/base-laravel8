@@ -106,7 +106,7 @@
 
         function editCategory(encryptedId, button) {
             document.getElementById('categoryMethod').value = 'PUT';
-            document.getElementById('categoryForm').action = '{{ url('categories') }}/' + encryptedId;
+            document.getElementById('categoryForm').action = '{{ url('admin/categories') }}/' + encryptedId;
             document.getElementById('categoryModalTitle').textContent = 'Edit Kategori';
             document.getElementById('categoryName').value = button.getAttribute('data-name');
             document.getElementById('categoryDescription').value = button.getAttribute('data-description');
@@ -125,7 +125,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('categories') }}/' + encryptedId,
+                    url: '{{ url('admin/categories') }}/' + encryptedId,
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

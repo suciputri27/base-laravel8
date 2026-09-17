@@ -47,7 +47,7 @@
     <script>
         function restorePersyaratan(encryptedId) {
             App.submitData({
-                url: '{{ url('persyaratan') }}/' + encryptedId + '/restore',
+                url: '{{ url('admin/persyaratan') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -67,7 +67,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('persyaratan') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('admin/persyaratan') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

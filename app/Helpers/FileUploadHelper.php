@@ -13,6 +13,7 @@ class FileUploadHelper
         'image/png' => 'png',
         'image/webp' => 'webp',
         'image/gif' => 'gif',
+        'application/pdf' => 'pdf',
     ];
 
     public static function upload(UploadedFile $file, string $directory = 'uploads', int $maxKb = 2048): string

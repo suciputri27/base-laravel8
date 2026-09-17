@@ -16,10 +16,12 @@ class Persyaratan extends Model
     protected $fillable = [
         'nama_persyaratan',
         'is_active',
+        'cekdokumen',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'cekdokumen' => 'boolean',
     ];
 
     protected $hidden = [

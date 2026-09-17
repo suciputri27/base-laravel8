@@ -20,4 +20,32 @@ class DetailPersyaratanRepository extends BaseRepository implements DetailPersya
             $options
         );
     }
+
+    public function activeByPelayanan(int $pelayananId)
+    {
+        return $this->newQuery()
+            ->where('pelayanan_id', $pelayananId)
+            ->where('is_active', true)
+            ->get();
+    }
+
+    public function findActive(int $pelayananId, int $persyaratanId)
+    {
+        return $this->newQuery()
+            ->where('pelayanan_id', $pelayananId)
+            ->where('persyaratan_id', $persyaratanId)
+            ->where('is_active', true)
+            ->latest()
+            ->first();
+    }
+
+    public function historyOf(int $pelayananId, int $persyaratanId)
+    {
+        return $this->newQuery()
+            ->where('pelayanan_id', $pelayananId)
+            ->where('persyaratan_id', $persyaratanId)
+            ->with('createdBy')
+            ->orderByDesc('created_at')
+            ->get();
+    }
 }

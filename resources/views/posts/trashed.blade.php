@@ -51,7 +51,7 @@
     <script>
         function restorePost(encryptedId) {
             App.submitData({
-                url: '{{ url('posts') }}/' + encryptedId + '/restore',
+                url: '{{ url('admin/posts') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -71,7 +71,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('posts') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('admin/posts') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

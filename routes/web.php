@@ -3,11 +3,13 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailPersyaratanController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PublikasiController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
@@ -25,7 +27,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 });
 
-Route::middleware('auth')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -124,4 +126,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/persyaratan/{persyaratan}/restore', [PersyaratanController::class, 'restore'])->name('persyaratan.restore')->middleware('role:Super Admin');
     Route::delete('/persyaratan/{persyaratan}/force-delete', [PersyaratanController::class, 'forceDelete'])->name('persyaratan.force-delete')->middleware('role:Super Admin');
 
+    Route::get('/pelayanan/{pelayanan}/kelola-persyaratan', [DetailPersyaratanController::class, 'index'])->name('detail_persyaratan.index');
+    Route::get('/pelayanan/{pelayanan}/persyaratan', [DetailPersyaratanController::class, 'checklist'])->name('detail_persyaratan.checklist');
+    Route::post('/pelayanan/{pelayanan}/persyaratan/sync', [DetailPersyaratanController::class, 'sync'])->name('detail_persyaratan.sync');
+    Route::get('/pelayanan/{pelayanan}/persyaratan/{persyaratan}/riwayat', [DetailPersyaratanController::class, 'history'])->name('detail_persyaratan.history');
+    Route::post('/detail-persyaratan/{detail}/ganti-template', [DetailPersyaratanController::class, 'gantiTemplate'])->name('detail_persyaratan.ganti-template');
+
+    Route::get('/publikasi', [PublikasiController::class, 'index'])->name('publikasi.index');
+    Route::get('/publikasi/paginate', [PublikasiController::class, 'paginate'])->name('publikasi.paginate');
+    Route::post('/publikasi', [PublikasiController::class, 'store'])->name('publikasi.store');
+    Route::put('/publikasi/{publikasi}', [PublikasiController::class, 'update'])->name('publikasi.update');
+    Route::delete('/publikasi/{publikasi}', [PublikasiController::class, 'destroy'])->name('publikasi.destroy');
 });

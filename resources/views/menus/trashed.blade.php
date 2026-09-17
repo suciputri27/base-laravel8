@@ -51,7 +51,7 @@
     <script>
         function restoreMenu(encryptedId) {
             App.submitData({
-                url: '{{ url('menus') }}/' + encryptedId + '/restore',
+                url: '{{ url('admin/menus') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -71,7 +71,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('menus') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('admin/menus') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

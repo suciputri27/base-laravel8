@@ -421,4 +421,22 @@
             };
         }
     };
+
+    App.renderThumbnail = function (url, options) {
+        options = options || {};
+        var emptyIcon = options.emptyIcon || 'fa-image';
+        var thumbClass = options.thumbClass || 'post-thumb';
+    
+        if (!url) {
+            return '<div class="' + thumbClass + ' ' + thumbClass + '-empty"><i class="fas ' + emptyIcon + '"></i></div>';
+        }
+    
+        var isPdf = url.toLowerCase().endsWith('.pdf');
+    
+        if (isPdf) {
+            return '<a href="' + App.escapeHtml(url) + '" target="_blank" class="' + thumbClass + ' ' + thumbClass + '-pdf"><i class="fas fa-file-pdf"></i></a>';
+        }
+    
+        return '<img src="' + App.escapeHtml(url) + '" alt="" class="' + thumbClass + '">';
+    };
 })();

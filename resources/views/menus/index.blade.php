@@ -141,7 +141,7 @@
 
         function editMenu(encryptedId, button) {
             document.getElementById('menuMethod').value = 'PUT';
-            document.getElementById('menuForm').action = '{{ url('menus') }}/' + encryptedId;
+            document.getElementById('menuForm').action = '{{ url('admin/menus') }}/' + encryptedId;
             document.getElementById('menuModalTitle').textContent = 'Edit Menu';
             document.getElementById('menuName').value = button.getAttribute('data-name');
             document.getElementById('menuIcon').value = button.getAttribute('data-icon');
@@ -164,7 +164,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('menus') }}/' + encryptedId,
+                    url: '{{ url('admin/menus') }}/' + encryptedId,
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

@@ -12,6 +12,10 @@
   --border: #e2e8f0;
   --danger: #dc2626;
   --success: #16a34a;
+  --warning: #d97706;
+  --warning-soft: #fffbeb;
+  --info: #0ea5e9;
+  --info-soft: #f0f9ff;
   --radius: 16px;
   --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
@@ -454,6 +458,26 @@ a:hover {
 .badge-secondary {
   background: #eff6ff;
   color: #1d4ed8;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge-info {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge-purple {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.badge-dark {
+  background: #e2e8f0;
+  color: #334155;
 }
 
 .form-group {
@@ -1266,4 +1290,35 @@ select.form-control {
 
 .input-icon .form-control {
   padding-left: 42px;
+}
+
+.pdf-file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.pdf-file-info i {
+  font-size: 24px;
+  color: #b91c1c;
+}
+
+.post-thumb-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.post-thumb-pdf:hover {
+  background: #fecaca;
 }

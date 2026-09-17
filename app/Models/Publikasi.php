@@ -5,16 +5,23 @@ namespace App\Models;
 use App\Traits\EncryptableIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Dokumen extends Model
+class Publikasi extends Model
 {
-    use HasFactory, EncryptableIdTrait;
+    use HasFactory, EncryptableIdTrait, SoftDeletes;
+
+    protected $table = 'publikasi'; 
 
     protected $fillable = [
-        'jenis_dokumen_id',
-        'nama_dokumen',
+        'judul',
         'deskripsi',
-        'berkas'
+        'is_active',
+        'berkas',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected $hidden = [

@@ -17,6 +17,7 @@ class PersyaratanRequest extends FormRequest
         $rules = [
             'nama_persyaratan' => ['required', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
+            'cekdokumen' => ['nullable', 'boolean'],
         ];
 
         if ($this->isMethod('post')) {

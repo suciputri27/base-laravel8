@@ -24,7 +24,7 @@ class PelayananRequest extends FormRequest
             $rules['name'][] = 'unique:pelayanan,nama_pelayanan';
         } else {
             $id = $this->route('pelayanan') ? id_decode((string) $this->route('pelayanan')) : null;
-            $rules['name'][] = Rule::unique('categories', 'nama_pelayanan')->ignore($id);
+            $rules['name'][] = Rule::unique('pelayanan', 'nama_pelayanan')->ignore($id);
         }
 
         return $rules;

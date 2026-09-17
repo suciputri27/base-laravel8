@@ -31,6 +31,7 @@ class PersyaratanService extends BaseService
             return [
                 'encrypted_id' => id_encode((int) $persyaratan->id),
                 'nama_persyaratan' => $persyaratan->nama_persyaratan,
+                'cekdokumen' => (bool) $persyaratan->cekdokumen,
                 'is_active' => (bool) $persyaratan->is_active
             ];
         })->values();

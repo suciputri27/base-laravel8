@@ -49,7 +49,7 @@
     <script>
         function restoreCategory(encryptedId) {
             App.submitData({
-                url: '{{ url('categories') }}/' + encryptedId + '/restore',
+                url: '{{ url('admin/categories') }}/' + encryptedId + '/restore',
                 method: 'POST',
                 onSuccess: function (response) {
                     App.alert('success', response.message);
@@ -69,7 +69,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('categories') }}/' + encryptedId + '/force-delete',
+                    url: '{{ url('admin/categories') }}/' + encryptedId + '/force-delete',
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

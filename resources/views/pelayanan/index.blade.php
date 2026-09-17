@@ -86,6 +86,7 @@
                 '<td>' + App.escapeHtml(item.deskripsi || '-') + '</td>' +
                 '<td>' + status + '</td>' +
                 '<td>' +
+                    '<a href="{{ url('admin/pelayanan') }}/' + item.encrypted_id + '/kelola-persyaratan" class="btn btn-info btn-sm" title="Kelola Persyaratan"><i class="fas fa-list-check"></i></a> ' +
                     '<button type="button" class="btn btn-secondary btn-sm" onclick="editPelayanan(\'' + item.encrypted_id + '\', this)" data-name="' + App.escapeHtml(item.nama_pelayanan) + '" data-description="' + App.escapeHtml(item.deskripsi || '') + '" data-active="' + (item.is_active ? '1' : '0') + '"><i class="fas fa-edit"></i></button> ' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deletePelayanan(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
                 '</td>' +
@@ -104,7 +105,7 @@
 
         function editPelayanan(encryptedId, button) {
             document.getElementById('PelayananMethod').value = 'PUT';
-            document.getElementById('PelayananForm').action = '{{ url('pelayanan') }}/' + encryptedId;
+            document.getElementById('PelayananForm').action = '{{ url('admin/pelayanan') }}/' + encryptedId;
             document.getElementById('PelayananModalTitle').textContent = 'Edit Kategori';
             document.getElementById('PelayananName').value = button.getAttribute('data-name');
             document.getElementById('PelayananDescription').value = button.getAttribute('data-description');
@@ -123,7 +124,7 @@
                 }
 
                 App.submitData({
-                    url: '{{ url('pelayanan') }}/' + encryptedId,
+                    url: '{{ url('admin/pelayanan') }}/' + encryptedId,
                     method: 'DELETE',
                     onSuccess: function (response) {
                         App.alert('success', response.message);

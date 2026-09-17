@@ -174,7 +174,7 @@
 
     function editStruktur(encryptedId, button) {
         document.getElementById('StrukturMethod').value = 'PUT';
-        document.getElementById('StrukturForm').action = '{{ url('struktur') }}/' + encryptedId;
+        document.getElementById('StrukturForm').action = '{{ url('admin/struktur') }}/' + encryptedId;
         document.getElementById('StrukturModalTitle').textContent = 'Edit Struktur Organisasi';
         document.getElementById('StrukturIsActive').value = button.getAttribute('data-active');
 
@@ -199,7 +199,7 @@
             }
 
             App.submitData({
-                url: '{{ url('struktur') }}/' + encryptedId,
+                url: '{{ url('admin/struktur') }}/' + encryptedId,
                 method: 'DELETE',
                 onSuccess: function(response) {
                     App.alert('success', response.message);

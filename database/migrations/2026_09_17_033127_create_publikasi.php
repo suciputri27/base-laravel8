@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJenisDokumenTable extends Migration
+class CreatePublikasi extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateJenisDokumenTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis_dokumen', function (Blueprint $table) {
+        Schema::create('publikasi', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_dokumen'); 
+            $table->string('judul');
+            $table->longText('deskripsi')->nullable();
+            $table->string('berkas')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->unsignedTinyInteger('type')->comment('1 = peraturan, 2 = dokumen');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -33,6 +34,6 @@ class CreateJenisDokumenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis_dokumen');
+        Schema::dropIfExists('publikasi');
     }
 }

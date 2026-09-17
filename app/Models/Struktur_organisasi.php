@@ -18,6 +18,10 @@ class Struktur_organisasi extends Model
         'is_active',
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
     protected $hidden = [
         'id',
     ];
