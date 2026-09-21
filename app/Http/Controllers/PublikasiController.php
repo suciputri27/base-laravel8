@@ -38,6 +38,11 @@ class PublikasiController extends Controller
         ]);
     }
 
+    public function create(): View
+    {
+        return view('publikasi.create');
+    }
+
     public function store(PublikasiRequest $request): JsonResponse
     {
         $this->publikasiService->create($request->validated());
@@ -45,7 +50,15 @@ class PublikasiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Publikasi berhasil ditambahkan.',
+            'redirect' => route('publikasi.index'),
         ]);
+    }
+
+    public function edit(string $publikasi): View
+    {
+        $publikasi = $this->publikasiService->find(id_decode($publikasi));
+
+        return view('publikasi.edit', compact('publikasi'));
     }
 
     public function update(PublikasiRequest $request, string $publikasi): JsonResponse
@@ -55,6 +68,7 @@ class PublikasiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Publikasi berhasil diperbarui.',
+            'redirect' => route('publikasi.index'),
         ]);
     }
 

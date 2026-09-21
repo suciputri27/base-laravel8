@@ -15,6 +15,7 @@ class Publikasi extends Model
 
     protected $fillable = [
         'judul',
+        'jenis_dokumen',
         'deskripsi',
         'is_active',
         'berkas',

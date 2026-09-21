@@ -134,7 +134,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('/publikasi', [PublikasiController::class, 'index'])->name('publikasi.index');
     Route::get('/publikasi/paginate', [PublikasiController::class, 'paginate'])->name('publikasi.paginate');
+    Route::get('/publikasi/create', [PublikasiController::class, 'create'])->name('publikasi.create');
     Route::post('/publikasi', [PublikasiController::class, 'store'])->name('publikasi.store');
+    Route::get('/publikasi/{publikasi}/edit', [PublikasiController::class, 'edit'])->name('publikasi.edit');
     Route::put('/publikasi/{publikasi}', [PublikasiController::class, 'update'])->name('publikasi.update');
     Route::delete('/publikasi/{publikasi}', [PublikasiController::class, 'destroy'])->name('publikasi.destroy');
 });

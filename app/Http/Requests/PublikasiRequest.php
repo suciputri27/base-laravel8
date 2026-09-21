@@ -15,7 +15,8 @@ class PublikasiRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'judul' => ['required', 'string', 'max:255'],
+            'judul' => ['nullable', 'string', 'max:255'],
+            'jenis_dokumen' => ['required', 'integer'],
             'deskripsi' => ['nullable', 'string'],
             'berkas' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:2048'],
             'is_active' => ['nullable', 'boolean'],

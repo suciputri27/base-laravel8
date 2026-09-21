@@ -38,9 +38,26 @@ class PublikasiService extends BaseService
 
         return $this->repository->update($id, $data);
     }
+
+    public function delete(int $id): bool
+    {
+        return $this->repository->delete($id);
+    }
+
+    public function forceDelete(int $id): bool
+    {
+        $model = $this->repository->newQuery()->withTrashed()->findOrFail($id);
+
+        if ($model->berkas) {
+            FileUploadHelper::delete($model->berkas);
+        }
+
+        return $this->repository->forceDelete($id);
+    }
+
     public function paginate(array $options = []): array
     {
-        $options['search_columns'] = ['judul', 'deskripsi'];
+        $options['search_columns'] = ['judul', 'deskripsi', 'jenis_dokumen'];
 
         $result = parent::paginate($options);
 
@@ -48,6 +65,7 @@ class PublikasiService extends BaseService
             return [
                 'encrypted_id' => id_encode((int) $publikasi->id),
                 'judul' => $publikasi->judul,
+                'jenis_dokumen' => $publikasi->jenis_dokumen,
                 'deskripsi' => $publikasi->deskripsi,
                 'berkas' => $publikasi->berkas,
                 'berkas_url' => $publikasi->berkas ? storage_url($publikasi->berkas) : null,
@@ -56,10 +74,5 @@ class PublikasiService extends BaseService
         })->values();
 
         return $result;
-    }
-
-    public function all()
-    {
-        return $this->repository->newQuery()->where('is_active', true)->orderBy('created_at', 'desc')->get();
     }
 }
