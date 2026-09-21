@@ -24,6 +24,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
@@ -84,10 +85,12 @@
 @push('scripts')
     <script>
         function userRow(item) {
+            var rowNumber = document.querySelectorAll('#publikasiTableBody tr').length + 1;
             var role = item.role_name ? item.role_name : 'Tanpa Role';
             var created = item.created_at ? item.created_at : '-';
 
             return '<tr>' +
+                '<td>' + rowNumber + '</td>' +
                 '<td>' + App.escapeHtml(item.name) + '</td>' +
                 '<td>' + App.escapeHtml(item.email) + '</td>' +
                 '<td><span class="badge badge-secondary">' + App.escapeHtml(role) + '</span></td>' +

@@ -19,6 +19,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Struktur</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -80,6 +81,7 @@
 @push('scripts')
 <script>
     function StrukturRow(item) {
+        var rowNumber = document.querySelectorAll('#strukturTableBody tr').length + 1;
         var berkas = item.berkas_url
                 ? '<img src="' + App.escapeHtml(item.berkas_url) + '" alt="" class="post-thumb">'
                 : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
@@ -89,6 +91,7 @@
                 : '<span class="badge badge-danger">Nonaktif</span>';
 
         return '<tr>' +
+            '<td>' + rowNumber + '</td>' +
             '<td>' + berkas + '</td>' +
             '<td>' + status + '</td>' +
             '<td>' +

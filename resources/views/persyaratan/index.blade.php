@@ -24,6 +24,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nama Persyaratan</th>
                         <th>Cek Dokumen</th>
                         <th>Status</th>
@@ -80,6 +81,7 @@
 @push('scripts')
 <script>
     function PersyaratanRow(item) {
+        var rowNumber = document.querySelectorAll('#PersyaratanTableBody tr').length + 1;
         var status = item.is_active ?
             '<span class="badge badge-success">Aktif</span>' :
             '<span class="badge badge-danger">Nonaktif</span>';
@@ -89,6 +91,7 @@
             '<span class="badge badge-secondary">Tidak Butuh Dokumen</span>';
 
         return '<tr>' +
+            '<td>' + rowNumber + '</td>' +
             '<td>' + App.escapeHtml(item.nama_persyaratan) + '</td>' +
             '<td>' + cek + '</td>' +
             '<td>' + status + '</td>' +

@@ -24,6 +24,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Thumbnail</th>
                             <th>Judul</th>
                             <th>Status</th>
@@ -41,6 +42,7 @@
 @push('scripts')
     <script>
         function postRow(item) {
+            var rowNumber = document.querySelectorAll('#postTableBody tr').length + 1;
             var thumbnail = item.thumbnail_url
                 ? '<img src="' + App.escapeHtml(item.thumbnail_url) + '" alt="" class="post-thumb">'
                 : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
@@ -54,6 +56,7 @@
                 : '<span class="badge badge-secondary">Draf</span>';
 
             return '<tr>' +
+                '<td>' + rowNumber + '</td>' +
                 '<td>' + thumbnail + '</td>' +
                 '<td>' +
                     '<div class="post-title-cell">' +

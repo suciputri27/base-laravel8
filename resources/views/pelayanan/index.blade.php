@@ -24,6 +24,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama Pelayanan</th>
                             <th>Deskripsi</th>
                             <th>Status</th>
@@ -77,11 +78,13 @@
 @push('scripts')
     <script>
         function PelayananRow(item) {
+            var rowNumber = document.querySelectorAll('#PelayananTableBody tr').length + 1;
             var status = item.is_active
                 ? '<span class="badge badge-success">Aktif</span>'
                 : '<span class="badge badge-danger">Nonaktif</span>';
 
             return '<tr>' +
+                '<td>' + rowNumber + '</td>' +
                 '<td>' + App.escapeHtml(item.nama_pelayanan) + '</td>' +
                 '<td>' + App.escapeHtml(item.deskripsi || '-') + '</td>' +
                 '<td>' + status + '</td>' +

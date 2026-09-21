@@ -24,6 +24,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Slug</th>
                             <th>Deskripsi</th>
@@ -78,11 +79,13 @@
 @push('scripts')
     <script>
         function categoryRow(item) {
+            var rowNumber = document.querySelectorAll('#categoryTableBody tr').length + 1;
             var status = item.is_active
                 ? '<span class="badge badge-success">Aktif</span>'
                 : '<span class="badge badge-danger">Nonaktif</span>';
 
             return '<tr>' +
+                '<td>' + rowNumber + '</td>' +
                 '<td>' + App.escapeHtml(item.name) + '</td>' +
                 '<td>' + App.escapeHtml(item.slug) + '</td>' +
                 '<td>' + App.escapeHtml(item.description || '-') + '</td>' +

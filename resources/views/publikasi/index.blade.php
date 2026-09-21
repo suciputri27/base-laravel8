@@ -19,6 +19,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Jenis Dokumen</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>
@@ -37,6 +38,7 @@
 @push('scripts')
     <script>
         function publikasiRow(item) {
+            var rowNumber = document.querySelectorAll('#publikasiTableBody tr').length + 1;
             var berkas = App.renderThumbnail(item.berkas_url);
             var badgeMap = {
                     1: '<span class="badge badge-success">Maklumat Pelayanan</span>',
@@ -50,8 +52,8 @@
             var status = item.is_active
                 ? '<span class="badge badge-success">Aktif</span>'
                 : '<span class="badge badge-danger">Nonaktif</span>';
-
             return '<tr>' +
+                '<td>' + rowNumber + '</td>' +
                 '<td>' + jenis + '</td>' +
                 '<td>' + App.escapeHtml(item.judul) + '</td>' +
                 '<td>' + App.escapeHtml(item.deskripsi || '-') + '</td>' +
