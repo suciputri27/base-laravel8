@@ -5,23 +5,23 @@ namespace App\Models;
 use App\Traits\EncryptableIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Inovasi extends Model
 {
     use HasFactory, EncryptableIdTrait;
 
+    protected $table = 'inovasi';
+
     protected $fillable = [
-        'category_id',
-        'title',
-        'slug',
-        'excerpt',
-        'content',
-        'status',
-        'published_at',
+        'judul',
+        'jenis',
+        'deskripsi',
+        'is_active',
     ];
 
     protected $casts = [
-        'published_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     protected $hidden = [
@@ -32,13 +32,8 @@ class Post extends Model
         'encrypted_id',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function berkas()
     {
-        return $this->hasMany(Berkas_post::class, 'posts_id');
+        return $this->hasMany(Berkas_inovasi::class, 'inovasi_id');
     }
 }

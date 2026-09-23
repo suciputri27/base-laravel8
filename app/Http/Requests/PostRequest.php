@@ -15,12 +15,14 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255'],
-            'excerpt' => ['nullable', 'string'],
-            'content' => ['required', 'string'],
-            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,webp,gif', 'max:2048'],
-            'status' => ['required', 'in:draft,published'],
+            'category_id'    => ['nullable', 'integer', 'exists:categories,id'],
+            'title'          => ['required', 'string', 'max:255'],
+            'excerpt'        => ['nullable', 'string'],
+            'content'        => ['required', 'string'],
+            'berkas'         => ['nullable', 'array'],
+            'berkas.*'       => ['image', 'mimes:jpeg,png,webp,gif', 'max:2048'],
+            'deleted_berkas' => ['nullable', 'string'], // "1,2,3"
+            'status'         => ['required', 'in:draft,published'],
         ];
 
         if ($this->isMethod('post')) {

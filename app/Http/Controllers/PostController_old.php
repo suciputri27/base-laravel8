@@ -9,9 +9,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PostController extends Controller
+class PostController_old extends Controller
 {
     protected $postService;
+
     protected $categoryService;
 
     public function __construct(PostService $postService, CategoryService $categoryService)
@@ -54,19 +55,18 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Informasi berhasil ditambahkan.',
+            'message' => 'Berita berhasil ditambahkan.',
             'redirect' => route('posts.index'),
         ]);
     }
 
     public function edit(string $post): View
     {
-        $post = $this->postService->find(id_decode($post), ['berkas']);
+        $post = $this->postService->find(id_decode($post));
         $categories = $this->categoryService->all();
-    
+
         return view('posts.edit', compact('post', 'categories'));
     }
-    
 
     public function update(PostRequest $request, string $post): JsonResponse
     {
@@ -74,7 +74,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Informasi berhasil diperbarui.',
+            'message' => 'Berita berhasil diperbarui.',
             'redirect' => route('posts.index'),
         ]);
     }
@@ -85,7 +85,34 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Informasi berhasil dihapus.',
+            'message' => 'Berita berhasil dihapus.',
+        ]);
+    }
+
+    public function trashed(): View
+    {
+        $posts = $this->postService->getTrashed();
+
+        return view('posts.trashed', compact('posts'));
+    }
+
+    public function restore(string $post): JsonResponse
+    {
+        $this->postService->restore(id_decode($post));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil dikembalikan.',
+        ]);
+    }
+
+    public function forceDelete(string $post): JsonResponse
+    {
+        $this->postService->forceDelete(id_decode($post));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil dihapus permanen.',
         ]);
     }
 }

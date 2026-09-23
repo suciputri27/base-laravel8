@@ -1,14 +1,13 @@
 @php
-    $selectedCategory = isset($post) && $post->category_id ? id_encode((int) $post->category_id) : ''; 
-    $existingBerkas = isset($post) ? $post->berkas : collect();
+    $existingBerkas = isset($inovasi) ? $inovasi->berkas : collect();
 @endphp
 
 <div class="card">
     <div class="card-header">
-        <h5 class="mb-0">{{ isset($post) ? 'Edit Informasi' : 'Tambah Informasi' }}</h5>
+        <h5 class="mb-0">{{ isset($inovasi) ? 'Edit Inovasi' : 'Tambah Inovasi' }}</h5>
     </div>
     <div class="card-body">
-        <form id="postForm" action="{{ $formAction }}" method="POST" enctype="multipart/form-data" novalidate>
+        <form id="inovasiForm" action="{{ $formAction }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
             @if($formMethod === 'PUT')
                 <input type="hidden" name="_method" value="PUT">
@@ -17,36 +16,29 @@
             <div class="row g-3">
                 <div class="col-12">
                     <div class="form-group mb-0">
+                        <label class="form-label">Jenis Inovasi</label>
+                        <select name="jenis" id="jenis" class="form-control">
+                            <option value="1" {{ isset($inovasi) && $inovasi->jenis == 1 ? 'selected' : '' }}>Inovasi</option>
+                            <option value="2" {{ isset($inovasi) && $inovasi->jenis == 2 ? 'selected' : '' }}>Layanan Jemput Bola</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group mb-0">
                         <label class="form-label">Judul</label>
-                        <input type="text" name="title" id="title" class="form-control" value="{{ isset($post) ? $post->title : '' }}" required>
+                        <input type="text" name="judul" id="judul" class="form-control" value="{{ isset($inovasi) ? $inovasi->judul : '' }}" required>
                     </div>
                 </div>
-
-                <div class="col-md-6">
+                <div class="col-12">
                     <div class="form-group mb-0">
-                        <label class="form-label">Kategori</label>
-                        <select name="category_id" id="category_id" class="form-control">
-                            <option value="">Pilih Kategori</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->encrypted_id }}" {{ $selectedCategory === $category->encrypted_id ? 'selected' : '' }}>{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group mb-0">
-                        <label class="form-label">Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="draft" {{ (isset($post) && $post->status === 'draft') || !isset($post) ? 'selected' : '' }}>Draf</option>
-                            <option value="published" {{ isset($post) && $post->status === 'published' ? 'selected' : '' }}>Terbit</option>
-                        </select>
+                        <label class="form-label">Deskripsi</label>
+                        <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3">{{ isset($inovasi) ? $inovasi->deskripsi : '' }}</textarea>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group mb-0">
-                        <label class="form-label">Thumbnail (bisa lebih dari satu)</label>
+                        <label class="form-label">Gambar (bisa lebih dari satu)</label>
                         <div class="file-dropzone" id="berkasDropzone">
                             <input type="file" name="berkas[]" id="berkasInput" accept="image/*" multiple hidden>
                             <div class="file-dropzone-inner" id="berkasDropzoneInner">
@@ -60,7 +52,7 @@
                         <div class="file-preview-grid mt-2 d-flex flex-wrap gap-2" id="berkasPreviewGrid"></div>
 
                         {{-- Foto lama (mode edit) --}}
-                        @if(isset($post) && $existingBerkas->count())
+                        @if(isset($inovasi) && $existingBerkas->count())
                             <div class="existing-preview-grid mt-2 d-flex flex-wrap gap-2" id="existingPreviewGrid">
                                 @foreach($existingBerkas as $b)
                                     <div class="file-preview-item position-relative" data-id="{{ $b->encrypted_id ?? id_encode($b->id) }}">
@@ -80,22 +72,18 @@
 
                 <div class="col-12">
                     <div class="form-group mb-0">
-                        <label class="form-label">Ringkasan</label>
-                        <textarea name="excerpt" id="excerpt" class="form-control" rows="3">{{ isset($post) ? $post->excerpt : '' }}</textarea>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="form-group mb-0">
-                        <label class="form-label">Isi Berita</label>
-                        <textarea name="content" id="content" class="form-control" rows="10">{{ isset($post) ? $post->content : '' }}</textarea>
+                        <label class="form-label">Status</label>
+                        <select name="is_active" id="publikasiIsActive" class="form-control">
+                            <option value="1" {{ isset($inovasi) && $inovasi->is_active == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ isset($inovasi) && $inovasi->is_active == 0 ? 'selected' : '' }}>Nonaktif</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-3">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-                <a href="{{ route('posts.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('inovasi.index') }}" class="btn btn-secondary">Batal</a>
             </div>
         </form>
     </div>
@@ -106,9 +94,9 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#category_id').select2({
+            $('#jenis').select2({
                 width: '100%',
-                placeholder: 'Pilih Kategori'
+                placeholder: 'Pilih Jenis Inovasi'
             });
         });
 
@@ -207,7 +195,7 @@
             });
         });
 
-        document.getElementById('postForm').addEventListener('submit', function (event) {
+        document.getElementById('inovasiForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
             App.submit(this, {

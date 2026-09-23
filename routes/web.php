@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailPersyaratanController;
+use App\Http\Controllers\InovasiController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\PermissionController;
@@ -139,4 +140,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/publikasi/{publikasi}/edit', [PublikasiController::class, 'edit'])->name('publikasi.edit');
     Route::put('/publikasi/{publikasi}', [PublikasiController::class, 'update'])->name('publikasi.update');
     Route::delete('/publikasi/{publikasi}', [PublikasiController::class, 'destroy'])->name('publikasi.destroy');
+
+
+    Route::get('/inovasi', [InovasiController::class, 'index'])->name('inovasi.index');
+    Route::get('/inovasi/paginate', [InovasiController::class, 'paginate'])->name('inovasi.paginate');
+    Route::get('/inovasi/create', [InovasiController::class, 'create'])->name('inovasi.create');
+    Route::post('/inovasi', [InovasiController::class, 'store'])->name('inovasi.store');
+    Route::get('/inovasi/{inovasi}/edit', [InovasiController::class, 'edit'])->name('inovasi.edit');
+    Route::put('/inovasi/{inovasi}', [InovasiController::class, 'update'])->name('inovasi.update');
+    Route::delete('/inovasi/{inovasi}', [InovasiController::class, 'destroy'])->name('inovasi.destroy');
 });

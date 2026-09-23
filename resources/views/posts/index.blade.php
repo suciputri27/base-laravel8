@@ -1,21 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Berita')
-@section('page-title', 'Berita')
+@section('title', 'Informasi')
+@section('page-title', 'Informasi')
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Data Berita</h5>
+            <h5 class="mb-0">Data Informasi</h5>
             <div class="d-flex align-items-center">
-                <input type="text" id="searchInput" class="form-control" placeholder="Cari berita..." style="width: 240px; margin-right: 8px;">
-                @if(auth()->user()->hasRole('Super Admin'))
-                    <a href="{{ route('posts.trashed') }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 8px;">
-                        <i class="fas fa-trash-restore"></i> Sampah
-                    </a>
-                @endif
+                <input type="text" id="searchInput" class="form-control" placeholder="Cari informasi..." style="width: 240px; margin-right: 8px;">
                 <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus"></i> Tambah Berita
+                    <i class="fas fa-plus"></i> Tambah Informasi
                 </a>
             </div>
         </div>
@@ -43,9 +38,8 @@
     <script>
         function postRow(item) {
             var rowNumber = document.querySelectorAll('#postTableBody tr').length + 1;
-            var thumbnail = item.thumbnail_url
-                ? '<img src="' + App.escapeHtml(item.thumbnail_url) + '" alt="" class="post-thumb">'
-                : '<div class="post-thumb post-thumb-empty"><i class="fas fa-image"></i></div>';
+            var thumbnailUrl = (item.berkas && item.berkas.length > 0) ? item.berkas[0].url : null;
+            var berkas = App.renderThumbnail(thumbnailUrl);
 
             var category = item.category_name
                 ? '<span class="badge badge-secondary">' + App.escapeHtml(item.category_name) + '</span>'
@@ -57,7 +51,7 @@
 
             return '<tr>' +
                 '<td>' + rowNumber + '</td>' +
-                '<td>' + thumbnail + '</td>' +
+                '<td>' + berkas + '</td>' +
                 '<td>' +
                     '<div class="post-title-cell">' +
                         '<div class="post-title">' + App.escapeHtml(item.title) + '</div>' +
