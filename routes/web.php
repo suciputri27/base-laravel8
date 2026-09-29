@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailPersyaratanController;
-use App\Http\Controllers\InovasiController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\PermissionController;
@@ -16,10 +15,38 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\F_BerandaController;
+use App\Http\Controllers\Frontend\F_InformasiController;
+use App\Http\Controllers\Frontend\F_PersyaratanController;
+use App\Http\Controllers\Frontend\F_StrukturOrganisasiController;
+use App\Http\Controllers\Frontend\F_PublikasiController;
+use App\Http\Controllers\Frontend\F_ProfilController;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+// frontend routes
+Route::get('/beranda', [F_BerandaController::class, 'index'])->name('beranda');
+Route::get('/informasi', [F_InformasiController::class, 'index'])->name('informasi');
+Route::get('/informasi/{slug}', [F_InformasiController::class, 'show'])->name('informasi.show');
+Route::get('/profil/tentang', [F_ProfilController::class, 'tentang'])->name('profil.tentang');
+Route::get('/profil/visi_misi', [F_ProfilController::class, 'visi_misi'])->name('profil.visi_misi');
+Route::get('/profil/motto', [F_ProfilController::class, 'motto'])->name('profil.motto');
+Route::get('/profil/tugas_fungsi', [F_ProfilController::class, 'tugas_fungsi'])->name('profil.tugas_fungsi');
+Route::get('/profil/sejarah', [F_ProfilController::class, 'sejarah'])->name('profil.sejarah');
+Route::get('/profil/struktur_organisasi', [F_StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi');
+Route::get('/profil/maklumat', [F_PublikasiController::class, 'maklumat'])->name('publikasi.maklumat');
+Route::get('/profil/standar_pelayanan', [F_PublikasiController::class, 'standar_pelayanan'])->name('publikasi.standar_pelayanan');
+Route::get('/profil/standar_pelayanan_data', [F_PublikasiController::class, 'standar_pelayanan_data'])->name('publikasi.standar_pelayanan_data');
+Route::get('/profil/sop', [F_PublikasiController::class, 'sop'])->name('publikasi.sop');
+Route::get('/profil/sop_data', [F_PublikasiController::class, 'sop_data'])->name('publikasi.sop_data');
+Route::get('/profil/alur_pengaduan', [F_PublikasiController::class, 'alur_pengaduan'])->name('publikasi.alur_pengaduan');
+Route::get('persyaratan', [F_PersyaratanController::class, 'index'])->name('persyaratan');
+Route::get('/formulir', [F_PersyaratanController::class, 'formulir'])->name('persyaratan.formulir');
+Route::get('/formulir/data', [F_PersyaratanController::class, 'formulir_data'])->name('persyaratan.formulir_data');
+Route::get('/publikasi', [F_PublikasiController::class, 'index'])->name('publikasi');
+Route::get('/publikasi/data', [F_PublikasiController::class, 'data'])->name('publikasi.data');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -140,13 +167,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/publikasi/{publikasi}/edit', [PublikasiController::class, 'edit'])->name('publikasi.edit');
     Route::put('/publikasi/{publikasi}', [PublikasiController::class, 'update'])->name('publikasi.update');
     Route::delete('/publikasi/{publikasi}', [PublikasiController::class, 'destroy'])->name('publikasi.destroy');
-
-
-    Route::get('/inovasi', [InovasiController::class, 'index'])->name('inovasi.index');
-    Route::get('/inovasi/paginate', [InovasiController::class, 'paginate'])->name('inovasi.paginate');
-    Route::get('/inovasi/create', [InovasiController::class, 'create'])->name('inovasi.create');
-    Route::post('/inovasi', [InovasiController::class, 'store'])->name('inovasi.store');
-    Route::get('/inovasi/{inovasi}/edit', [InovasiController::class, 'edit'])->name('inovasi.edit');
-    Route::put('/inovasi/{inovasi}', [InovasiController::class, 'update'])->name('inovasi.update');
-    Route::delete('/inovasi/{inovasi}', [InovasiController::class, 'destroy'])->name('inovasi.destroy');
 });
