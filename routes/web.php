@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\F_PersyaratanController;
 use App\Http\Controllers\Frontend\F_StrukturOrganisasiController;
 use App\Http\Controllers\Frontend\F_PublikasiController;
 use App\Http\Controllers\Frontend\F_ProfilController;
+use App\Http\Controllers\InovasiController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -51,8 +52,8 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])
-        ->name('login.submit')
-        ->middleware('recaptcha:0.5');
+            ->name('login.submit')
+            ->middleware('recaptcha:0.5');
         Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
         Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
     });
@@ -169,4 +170,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/publikasi/{publikasi}/edit', [PublikasiController::class, 'edit'])->name('publikasi.edit');
     Route::put('/publikasi/{publikasi}', [PublikasiController::class, 'update'])->name('publikasi.update');
     Route::delete('/publikasi/{publikasi}', [PublikasiController::class, 'destroy'])->name('publikasi.destroy');
+
+    Route::get('/inovasi', [InovasiController::class, 'index'])->name('inovasi.index');
+    Route::get('/inovasi/paginate', [InovasiController::class, 'paginate'])->name('inovasi.paginate');
+    Route::get('/inovasi/create', [InovasiController::class, 'create'])->name('inovasi.create');
+    Route::post('/inovasi', [InovasiController::class, 'store'])->name('inovasi.store');
+    Route::get('/inovasi/{inovasi}/edit', [InovasiController::class, 'edit'])->name('inovasi.edit');
+    Route::put('/inovasi/{inovasi}', [InovasiController::class, 'update'])->name('inovasi.update');
+    Route::delete('/inovasi/{inovasi}', [InovasiController::class, 'destroy'])->name('inovasi.destroy');
 });
