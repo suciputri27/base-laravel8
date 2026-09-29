@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\DetailPersyaratanRepositoryInterface;
-use App\Repositories\Contracts\GalleryRepositoryInterface;
 use App\Repositories\Contracts\MenuRepositoryInterface;
 use App\Repositories\Contracts\PelayananRepositoryInterface;
 use App\Repositories\Contracts\PersyaratanRepositoryInterface;
@@ -15,7 +14,6 @@ use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Contracts\StrukturOrganisasiRepositoryInterface;
 use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Eloquent\DetailPersyaratanRepository;
-use App\Repositories\Eloquent\GalleryRepository;
 use App\Repositories\Eloquent\MenuRepository;
 use App\Repositories\Eloquent\PelayananRepository;
 use App\Repositories\Eloquent\PersyaratanRepository;
@@ -28,6 +26,12 @@ use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Models\frontend\F_Profil;
+use App\Repositories\Contracts\BerkasInovasiRepositoryInterface;
+use App\Repositories\Contracts\BerkasPostRepositoryInterface;
+use App\Repositories\Contracts\InovasiRepositoryInterface;
+use App\Repositories\Eloquent\BerkasInovasiRepository;
+use App\Repositories\Eloquent\BerkasPostRepository;
+use App\Repositories\Eloquent\InovasiRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,13 +41,15 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(BerkasPostRepositoryInterface::class, BerkasPostRepository::class);
         $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
         $this->app->bind(StrukturOrganisasiRepositoryInterface::class, StrukturOrganisasiRepository::class);
         $this->app->bind(PelayananRepositoryInterface::class, PelayananRepository::class);
         $this->app->bind(PersyaratanRepositoryInterface::class, PersyaratanRepository::class);
         $this->app->bind(DetailPersyaratanRepositoryInterface::class, DetailPersyaratanRepository::class);
-        $this->app->bind(GalleryRepositoryInterface::class, GalleryRepository::class);
         $this->app->bind(PublikasiRepositoryInterface::class, PublikasiRepository::class);
+        $this->app->bind(InovasiRepositoryInterface::class, InovasiRepository::class);
+        $this->app->bind(BerkasInovasiRepositoryInterface::class, BerkasInovasiRepository::class);
     }
 
     public function boot()
