@@ -1,0 +1,28 @@
+/* Khusus halaman: Maklumat Pelayanan */
+.maklumat-box {
+  background: #fff;
+  border: 2px solid var(--primary-dark);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.maklumat-box .ti {
+  font-size: 2.5rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+.maklumat-box p {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.8;
+}
+
+.maklumat-sign {
+  margin-top: 2rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}

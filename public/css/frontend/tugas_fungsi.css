@@ -1,0 +1,23 @@
+/* Khusus halaman: Tugas dan Fungsi */
+.tf-accordion .accordion-button {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.tf-accordion .accordion-button:focus {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.tf-accordion .accordion-button:not(.collapsed) {
+  background-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.tf-legal-note {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}

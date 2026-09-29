@@ -1,0 +1,44 @@
+/* Khusus halaman: Pengaduan */
+.pengaduan-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pengaduan-card .card-body {
+    padding: 2rem;
+}
+
+.pengaduan-info {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-label.required::after {
+    content: " *";
+    color: #d32f2f;
+}
+
+.pengaduan-form .form-control,
+.pengaduan-form .form-select {
+    border-radius: 0.5rem;
+}
+
+.pengaduan-kontak-alt {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.pengaduan-kontak-alt .ti {
+    color: #0d47a1;
+    margin-right: 0.3rem;
+}

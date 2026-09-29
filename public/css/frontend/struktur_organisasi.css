@@ -1,0 +1,19 @@
+/* Khusus halaman: Struktur Organisasi */
+.struktur-frame {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.struktur-frame img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.struktur-table th {
+  background: var(--primary-dark);
+  color: #fff;
+}

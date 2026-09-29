@@ -1,0 +1,20 @@
+/* Khusus halaman: Motto */
+.motto-wrapper {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.motto-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  border: 3px dashed var(--primary-dark);
+  display: inline-block;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+}
+
+.motto-sub {
+  margin-top: 1rem;
+  color: #6c757d;
+}

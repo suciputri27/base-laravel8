@@ -1,0 +1,297 @@
+/* ========================= HERO BERANDA ========================= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    padding-top: 10rem;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background:
+        linear-gradient(rgba(7, 53, 112, 0.5), rgba(7, 53, 112, 0.5)),
+        url("/img/gambar-kantor.png") center/cover;
+    /* background:
+        linear-gradient(
+            90deg,
+            rgba(90, 60, 4, 0.92),
+            rgba(234, 160, 18, 0.3),
+            rgba(234, 160, 18, 0)
+        ),
+        url("/img/capil-1.jpeg") center/cover; */
+}
+.hero-content {
+    max-width: 100%;
+    color: var(--light-bg);
+}
+.hero-title {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+.hero-description {
+    font-size: 1.1rem;
+    max-width: 100%;
+    opacity: 0.92;
+}
+.ornamen-hero {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+
+/* ========================= HERO SLIDER BERITA ========================= */
+.berita-hero-slider {
+    position: relative;
+}
+.berita-hero-slider .carousel-item {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+.berita-hero-slider .berita-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(7, 53, 112, 0.92),
+        rgba(21, 116, 243, 0.3),
+        rgba(21, 116, 243, 0)
+    );
+}
+.berita-hero-slider .container {
+    position: relative;
+    z-index: 2;
+}
+.berita-hero-content {
+    max-width: 720px;
+    color: #fff;
+}
+.berita-hero-title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+.berita-hero-description {
+    font-size: 1.1rem;
+    max-width: 620px;
+    opacity: 0.92;
+}
+
+/* Indikator titik carousel, diposisikan lebih rapat ke bawah konten */
+.berita-hero-indicators {
+    bottom: 30px;
+    justify-content: center;
+    margin-left: calc((100% - 720px) / 2 + 15px);
+}
+.berita-hero-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    opacity: 0.5;
+}
+.berita-hero-indicators [data-bs-target].active {
+    opacity: 1;
+    background-color: var(--light-bg);
+}
+@media (max-width: 767px) {
+    .berita-hero-indicators {
+        margin-left: 15px;
+    }
+}
+
+/* ========================= ANIMASI TEKS MUNCUL ========================= */
+/* Elemen diberi opacity 0 dulu, lalu animasi dipicu saat carousel-item
+   induknya mendapat class .active (dipicu ulang otomatis setiap ganti slide,
+   karena setiap .carousel-item adalah elemen berbeda). */
+.berita-hero-animate {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.carousel-item.active .berita-hero-animate {
+    animation: heroFadeUp 0.8s ease forwards;
+    animation-delay: var(--delay, 0s);
+}
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================= LATEST INFO ========================= */
+.latest-info {
+    margin-top: -45px;
+    position: relative;
+    z-index: 5;
+}
+.info-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+.info-icon {
+    min-width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-dark);
+    color: var(--primary);
+    font-size: 24px;
+}
+
+/* ========================= MENU POPULER ========================= */
+.popular-section {
+    background:
+        linear-gradient(rgba(240, 246, 255, 0.95), rgba(240, 246, 255, 0.95)),
+        url("/img/logo-only-capil-black.png");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.service-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border-bottom: 8px solid transparent;
+    background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(to right, var(--primary), var(--primary-dark));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 16px;
+    padding: 22px;
+    height: 100%;
+    transition: 0.25s ease;
+}
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    border-color: #cfe2ff;
+}
+.service-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: var(--primary-dark);
+    color: var(--primary-light);
+    font-size: 27px;
+    margin-bottom: 18px;
+}
+.service-card h5 {
+    font-size: 17px;
+    font-weight: 700;
+}
+.service-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 0;
+}
+
+/* ========================= BERITA (kartu di beranda) ========================= */
+.news-card {
+    border: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+    height: 100%;
+    border-bottom: 8px solid transparent;
+    background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(to right, var(--primary), var(--primary-dark));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+.news-image {
+    height: 210px;
+    width: 100%;
+    object-fit: cover;
+}
+.news-category {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+.news-title {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.news-title a {
+    color: #212529;
+    text-decoration: none;
+}
+.news-title a:hover {
+    color: var(--primary);
+}
+
+/* ========================= PENGHARGAAN ========================= */
+.award-card {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding: 20px;
+    height: 100%;
+}
+.award-image {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* ========================= INOVASI ========================= */
+.innovation-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    min-height: 260px;
+    background: #111;
+    color: #fff;
+}
+.innovation-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    opacity: 0.65;
+}
+.innovation-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}
+
+/* ========================= RESPONSIVE KHUSUS BERANDA ========================= */
+@media (max-width: 767px) {
+    .hero-slider .carousel-item {
+        min-height: 600px;
+    }
+    .latest-info {
+        margin-top: -25px;
+    }
+}

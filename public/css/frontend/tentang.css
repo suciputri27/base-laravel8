@@ -1,0 +1,34 @@
+/* Khusus halaman: Tentang Dinas */
+.tentang-hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.tentang-hero h1 {
+    font-weight: 700;
+}
+
+.tentang-info-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    height: 100%;
+    border-bottom: 8px solid transparent;
+    background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(to right, var(--primary), var(--primary-dark));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.tentang-info-card:hover {
+    transform: translateY(-4px);
+}
+
+.tentang-info-card i {
+    font-size: 1.8rem;
+    color: #0d47a1;
+}

@@ -1,0 +1,13 @@
+/* Khusus halaman: Formulir */
+.formulir-table .kode-badge {
+    background: #0d47a1;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    font-weight: 600;
+}
+
+.formulir-table td {
+    vertical-align: middle;
+}

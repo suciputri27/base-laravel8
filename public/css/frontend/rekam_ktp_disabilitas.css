@@ -1,0 +1,29 @@
+/* Khusus halaman: Pengajuan Perekaman KTP Bagi Disabilitas */
+.pengajuan-card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pengajuan-card .card-body {
+  padding: 2rem;
+}
+
+.pengajuan-info {
+  background: #e3f2fd;
+  border-left: 4px solid #0d47a1;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-label.required::after {
+  content: " *";
+  color: #d32f2f;
+}
+
+.pengajuan-form .form-control,
+.pengajuan-form .form-select {
+  border-radius: 0.5rem;
+}

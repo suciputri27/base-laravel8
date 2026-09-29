@@ -1,0 +1,31 @@
+/* Khusus halaman: Sejarah - timeline vertikal */
+.timeline {
+  position: relative;
+  margin-left: 1rem;
+  padding-left: 2rem;
+  border-left: 3px solid var(--primary-dark);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -2.45rem;
+  top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--primary-dark);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px var(--primary-dark);
+}
+
+.timeline-year {
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 1.1rem;
+}

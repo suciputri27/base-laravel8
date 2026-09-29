@@ -1,0 +1,56 @@
+/* Khusus halaman: Alur Pengaduan */
+.alur-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.alur-step {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1.25rem;
+  width: 220px;
+  text-align: center;
+  position: relative;
+}
+
+.alur-step .alur-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--primary-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.alur-step h6 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.alur-step p {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.alur-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .alur-arrow {
+    transform: rotate(90deg);
+  }
+}

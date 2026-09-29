@@ -1,0 +1,16 @@
+/* Khusus halaman: Standar Pelayanan Publik */
+.sp-accordion .accordion-button {
+  font-weight: 600;
+}
+
+.sp-table th {
+  background: var(--primary-dark);
+  color: #fff;
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.sp-table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}

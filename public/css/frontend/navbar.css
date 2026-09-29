@@ -1,0 +1,80 @@
+#mainNavbar {
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        padding 0.3s ease;
+}
+
+/* Kondisi awal */
+.navbar-transparent {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0)
+    );
+    box-shadow: none;
+}
+
+/* Link saat di atas hero */
+.navbar-transparent .nav-link,
+.navbar-transparent .navbar-brand {
+    color: #fff;
+}
+
+/* Setelah scroll */
+.navbar-scrolled,
+.navbar-scrolled .offcanvas.show {
+    background: linear-gradient(to right, var(--primary-dark), var(--primary));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: none;
+}
+
+.navbar-scrolled .nav-link,
+.navbar-scrolled .navbar-brand {
+    color: #fff;
+}
+
+.navbar-scrolled .navbar-nav {
+    background-color: transparent !important;
+}
+
+/* OFFCANVAS SAAT BELUM SCROLL */
+.navbar-transparent .offcanvas {
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-transparent .offcanvas .nav-link,
+.navbar-transparent .offcanvas .offcanvas-title {
+    color: #fff;
+}
+
+.navbar-transparent .offcanvas .dropdown-item {
+    color: #212529;
+}
+/* OFFCANVAS SETELAH SCROLL */
+.navbar-scrolled .offcanvas {
+    background: #fff;
+}
+
+.navbar-scrolled .offcanvas .nav-link,
+.navbar-scrolled .offcanvas .offcanvas-title {
+    color: #fff;
+}
+
+.navbar-scrolled .offcanvas .dropdown-item {
+    color: #212529;
+}
+.navbar-transparent .offcanvas .btn-close,
+.navbar-scrolled .navbar-toggler .navbar-toggler-icon {
+    filter: invert(1);
+}
+.offcanvas {
+    transition: background-color 0.3s ease;
+}
+
+.offcanvas .nav-link,
+.offcanvas .offcanvas-title,
+.offcanvas .dropdown-item {
+    transition: color 0.3s ease;
+}

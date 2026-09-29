@@ -1,0 +1,129 @@
+/* Khusus halaman: Publikasi/Download */
+.publikasi-search {
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+}
+.publikasi-search input {
+    border-radius: 10px;
+    padding-left: 44px;
+    height: 48px;
+}
+.publikasi-container {
+    width: 100%;
+}
+.publikasi-search .ti-search {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 1.1rem;
+}
+
+.publikasi-card {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid transparent;
+    background-image:
+        linear-gradient(#fff, #fff),
+        linear-gradient(to right, var(--primary), var(--primary-dark));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    gap: 1.25rem;
+    width: 100%;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+.publikasi-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+.publikasi-card .publikasi-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--light-bg);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.publikasi-card .publikasi-body {
+    flex-grow: 1;
+    min-width: 0; /* supaya teks bisa truncate, bukan dorong layout */
+}
+.publikasi-card h5 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.publikasi-card p {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+
+    /* Deskripsi maksimal 1 baris di tampilan memanjang, sisanya "..." */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.publikasi-card .btn-custom {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+    .publikasi-card {
+        flex-wrap: wrap;
+    }
+    .publikasi-card .btn-custom {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.publikasi-empty,
+.publikasi-loading {
+    text-align: center;
+    color: #6b7280;
+    padding: 3rem 0;
+}
+
+.publikasi-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+}
+.publikasi-pagination button {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    background: #fff;
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.publikasi-pagination button:hover:not(:disabled):not(.active) {
+    border-color: var(--primary);
+    color: var(--primary-dark);
+}
+.publikasi-pagination button.active {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #fff;
+}
+.publikasi-pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
