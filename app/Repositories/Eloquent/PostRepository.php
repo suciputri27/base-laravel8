@@ -15,6 +15,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     public function getPaginated(array $options = []): array
     {
-        return CursorPaginationHelper::paginate($this->model->with('category'), $options);
+        $query = $this->newQuery()->with('category');
+
+        if (!empty($options['category_id'])) {
+            $query->where('category_id', $options['category_id']);
+        }
+
+        return CursorPaginationHelper::paginate($query, $options);
     }
 }

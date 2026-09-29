@@ -13,12 +13,20 @@ class PersyaratanService extends BaseService
 
     public function create(array $data)
     {
-        return $this->repository->create($data);
+        $persyaratan = $this->repository->create($data);
+
+        ActivityLogger::log('Admin menambahkan Persyaratan "' . $persyaratan->nama_persyaratan . '".', $persyaratan);
+
+        return $persyaratan;
     }
 
     public function update(int $id, array $data)
     {
-        return $this->repository->update($id, $data);
+        $persyaratan = $this->repository->update($id, $data);
+        
+        ActivityLogger::log('Admin mengubah Persyaratan "' . $persyaratan->nama_persyaratan . '".', $persyaratan);
+
+        return $persyaratan;
     }
 
     public function paginate(array $options = []): array

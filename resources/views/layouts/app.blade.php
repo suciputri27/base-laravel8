@@ -4,7 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Base App')</title>
+    <title>@yield('title', 'DISDUKCAPIL')</title>
+
+    <meta name="description" content="Website resmi Dinas Kependudukan dan Pencatatan Sipil Kabupaten Agam">
+    <meta name="author" content="Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam"/>
+    <meta name="programmers" content="Yuli Resmawati, Reza Fahmi"/>
+    <meta name="company" content="Disdukcapil"/>
+    <meta name="powered_by" content="DISKOMINFO AGAM"/>
+    <meta name="regency" content="Kabupaten Agam"/>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-only-capil.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

@@ -77,14 +77,6 @@
                         @endif
                     </div>
                 </div>
-
-                <div class="col-12">
-                    <div class="form-group mb-0">
-                        <label class="form-label">Ringkasan</label>
-                        <textarea name="excerpt" id="excerpt" class="form-control" rows="3">{{ isset($post) ? $post->excerpt : '' }}</textarea>
-                    </div>
-                </div>
-
                 <div class="col-12">
                     <div class="form-group mb-0">
                         <label class="form-label">Isi Berita</label>

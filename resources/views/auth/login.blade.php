@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @include('partials.recaptcha')
 </head>
 <body>
     <div class="auth-page">
@@ -31,9 +32,8 @@
 
                 <div id="globalAlert" class="d-none"></div>
 
-                <form id="loginForm" action="{{ route('login.submit') }}" method="POST" novalidate>
+                <form id="loginForm" action="{{ route('login.submit') }}" method="POST" data-recaptcha="login" novalidate>
                     @csrf
-
                     <div class="form-group">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" class="form-control" required>

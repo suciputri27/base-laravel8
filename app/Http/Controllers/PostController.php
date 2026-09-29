@@ -22,7 +22,9 @@ class PostController extends Controller
 
     public function index(): View
     {
-        return view('posts.index');
+        $categories = $this->categoryService->all();
+
+        return view('posts.index', compact('categories'));
     }
 
     public function paginate(Request $request): JsonResponse
@@ -31,6 +33,7 @@ class PostController extends Controller
             'per_page' => (int) $request->input('per_page', 10),
             'cursor' => $request->input('cursor'),
             'search' => $request->input('search'),
+            'category_id' => $request->input('category_id'),
         ]);
 
         return response()->json([

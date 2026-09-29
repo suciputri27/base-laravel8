@@ -17,7 +17,6 @@ class PostRequest extends FormRequest
         $rules = [
             'category_id'    => ['nullable', 'integer', 'exists:categories,id'],
             'title'          => ['required', 'string', 'max:255'],
-            'excerpt'        => ['nullable', 'string'],
             'content'        => ['required', 'string'],
             'berkas'         => ['nullable', 'array'],
             'berkas.*'       => ['image', 'mimes:jpeg,png,webp,gif', 'max:2048'],

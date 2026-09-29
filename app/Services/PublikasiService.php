@@ -18,8 +18,12 @@ class PublikasiService extends BaseService
         if (isset($data['berkas']) && $data['berkas'] instanceof UploadedFile) {
             $data['berkas'] = FileUploadHelper::upload($data['berkas'], 'publikasi');
         }
-    
-        return $this->repository->create($data);
+        
+        $publikasi = $this->repository->create($data);
+
+        ActivityLogger::log('Admin menambahkan Publikasi "' . $publikasi->judul . '".', $publikasi);
+
+        return $publikasi;
     }
 
     public function update(int $id, array $data)
@@ -36,11 +40,23 @@ class PublikasiService extends BaseService
             unset($data['berkas']);
         }
 
-        return $this->repository->update($id, $data);
+        $publikasi = $this->repository->update($id, $data);
+
+        ActivityLogger::log('Admin memperbarui Publikasi "' . $publikasi->judul . '".', $publikasi);
+
+        return $publikasi;
     }
 
     public function delete(int $id): bool
     {
+        $publikasi = $this->repository->findOrFail($id);
+
+        if ($publikasi->berkas) {
+            FileUploadHelper::delete($model->berkas);
+        }
+
+        ActivityLogger::log('Admin menghapus Publikasi "' . $publikasi->judul . '".', $publikasi);
+
         return $this->repository->delete($id);
     }
 

@@ -27,33 +27,35 @@ Route::get('/', function () {
 });
 
 // frontend routes
-Route::get('/beranda', [F_BerandaController::class, 'index'])->name('beranda');
-Route::get('/informasi', [F_InformasiController::class, 'index'])->name('informasi');
-Route::get('/informasi/{slug}', [F_InformasiController::class, 'show'])->name('informasi.show');
-Route::get('/profil/tentang', [F_ProfilController::class, 'tentang'])->name('profil.tentang');
-Route::get('/profil/visi_misi', [F_ProfilController::class, 'visi_misi'])->name('profil.visi_misi');
-Route::get('/profil/motto', [F_ProfilController::class, 'motto'])->name('profil.motto');
-Route::get('/profil/tugas_fungsi', [F_ProfilController::class, 'tugas_fungsi'])->name('profil.tugas_fungsi');
-Route::get('/profil/sejarah', [F_ProfilController::class, 'sejarah'])->name('profil.sejarah');
-Route::get('/profil/struktur_organisasi', [F_StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi');
-Route::get('/profil/maklumat', [F_PublikasiController::class, 'maklumat'])->name('publikasi.maklumat');
-Route::get('/profil/standar_pelayanan', [F_PublikasiController::class, 'standar_pelayanan'])->name('publikasi.standar_pelayanan');
-Route::get('/profil/standar_pelayanan_data', [F_PublikasiController::class, 'standar_pelayanan_data'])->name('publikasi.standar_pelayanan_data');
-Route::get('/profil/sop', [F_PublikasiController::class, 'sop'])->name('publikasi.sop');
-Route::get('/profil/sop_data', [F_PublikasiController::class, 'sop_data'])->name('publikasi.sop_data');
-Route::get('/profil/alur_pengaduan', [F_PublikasiController::class, 'alur_pengaduan'])->name('publikasi.alur_pengaduan');
-Route::get('persyaratan', [F_PersyaratanController::class, 'index'])->name('persyaratan');
-Route::get('/formulir', [F_PersyaratanController::class, 'formulir'])->name('persyaratan.formulir');
-Route::get('/formulir/data', [F_PersyaratanController::class, 'formulir_data'])->name('persyaratan.formulir_data');
-Route::get('/publikasi', [F_PublikasiController::class, 'index'])->name('publikasi');
-Route::get('/publikasi/data', [F_PublikasiController::class, 'data'])->name('publikasi.data');
+    Route::get('/beranda', [F_BerandaController::class, 'index'])->name('beranda');
+    Route::get('/informasi', [F_InformasiController::class, 'index'])->name('informasi');
+    Route::get('/informasi/{slug}', [F_InformasiController::class, 'show'])->name('informasi.show');
+    Route::get('/profil/tentang', [F_ProfilController::class, 'tentang'])->name('profil.tentang');
+    Route::get('/profil/visi_misi', [F_ProfilController::class, 'visi_misi'])->name('profil.visi_misi');
+    Route::get('/profil/motto', [F_ProfilController::class, 'motto'])->name('profil.motto');
+    Route::get('/profil/tugas_fungsi', [F_ProfilController::class, 'tugas_fungsi'])->name('profil.tugas_fungsi');
+    Route::get('/profil/sejarah', [F_ProfilController::class, 'sejarah'])->name('profil.sejarah');
+    Route::get('/profil/struktur_organisasi', [F_StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi');
+    Route::get('/profil/maklumat', [F_PublikasiController::class, 'maklumat'])->name('publikasi.maklumat');
+    Route::get('/profil/standar_pelayanan', [F_PublikasiController::class, 'standar_pelayanan'])->name('publikasi.standar_pelayanan');
+    Route::get('/profil/standar_pelayanan_data', [F_PublikasiController::class, 'standar_pelayanan_data'])->name('publikasi.standar_pelayanan_data');
+    Route::get('/profil/sop', [F_PublikasiController::class, 'sop'])->name('publikasi.sop');
+    Route::get('/profil/sop_data', [F_PublikasiController::class, 'sop_data'])->name('publikasi.sop_data');
+    Route::get('/profil/alur_pengaduan', [F_PublikasiController::class, 'alur_pengaduan'])->name('publikasi.alur_pengaduan');
+    Route::get('persyaratan', [F_PersyaratanController::class, 'index'])->name('persyaratan');
+    Route::get('/formulir', [F_PersyaratanController::class, 'formulir'])->name('persyaratan.formulir');
+    Route::get('/formulir/data', [F_PersyaratanController::class, 'formulir_data'])->name('persyaratan.formulir_data');
+    Route::get('/publikasi', [F_PublikasiController::class, 'index'])->name('publikasi');
+    Route::get('/publikasi/data', [F_PublikasiController::class, 'data'])->name('publikasi.data');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
-});
+        Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.submit')
+        ->middleware('recaptcha:0.5');
+        Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+        Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    });
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

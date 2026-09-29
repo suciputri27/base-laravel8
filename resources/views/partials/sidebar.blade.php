@@ -1,7 +1,7 @@
 <aside class="app-sidebar" id="appSidebar">
     <div class="brand">
-        <span class="brand-mark"><i class="fas fa-layer-group"></i></span>
-        <span>Base App</span>
+        <span class="brand-mark"><img src="{{ asset('images/logo-only-capil.png') }}" alt="logo" height="50"></span>
+        <span>DISDUKCAPIL</span>
     </div>
 
     <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Tutup menu">

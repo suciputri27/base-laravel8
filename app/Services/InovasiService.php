@@ -29,6 +29,7 @@ class InovasiService extends BaseService
             $inovasi = $this->repository->create($data);
 
             $this->storeBerkas($inovasi->id, $files);
+            ActivityLogger::log('Admin Menambahkan Inovasi "' . $inovasi->judul . '".', $inovasi);
 
             return $inovasi;
         });
@@ -49,6 +50,7 @@ class InovasiService extends BaseService
             }
 
             $this->storeBerkas($id, $files);
+            ActivityLogger::log('Admin memperbarui  berita "' . $inovasi->judul . '".', $inovasi);
 
             return $inovasi;
         });

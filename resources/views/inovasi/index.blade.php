@@ -8,6 +8,11 @@
         <div class="card-header">
             <h5 class="mb-0">Data Inovasi</h5>
             <div class="d-flex align-items-center">
+                <select id="jenisFilter" class="form-control" style="width: 220px; margin-right: 8px;">
+                    <option value="">Semua Jenis</option>
+                    <option value="1">Inovasi</option>
+                    <option value="2">Layanan Jemput Bola</option>
+                </select>
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari inovasi..." style="width: 240px; margin-right: 8px;">
                 <a href="{{ route('inovasi.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah Inovasi
@@ -86,12 +91,22 @@
             inovasiTable.search(this.value);
         });
 
+        var inovasiFilters = {
+            jenis: ''
+        };
+
+        document.getElementById('jenisFilter').addEventListener('change', function () {
+            inovasiFilters.jenis = this.value;
+            inovasiTable.reset();
+        });
+
         var inovasiTable = App.infiniteScroll({
             container: '#inovasiScroll',
             body: '#inovasiTableBody',
             endpoint: '{{ route('inovasi.paginate') }}',
             pageSize: 10,
-            rowRenderer: inovasiRow
+            rowRenderer: inovasiRow,
+            extraParams: inovasiFilters
         });
 
         inovasiTable.load(true);

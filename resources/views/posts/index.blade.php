@@ -8,6 +8,12 @@
         <div class="card-header">
             <h5 class="mb-0">Data Informasi</h5>
             <div class="d-flex align-items-center">
+                <select id="categoryFilter" class="form-control" style="width: 200px; margin-right: 8px;">
+                    <option value="">Semua Kategori</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->encrypted_id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari informasi..." style="width: 240px; margin-right: 8px;">
                 <a href="{{ route('posts.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah Informasi
@@ -92,12 +98,24 @@
             postTable.search(this.value);
         });
 
+        // objek ini di-pass by reference ke infiniteScroll,
+        // jadi perubahan property-nya otomatis kebaca saat load() jalan lagi
+        var postFilters = {
+            category_id: ''
+        };
+
+        document.getElementById('categoryFilter').addEventListener('change', function () {
+            postFilters.category_id = this.value;
+            postTable.reset();
+        });
+
         var postTable = App.infiniteScroll({
             container: '#postScroll',
             body: '#postTableBody',
             endpoint: '{{ route('posts.paginate') }}',
             pageSize: 10,
-            rowRenderer: postRow
+            rowRenderer: postRow,
+            extraParams: postFilters
         });
 
         postTable.load(true);

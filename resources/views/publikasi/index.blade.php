@@ -8,6 +8,14 @@
         <div class="card-header">
             <h5 class="mb-0">Data Publikasi</h5>
             <div class="d-flex align-items-center">
+                <select id="jenisFilter" class="form-control" style="width: 220px; margin-right: 8px;">
+                    <option value="">Semua Jenis Dokumen</option>
+                    <option value="1">Maklumat Pelayanan</option>
+                    <option value="2">Standar Pelayanan Publik</option>
+                    <option value="3">SOP</option>
+                    <option value="4">Alur Pengaduan</option>
+                    <option value="5">Publikasi</option>
+                </select>
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari publikasi..." style="width: 240px; margin-right: 8px;">
                 <a href="{{ route('publikasi.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah Publikasi
@@ -90,12 +98,22 @@
             publikasiTable.search(this.value);
         });
 
+        var publikasiFilters = {
+            jenis_dokumen: ''
+        };
+
+        document.getElementById('jenisFilter').addEventListener('change', function () {
+            publikasiFilters.jenis_dokumen = this.value;
+            publikasiTable.reset();
+        });
+
         var publikasiTable = App.infiniteScroll({
             container: '#publikasiScroll',
             body: '#publikasiTableBody',
             endpoint: '{{ route('publikasi.paginate') }}',
             pageSize: 10,
-            rowRenderer: publikasiRow
+            rowRenderer: publikasiRow,
+            extraParams: publikasiFilters
         });
 
         publikasiTable.load(true);

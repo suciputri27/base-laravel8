@@ -5,11 +5,10 @@ namespace App\Models;
 use App\Traits\EncryptableIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Publikasi extends Model
 {
-    use HasFactory, EncryptableIdTrait, SoftDeletes;
+    use HasFactory, EncryptableIdTrait;
 
     protected $table = 'publikasi'; 
 

@@ -13,12 +13,20 @@ class PelayananService extends BaseService
 
     public function create(array $data)
     {
-        return $this->repository->create($data);
+        $pelayanan = $this->repository->create($data);
+
+        ActivityLogger::log('Admin menambahkan Pelayanan "' . $pelayanan->nama_pelayanan . '".', $pelayanan);
+
+        return $pelayanan;
     }
 
     public function update(int $id, array $data)
     {
-        return $this->repository->update($id, $data);
+        $pelayanan = $this->repository->update($id, $data);
+
+        ActivityLogger::log('Admin menambahkan Pelayanan "' . $pelayanan->nama_pelayanan . '".', $pelayanan);
+
+        return $pelayanan;
     }
 
     public function paginate(array $options = []): array

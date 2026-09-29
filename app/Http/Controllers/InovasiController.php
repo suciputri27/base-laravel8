@@ -28,6 +28,7 @@ class InovasiController extends Controller
             'per_page' => (int) $request->input('per_page', 10),
             'cursor' => $request->input('cursor'),
             'search' => $request->input('search'),
+            'jenis' => $request->input('jenis'),
         ]);
 
         return response()->json([

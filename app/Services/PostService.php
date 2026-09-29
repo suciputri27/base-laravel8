@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Contracts\BerkasPostRepositoryInterface;
 use App\Repositories\Eloquent\PostRepository;
+use App\Services\ActivityLogger;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -33,6 +34,7 @@ class PostService extends BaseService
             $post = $this->repository->create($data);
 
             $this->storeBerkas($post->id, $files);
+            ActivityLogger::log('Admin mempublikasikan berita "' . $post->title . '".', $post);
 
             return $post;
         });
@@ -58,6 +60,7 @@ class PostService extends BaseService
             }
 
             $this->storeBerkas($id, $files);
+            ActivityLogger::log('Admin memperbarui  berita "' . $post->title . '".', $post);
 
             return $post;
         });
@@ -104,28 +107,31 @@ class PostService extends BaseService
 
     public function paginate(array $options = []): array
     {
-        $options['search_columns'] = ['title', 'slug', 'excerpt'];
-
+        $options['search_columns'] = ['title', 'content'];
+    
+        if (!empty($options['category_id'])) {
+            $options['category_id'] = id_decode($options['category_id']);
+        }
+    
         $result = parent::paginate($options);
-
+    
         $result['data'] = $result['data']->map(function ($post) {
             return [
                 'encrypted_id' => id_encode((int) $post->id),
                 'title' => $post->title,
-                'slug' => $post->slug,
-                'category_name' => $post->category ? $post->category->name : null,
                 'status' => $post->status,
-                'published_at' => $post->published_at ? indo_datetime($post->published_at) : null,
+                'published_at' => optional($post->published_at)->format('d M Y'),
+                'category_name' => optional($post->category)->name,
                 'berkas' => $this->berkasRepository->getByPostId($post->id)
-                ->filter(fn ($b) => !empty($b->berkas))
-                ->map(fn ($b) => [
+                    ->filter(fn ($b) => !empty($b->berkas))
+                    ->map(fn ($b) => [
                         'encrypted_id' => id_encode((int) $b->id),
                         'url' => storage_url($b->berkas),
-                ])
-                ->values(),
+                    ])
+                    ->values(),
             ];
         })->values();
-
+    
         return $result;
     }
 
@@ -145,6 +151,7 @@ class PostService extends BaseService
     public function delete(int $id) :bool
     {
         return DB::transaction(function () use ($id) {
+            $post = $this->repository->find($id);
             $berkasList = $this->berkasRepository->getByPostId($id);
 
             foreach ($berkasList as $berkas) {
@@ -152,7 +159,7 @@ class PostService extends BaseService
                     Storage::disk('public')->delete($berkas->berkas);
                 }
             }
-
+            ActivityLogger::log('Admin menghapus berita "' . $post->title . '".', $post);
             // row berkas_inovasi otomatis ikut terhapus lewat cascadeOnDelete
             return $this->repository->delete($id);
         });

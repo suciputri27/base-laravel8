@@ -166,6 +166,20 @@
         });
     }
 
+    function getRecaptchaToken(action) {
+        var meta = document.querySelector('meta[name="recaptcha-site-key"]');
+    
+        if (!meta || typeof grecaptcha === 'undefined') {
+            return Promise.reject(new Error('reCAPTCHA belum dimuat'));
+        }
+    
+        return new Promise(function (resolve, reject) {
+            grecaptcha.ready(function () {
+                grecaptcha.execute(meta.content, { action: action }).then(resolve).catch(reject);
+            });
+        });
+    }
+
     window.App = {
         escapeHtml: escapeHtml,
         alert: showAlert,
@@ -176,21 +190,34 @@
         submit: function (form, options) {
             var settings = options || {};
             var url = form.getAttribute('action') || window.location.href;
-            var data = new FormData(form);
             var button = form.querySelector('button[type="submit"]');
-
+            var action = form.getAttribute('data-recaptcha');
+        
             setButtonLoading(button, true, settings.loadingText || 'Memproses...');
-
-            fetch(url, {
-                method: 'POST',
-                body: data,
-                headers: jsonHeaders()
-            })
+        
+            var prepare = action
+                ? getRecaptchaToken(action).then(function (token) {
+                    var data = new FormData(form);
+                    data.set('recaptcha_token', token);
+                    return data;
+                })
+                : Promise.resolve(new FormData(form));
+        
+            prepare
+                .then(function (data) {
+                    return fetch(url, {
+                        method: 'POST',
+                        body: data,
+                        headers: jsonHeaders()
+                    });
+                })
                 .then(function (response) {
                     return handleResponse(response, settings);
                 })
                 .catch(function () {
-                    showAlert('danger', 'Terjadi kesalahan jaringan.');
+                    showAlert('danger', action
+                        ? 'Verifikasi keamanan gagal. Muat ulang halaman lalu coba lagi.'
+                        : 'Terjadi kesalahan jaringan.');
                 })
                 .then(function () {
                     setButtonLoading(button, false);

@@ -11,9 +11,6 @@
                     <h2>Selamat datang, {{ auth()->user()->name }}</h2>
                     <p>{{ indo_date(now()) }}. Berikut ringkasan performa website Anda hari ini.</p>
                 </div>
-                <button type="button" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Buat Berita
-                </button>
             </div>
         </div>
 
@@ -21,9 +18,14 @@
             <div class="stat-card">
                 <div class="stat-icon blue"><i class="fas fa-eye"></i></div>
                 <div>
-                    <div class="stat-value">8.420</div>
+                    <div class="stat-value">{{ number_format($stats['pengunjung']['total'], 0, ',', '.') }}</div>
                     <div class="stat-label">Pengunjung Hari Ini</div>
-                    <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 12,5%</div>
+                    <div class="stat-trend {{ $stats['pengunjung']['trend']['direction'] }}">
+                        @if($stats['pengunjung']['trend']['direction'] !== 'flat')
+                            <i class="fas fa-arrow-{{ $stats['pengunjung']['trend']['direction'] }}"></i>
+                        @endif
+                        {{ $stats['pengunjung']['trend']['percentage'] }}%
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,9 +34,14 @@
             <div class="stat-card">
                 <div class="stat-icon green"><i class="fas fa-newspaper"></i></div>
                 <div>
-                    <div class="stat-value">1.248</div>
-                    <div class="stat-label">Total Berita</div>
-                    <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 3,2%</div>
+                    <div class="stat-value">{{ number_format($stats['berita_aktif']['total'], 0, ',', '.') }}</div>
+                    <div class="stat-label">Total Berita Publish</div>
+                    <div class="stat-trend {{ $stats['total_berita']['trend']['direction'] }}">
+                        @if($stats['total_berita']['trend']['direction'] !== 'flat')
+                            <i class="fas fa-arrow-{{ $stats['total_berita']['trend']['direction'] }}"></i>
+                        @endif
+                        {{ $stats['total_berita']['trend']['percentage'] }}%
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,20 +50,30 @@
             <div class="stat-card">
                 <div class="stat-icon orange"><i class="fas fa-tags"></i></div>
                 <div>
-                    <div class="stat-value">24</div>
-                    <div class="stat-label">Kategori Aktif</div>
-                    <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 1,8%</div>
+                <div class="stat-value">{{ number_format($stats['total_inovasi']['total'], 0, ',', '.') }}</div>
+                    <div class="stat-label">Total Inovasi</div>
+                    <div class="stat-trend {{ $stats['total_inovasi']['trend']['direction'] }}">
+                        @if($stats['total_inovasi']['trend']['direction'] !== 'flat')
+                            <i class="fas fa-arrow-{{ $stats['total_inovasi']['trend']['direction'] }}"></i>
+                        @endif
+                        {{ $stats['total_inovasi']['trend']['percentage'] }}%
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="bento-card span-3">
             <div class="stat-card">
-                <div class="stat-icon rose"><i class="fas fa-envelope"></i></div>
+                <div class="stat-icon rose"><i class="fa fa-bullhorn"></i></div>
                 <div>
-                    <div class="stat-value">156</div>
-                    <div class="stat-label">Pesan Baru</div>
-                    <div class="stat-trend down"><i class="fas fa-arrow-down"></i> 2,4%</div>
+                <div class="stat-value">{{ number_format($stats['total_publikasi']['total'], 0, ',', '.') }}</div>
+                    <div class="stat-label">Total Publikasi</div>
+                    <div class="stat-trend {{ $stats['total_inovasi']['trend']['direction'] }}">
+                        @if($stats['total_publikasi']['trend']['direction'] !== 'flat')
+                            <i class="fas fa-arrow-{{ $stats['total_publikasi']['trend']['direction'] }}"></i>
+                        @endif
+                        {{ $stats['total_publikasi']['trend']['percentage'] }}%
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,7 +95,7 @@
             <div class="bento-card-header">
                 <div>
                     <h3 class="bento-card-title">Distribusi Kategori</h3>
-                    <p class="bento-card-subtitle">Porsi berita per kategori</p>
+                    <p class="bento-card-subtitle">Porsi informasi per kategori</p>
                 </div>
             </div>
             <div class="chart-wrap">
@@ -94,41 +111,21 @@
                 </div>
             </div>
             <ul class="news-list">
-                <li>
-                    <div class="news-thumb"><i class="fas fa-bullhorn"></i></div>
-                    <div class="news-meta">
-                        <div class="news-title">Peluncuran Produk Baru Tahun 2026</div>
-                        <div class="news-date">{{ indo_date('2026-09-10') }}</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="news-thumb"><i class="fas fa-chart-line"></i></div>
-                    <div class="news-meta">
-                        <div class="news-title">Strategi Digital Marketing untuk UMKM</div>
-                        <div class="news-date">{{ indo_date('2026-09-08') }}</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="news-thumb"><i class="fas fa-lightbulb"></i></div>
-                    <div class="news-meta">
-                        <div class="news-title">Inovasi Teknologi di Industri Kreatif</div>
-                        <div class="news-date">{{ indo_date('2026-09-06') }}</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="news-thumb"><i class="fas fa-handshake"></i></div>
-                    <div class="news-meta">
-                        <div class="news-title">Kemitraan Strategis dengan Mitra Regional</div>
-                        <div class="news-date">{{ indo_date('2026-09-03') }}</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="news-thumb"><i class="fas fa-award"></i></div>
-                    <div class="news-meta">
-                        <div class="news-title">Penghargaan Perusahaan Digital Terbaik</div>
-                        <div class="news-date">{{ indo_date('2026-09-01') }}</div>
-                    </div>
-                </li>
+                @forelse($recentPosts as $post)
+                    <li>
+                        <div class="news-thumb"><i class="fas fa-newspaper"></i></div>
+                        <div class="news-meta">
+                            <div class="news-title">{{ $post->title }}</div>
+                            <div class="news-date">{{ indo_date($post->published_at) }}</div>
+                        </div>
+                    </li>
+                @empty
+                    <li>
+                        <div class="news-meta">
+                            <div class="news-title text-muted">Belum ada berita yang dipublikasikan.</div>
+                        </div>
+                    </li>
+                @endforelse
             </ul>
         </div>
 
@@ -140,23 +137,17 @@
                 </div>
             </div>
             <ul class="activity-list">
+            @forelse($recentActivities as $activity)
                 <li>
                     <span class="activity-dot"></span>
-                    <span class="activity-text">Admin mempublikasikan berita Peluncuran Produk Baru.</span>
+                    <span class="activity-text">{{ $activity->description }}</span>
                 </li>
+            @empty
                 <li>
-                    <span class="activity-dot"></span>
-                    <span class="activity-text">Editor memperbarui kategori Teknologi.</span>
+                    <span class="activity-text text-muted">Belum ada aktivitas tercatat.</span>
                 </li>
-                <li>
-                    <span class="activity-dot"></span>
-                    <span class="activity-text">Sistem menerima 32 pesan kontak baru.</span>
-                </li>
-                <li>
-                    <span class="activity-dot"></span>
-                    <span class="activity-text">Pengguna baru mendaftar sebagai kontributor.</span>
-                </li>
-            </ul>
+            @endforelse
+    </ul>
         </div>
     </div>
 @endsection
@@ -169,25 +160,16 @@
         new Chart(trafficCtx, {
             type: 'line',
             data: {
-                labels: ['Sen', 'Sel', 'Rabu', 'Kam', 'Jum', 'Sab', 'Min'],
+                labels: @json($traffic['labels']),
                 datasets: [
                     {
                         label: 'Pengunjung',
-                        data: [5200, 6100, 5800, 7400, 6900, 8100, 8420],
+                        data: @json($traffic['data']),
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37, 99, 235, 0.10)',
                         fill: true,
                         tension: 0.4,
                         pointBackgroundColor: '#2563eb'
-                    },
-                    {
-                        label: 'Tayangan',
-                        data: [6800, 7400, 7100, 8600, 8100, 9300, 9700],
-                        borderColor: '#06b6d4',
-                        backgroundColor: 'rgba(6, 182, 212, 0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: '#06b6d4'
                     }
                 ]
             },
@@ -217,14 +199,16 @@
 
         var categoryCtx = document.getElementById('categoryChart').getContext('2d');
 
+        var categoryColors = ['#2563eb', '#06b6d4', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899']; 
+
         new Chart(categoryCtx, {
             type: 'doughnut',
             data: {
-                labels: ['Teknologi', 'Bisnis', 'Hiburan', 'Olahraga', 'Kesehatan'],
+                labels: @json($categoryDistribution['labels']),
                 datasets: [
                     {
-                        data: [35, 25, 18, 12, 10],
-                        backgroundColor: ['#2563eb', '#06b6d4', '#f59e0b', '#10b981', '#ef4444'],
+                        data: @json($categoryDistribution['data']),
+                        backgroundColor: categoryColors,
                         borderWidth: 0
                     }
                 ]
