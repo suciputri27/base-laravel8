@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\FileUploadHelper;
 use App\Repositories\Contracts\PublikasiRepositoryInterface;
+use App\Services\ActivityLogger;
 use Illuminate\Http\UploadedFile;
 
 class PublikasiService extends BaseService

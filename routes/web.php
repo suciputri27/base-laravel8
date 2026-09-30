@@ -28,6 +28,7 @@ Route::get('/', function () {
 });
 
 // frontend routes
+Route::middleware('track.visitor')->group(function () {
     Route::get('/beranda', [F_BerandaController::class, 'index'])->name('beranda');
     Route::get('/informasi', [F_InformasiController::class, 'index'])->name('informasi');
     Route::get('/informasi/{slug}', [F_InformasiController::class, 'show'])->name('informasi.show');
@@ -48,15 +49,16 @@ Route::get('/', function () {
     Route::get('/formulir/data', [F_PersyaratanController::class, 'formulir_data'])->name('persyaratan.formulir_data');
     Route::get('/publikasi', [F_PublikasiController::class, 'index'])->name('publikasi');
     Route::get('/publikasi/data', [F_PublikasiController::class, 'data'])->name('publikasi.data');
+});
 
 Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])
-            ->name('login.submit')
-            ->middleware('recaptcha:0.5');
+        ->name('login.submit')
+        ->middleware('recaptcha:0.5');
         Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
         Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
-    });
+});
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

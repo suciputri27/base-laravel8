@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Eloquent\PelayananRepository;
+use App\Services\ActivityLogger;
 
 class PelayananService extends BaseService
 {

@@ -13,7 +13,7 @@ class ActivityLogger
             'user_id' => Auth::id(),
             'description' => $description,
             'subject_type' => $subject ? get_class($subject) : null,
-            'subject_id' => $subject->id,
+            'subject_id' => $subject ? $subject->id : null,
         ]);
     }
 }

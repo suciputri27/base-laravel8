@@ -15,6 +15,7 @@ class Inovasi extends Model
 
     protected $fillable = [
         'judul',
+        'slug',
         'jenis',
         'deskripsi',
         'is_active',

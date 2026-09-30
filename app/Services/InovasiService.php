@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Repositories\Eloquent\InovasiRepository;
 use App\Repositories\Contracts\BerkasInovasiRepositoryInterface;
+use App\Services\ActivityLogger;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class InovasiService extends BaseService
 {
@@ -23,6 +25,7 @@ class InovasiService extends BaseService
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
+            $data['slug'] = $this->generateUniqueSlug($data['judul']);
             $files = $data['berkas'] ?? [];
             unset($data['berkas']);
 
@@ -38,6 +41,7 @@ class InovasiService extends BaseService
     public function update(int $id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
+            $data['slug'] = $this->generateUniqueSlug($data['title'], $id);
             $files = $data['berkas'] ?? [];
             $deletedIds = $data['deleted_berkas'] ?? null;
             unset($data['berkas'], $data['deleted_berkas']);
@@ -50,10 +54,29 @@ class InovasiService extends BaseService
             }
 
             $this->storeBerkas($id, $files);
-            ActivityLogger::log('Admin memperbarui  berita "' . $inovasi->judul . '".', $inovasi);
+            ActivityLogger::log('Admin memperbarui  Inovasi "' . $inovasi->judul . '".', $inovasi);
 
             return $inovasi;
         });
+    }
+
+    protected function generateUniqueSlug(string $title, ?int $excludeId = null): string
+    {
+        $slug = Str::slug($title);
+        $original = $slug;
+        $count = 1;
+
+        while (
+            $this->repository->newQuery()
+                ->where('slug', $slug)
+                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
+                ->exists()
+        ) {
+            $slug = $original . '-' . $count;
+            $count++;
+        }
+
+        return $slug;
     }
 
     protected function storeBerkas(int $inovasiId, array $files): void

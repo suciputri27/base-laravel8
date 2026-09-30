@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Eloquent\PersyaratanRepository;
+use App\Services\ActivityLogger;
 
 class PersyaratanService extends BaseService
 {

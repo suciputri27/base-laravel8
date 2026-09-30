@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGalleryTable extends Migration
+class CreateJadwalLayananTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateGalleryTable extends Migration
      */
     public function up()
     {
-        Schema::create('gallery', function (Blueprint $table) {
+        Schema::create('jadwal_layanan', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->string('berkas')->nullable();
+            $table->unsignedBigInteger('jenis')->nullable();      
+            $table->string('day');
+            $table->timestamp('open')->nullable();
+            $table->timestamp('close')->nullable(); 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -32,6 +34,6 @@ class CreateGalleryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gallery');
+        Schema::dropIfExists('jadwal_layanan');
     }
 }
