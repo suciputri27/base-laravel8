@@ -16,10 +16,14 @@ class JadwalLayananService extends BaseService
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
+            if ($data['jenis'] == 2 && !empty($data['tanggal'])) {
+                $data['day'] = Carbon::parse($data['tanggal'])->translatedFormat('l'); // "Senin", "Selasa", dst
+            }
+
             $jadwal = $this->repository->create($data);
-    
+
             ActivityLogger::log('Admin menambahkan Jadwal.', $jadwal);
-    
+
             return $jadwal;
         });
     }
@@ -46,6 +50,9 @@ class JadwalLayananService extends BaseService
                 'encrypted_id' => id_encode((int) $jadwal->id),
                 'jenis' => $jadwal->jenis,
                 'day' => $jadwal->day,
+                'tanggal' => $jadwal->tanggal ? Carbon::parse($jadwal->tanggal)->format('Y-m-d') : null,
+                'tanggal_formatted' => $jadwal->tanggal ? Carbon::parse($jadwal->tanggal)->translatedFormat('d M Y (l)') : null,
+                'tempat' => $jadwal->tempat,
                 'open' => Carbon::parse($jadwal->open)->format('H:i'),
                 'close' => Carbon::parse($jadwal->close)->format('H:i'),
             ];

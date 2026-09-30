@@ -41,7 +41,7 @@ class InovasiService extends BaseService
     public function update(int $id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
-            $data['slug'] = $this->generateUniqueSlug($data['title'], $id);
+            $data['slug'] = $this->generateUniqueSlug($data['judul'], $id);
             $files = $data['berkas'] ?? [];
             $deletedIds = $data['deleted_berkas'] ?? null;
             unset($data['berkas'], $data['deleted_berkas']);

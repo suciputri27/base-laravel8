@@ -14,8 +14,10 @@ class Jadwal_layanan extends Model
     protected $fillable = [
         'jenis',
         'day',
+        'tanggal',
         'open',
         'close',
+        'tempat',
     ];
 
     protected $hidden = [

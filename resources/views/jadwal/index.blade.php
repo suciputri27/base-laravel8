@@ -8,6 +8,11 @@
         <div class="card-header">
             <h5 class="mb-0">Data Jadwal</h5>
             <div class="d-flex align-items-center">
+                <select id="jenisFilter" class="form-control" style="width: 220px; margin-right: 8px;">
+                    <option value="">Semua Jenis layanan</option>
+                    <option value="1">Layanan Rutin</option>
+                    <option value="2">Layanan keliling</option>
+                </select>
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari jadwal..." style="width: 240px; margin-right: 8px;">
                 <button type="button" class="btn btn-primary btn-sm" onclick="openJadwalModal()">
                     <i class="fas fa-plus"></i> Tambah
@@ -21,7 +26,8 @@
                         <tr>
                             <th>#</th>
                             <th>Jenis Layanan</th>
-                            <th>Day</th>
+                            <th>Day/Tanggal</th>
+                            <th>Lokasi</th>
                             <th>Open</th>
                             <th>Close</th>
                             <th>Aksi</th>
@@ -49,11 +55,11 @@
                             <label class="form-label">Jenis Layanan</label>
                             <select name="jenis" id="jadwalJenis" class="form-control">
                                 <option value=""></option>
-                                <option value="1">Layanan Keliling</option>
-                                <option value="2">Layanan Rutin</option>
+                                <option value="1">Layanan Rutin</option>
+                                <option value="2">Layanan Keliling</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="dayGroup">
                             <label class="form-label">Day</label>
                             <select name="day" id="jadwalDay" class="form-control">
                                 <option value=""></option>
@@ -66,6 +72,10 @@
                                 <option value="7">Minggu</option>
                             </select>
                         </div>
+                        <div class="form-group" id="tanggalGroup" style="display: none;">
+                            <label class="form-label">Tanggal</label>
+                            <input type="date" name="tanggal" id="jadwalTanggal" class="form-control">
+                        </div>
                         <div class="form-group">
                             <label class="form-label">Open</label>
                             <input type="time" name="open" id="jadwalOpen" class="form-control" required>
@@ -73,6 +83,10 @@
                         <div class="form-group">
                             <label class="form-label">Close</label>
                             <input type="time" name="close" id="jadwalClose" class="form-control" required>
+                        </div>
+                        <div class="form-group" id="lokasiGroup" style="display: none;">
+                            <label class="form-label">Tempat</label>
+                            <textarea type="text" name="tempat" id="jadwalTempat" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -103,9 +117,35 @@
             });
         });
 
+        function toggleFieldsByJenis() {
+            if ($('#jadwalJenis').val() === '2') {
+                // Keliling: tampilkan tanggal + lokasi, sembunyikan day
+                $('#tanggalGroup').show();
+                $('#lokasiGroup').show();
+                $('#dayGroup').hide();
+
+                $('#jadwalTanggal').attr('required', true);
+                $('#jadwalTempat').attr('required', true);
+                $('#jadwalDay').val('').trigger('change').removeAttr('required');
+            } else {
+                // Rutin: tampilkan day, sembunyikan tanggal + lokasi
+                $('#tanggalGroup').hide();
+                $('#lokasiGroup').hide();
+                $('#dayGroup').show();
+
+                $('#jadwalDay').attr('required', true);
+                $('#jadwalTanggal').removeAttr('required').val('');
+                $('#jadwalTempat').removeAttr('required').val('');
+            }
+        }
+
+        $('#jadwalJenis').on('change', function () {
+            toggleFieldsByJenis();
+        });
+
         var jenisLabel = {
-            1: 'Layanan Keliling',
-            2: 'Layanan Rutin'
+            1: 'Layanan Rutin',
+            2: 'Layanan Keliling'
         };
 
         var dayLabel = {
@@ -121,17 +161,20 @@
         function jadwalRow(item) {
             var rowNumber = document.querySelectorAll('#jadwalTableBody tr').length + 1;
             var jenisText = jenisLabel[item.jenis] || '-';
-            var dayText = dayLabel[item.day] || '-';
+            var dayOrTanggal = item.jenis == 2 ? item.tanggal_formatted : dayLabel[item.day];
+            var lokasiText = item.tempat || 'Kantor Disdukcapil Agam Lubuk Basung,<br>Kantor Pelayanan Bersama Belakang Balok Bukittingi,<br>Kantor Camat Ampek Angkek,<br>Kantor Walinagari Matua Mudiak';
 
             return '<tr>' +
                 '<td>' + rowNumber + '</td>' +
                 '<td>' + jenisText + '</td>' +
-                '<td>' + dayText + '</td>' +
+                '<td>' + dayOrTanggal + '</td>' +
+                '<td>' + lokasiText + '</td>' +
                 '<td>' + item.open + '</td>' +
                 '<td>' + item.close + '</td>' +
                 '<td>' +
                     '<button type="button" class="btn btn-secondary btn-sm" onclick="editJadwal(\'' + item.encrypted_id + '\', this)" ' +
-                        'data-jenis="' + item.jenis + '" data-day="' + item.day + '" data-open="' + item.open + '" data-close="' + item.close + '">' +
+                        'data-jenis="' + item.jenis + '" data-day="' + item.day + '" data-tanggal="' + (item.tanggal || '') + '" ' +
+                        'data-tempat="' + (item.tempat) + '" data-open="' + item.open + '" data-close="' + item.close + '">' +
                         '<i class="fas fa-edit"></i></button> ' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deleteJadwal(\'' + item.encrypted_id + '\')"><i class="fas fa-trash"></i></button>' +
                 '</td>' +
@@ -145,8 +188,10 @@
 
             $('#jadwalJenis').val('').trigger('change');
             $('#jadwalDay').val('').trigger('change');
+            document.getElementById('jadwalTanggal').value = '';
             document.getElementById('jadwalOpen').value = '';
             document.getElementById('jadwalClose').value = '';
+            document.getElementById('jadwalTempat').value = '';
 
             new bootstrap.Modal(document.getElementById('jadwalModal')).show();
         }
@@ -158,8 +203,10 @@
 
             $('#jadwalJenis').val(button.getAttribute('data-jenis')).trigger('change');
             $('#jadwalDay').val(button.getAttribute('data-day')).trigger('change');
+            document.getElementById('jadwalTanggal').value = button.getAttribute('data-tanggal');
             document.getElementById('jadwalOpen').value = button.getAttribute('data-open');
             document.getElementById('jadwalClose').value = button.getAttribute('data-close');
+            document.getElementById('jadwalTempat').value = button.getAttribute('data-tempat');
 
             new bootstrap.Modal(document.getElementById('jadwalModal')).show();
         }
@@ -188,6 +235,16 @@
             jadwalTable.search(this.value);
         });
 
+        var jadwalFilters = {
+            jenis: ''
+        };
+
+        document.getElementById('jenisFilter').addEventListener('change', function () {
+            jadwalFilters.jenis = this.value;
+            jadwalTable.reset();
+        });
+
+
         document.getElementById('jadwalForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -208,7 +265,8 @@
             body: '#jadwalTableBody',
             endpoint: '{{ route('jadwal.paginate') }}',
             pageSize: 10,
-            rowRenderer: jadwalRow
+            rowRenderer: jadwalRow,
+            extraParams: jadwalFilters
         });
 
         jadwalTable.load(true);
