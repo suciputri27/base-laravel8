@@ -16,6 +16,8 @@ class CreateInovasiTable extends Migration
         Schema::create('inovasi', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('jenis');
             $table->longText('deskripsi')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();

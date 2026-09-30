@@ -22,6 +22,8 @@ use App\Http\Controllers\Frontend\F_StrukturOrganisasiController;
 use App\Http\Controllers\Frontend\F_PublikasiController;
 use App\Http\Controllers\Frontend\F_ProfilController;
 use App\Http\Controllers\InovasiController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\JadwalLayananController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -180,4 +182,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/inovasi/{inovasi}/edit', [InovasiController::class, 'edit'])->name('inovasi.edit');
     Route::put('/inovasi/{inovasi}', [InovasiController::class, 'update'])->name('inovasi.update');
     Route::delete('/inovasi/{inovasi}', [InovasiController::class, 'destroy'])->name('inovasi.destroy');
+
+    Route::get('/jadwal', [JadwalLayananController::class, 'index'])->name('jadwal.index');
+    Route::get('/jadwal/paginate', [JadwalLayananController::class, 'paginate'])->name('jadwal.paginate');
+    Route::post('/jadwal', [JadwalLayananController::class, 'store'])->name('jadwal.store');
+    Route::put('/jadwal/{jadwal}', [JadwalLayananController::class, 'update'])->name('jadwal.update');
+    Route::delete('/jadwal/{jadwal}', [JadwalLayananController::class, 'destroy'])->name('jadwal.destroy');
 });

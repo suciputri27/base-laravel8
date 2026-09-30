@@ -17,8 +17,8 @@ class CreateJadwalLayananTable extends Migration
             $table->id();
             $table->unsignedBigInteger('jenis')->nullable();      
             $table->string('day');
-            $table->timestamp('open')->nullable();
-            $table->timestamp('close')->nullable(); 
+            $table->time('open')->nullable();
+            $table->time('close')->nullable(); 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

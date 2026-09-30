@@ -29,9 +29,11 @@ use App\Models\frontend\F_Profil;
 use App\Repositories\Contracts\BerkasInovasiRepositoryInterface;
 use App\Repositories\Contracts\BerkasPostRepositoryInterface;
 use App\Repositories\Contracts\InovasiRepositoryInterface;
+use App\Repositories\Contracts\JadwallayananRepositoryInterface;
 use App\Repositories\Eloquent\BerkasInovasiRepository;
 use App\Repositories\Eloquent\BerkasPostRepository;
 use App\Repositories\Eloquent\InovasiRepository;
+use App\Repositories\Eloquent\JadwalLayananRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PublikasiRepositoryInterface::class, PublikasiRepository::class);
         $this->app->bind(InovasiRepositoryInterface::class, InovasiRepository::class);
         $this->app->bind(BerkasInovasiRepositoryInterface::class, BerkasInovasiRepository::class);
+        $this->app->bind(JadwallayananRepositoryInterface::class, JadwalLayananRepository::class);
     }
 
     public function boot()
