@@ -25,12 +25,12 @@
 </section>
 
 <!-- ===================================================== HERO SLIDER BERITA ===================================================== -->
-<section class="berita-hero-slider">
+<!-- <section class="berita-hero-slider">
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
 
         <div class="carousel-inner">
 
-            @foreach ($heroberita ?? [] as $item)
+            @foreach ($beritaTerbaru ?? [] as $item)
             <div class="carousel-item {{ $loop->first ? 'active' : '' }}"
                 style="background-image: url('{{ asset('storage/' . $item->thumbnail) }}')">
                 <div class="berita-hero-overlay"></div>
@@ -59,7 +59,7 @@
 
         {{-- Indikator titik carousel, jumlahnya juga harus ikut dinamis --}}
         <div class="carousel-indicators berita-hero-indicators">
-            @foreach ($heroberita ?? [] as $item)
+            @foreach ($beritaTerbaru ?? [] as $item)
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $loop->index }}"
                 class="{{ $loop->first ? 'active' : '' }}"
                 aria-current="{{ $loop->first ? 'true' : 'false' }}"
@@ -68,7 +68,7 @@
         </div>
 
     </div>
-</section>
+</section> -->
 
 <!-- ===================================================== MENU POPULER ===================================================== -->
 <section class="section popular-section">
