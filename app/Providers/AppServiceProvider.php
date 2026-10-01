@@ -25,6 +25,7 @@ use App\Repositories\Eloquent\UserRepository;
 use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Setting;
 use App\Repositories\Contracts\BerkasInovasiRepositoryInterface;
 use App\Repositories\Contracts\BerkasPostRepositoryInterface;
 use App\Repositories\Contracts\InovasiRepositoryInterface;
@@ -58,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('partials.sidebar', SidebarComposer::class);
         View::composer('layouts.frontend', function ($view) {
-            $profil = F_Profil::first();
+            $profil = Setting::first();
 
             $view->with('profil', $profil);
         });
