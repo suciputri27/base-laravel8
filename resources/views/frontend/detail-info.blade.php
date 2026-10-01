@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', ($infos->title ?? 'Detail Informasi') . ' - DISDUKCAPIL Kabupaten Agam')
+@section('title', ($post->title ?? 'Detail Informasi') . ' - DISDUKCAPIL Kabupaten Agam')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/frontend/detail-info.css') }}">
@@ -30,32 +30,32 @@
                     <i class="ti ti-arrow-left me-1"></i> Kembali ke Berita
                 </a>
 
-                @if ($infos->thumbnail)
-                <img src="{{ asset('storage/' . $infos->thumbnail) }}" alt="{{ $infos->title }}" class="berita-detail-img">
+                @php $foto = $post->berkas->first(); @endphp
+                @if ($foto)
+                <img src="{{ storage_url($foto->berkas) }}" alt="{{ $post->title }}" class="berita-detail-img">
                 @endif
 
                 <div class="berita-detail-meta">
-                    <span class="kategori-badge">{{ $infos->kategori->name ?? 'Umum' }}</span>
+                    <span class="kategori-badge">{{ $post->category->name ?? 'Umum' }}</span>
                     <i class="ti ti-calendar me-1"></i>
-                    {{ optional($infos->created_at)->translatedFormat('d F Y') }}
+                    {{ optional($post->published_at)->translatedFormat('d F Y') }}
                 </div>
 
-                <h1 class="h3 berita-detail-title">{{ $infos->title }}</h1>
+                <h1 class="h3 berita-detail-title">{{ $post->title }}</h1>
 
                 {{--
-                        Kolom 'konten' diasumsikan berisi HTML (hasil rich text
+                        Kolom 'content' diasumsikan berisi HTML (hasil rich text
                         editor di admin), makanya pakai {!! !!} bukan {{ }}.
                 Ini AMAN selama isi konten hanya bisa ditulis lewat
                 admin panel yang terpercaya (bukan input publik tanpa
                 sanitasi), karena {!! !!} tidak meng-escape HTML.
                 --}}
                 <div class="berita-detail-content">
-                    {!! $infos->konten !!}
+                    {!! $post->content !!}
                 </div>
 
             </div>
         </div>
     </div>
-</section>
 
 @endsection

@@ -3,17 +3,29 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\frontend\F_Informasi;
-use App\Models\frontend\F_Inovasi;
+use App\Services\InovasiService;
+use App\Services\PostService;
+use Illuminate\View\View;
 
 class F_BerandaController extends Controller
 {
-    public function index()
+    protected $postService;
+    protected $inovasiService;
+
+    public function __construct(
+        PostService $postService,
+        InovasiService $inovasiService
+    ) {
+        $this->postService = $postService;
+        $this->inovasiService = $inovasiService;
+    }
+
+    public function index(): View
     {
-        $heroberita = F_Informasi::with('kategori')->orderBy('created_at', 'desc')->limit(3)->get();
-        $inovasis = F_Inovasi::orderBy('created_at', 'desc')->limit(3)->get();
-        return $inovasis;
-        die;
-        return view('frontend.beranda', compact('heroberita', 'inovasis'));
+        $beritaTerbaru = $this->postService->getPublishedRecent(3);
+        $inovasiAktif = $this->inovasiService->all();
+
+        return view('frontend.beranda', compact('beritaTerbaru', 'inovasiAktif'
+        ));
     }
 }

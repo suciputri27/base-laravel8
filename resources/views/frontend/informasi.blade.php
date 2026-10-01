@@ -28,11 +28,14 @@
     <div class="container">
 
         <div class="row g-4">
-            @forelse ($infos ?? [] as $item)
+            @forelse ($posts ?? [] as $item)
             <div class="col-sm-6 col-lg-4">
                 <a href="{{ url('informasi', $item->slug) }}" class="text-decoration-none">
-                    <div class="card berita-card">
-                        <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->title }}">
+                    <div class="card berita-card"> 
+                    @php $foto = $item->berkas->first(); @endphp
+                    @if ($foto)
+                    <img src="{{ storage_url($foto->berkas) }}" alt="{{ $item->title }}" class="berita-detail-img">
+                    @endif
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="kategori-badge">{{ $item->kategori->name ?? 'Umum' }}</div>

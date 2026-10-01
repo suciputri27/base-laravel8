@@ -157,12 +157,15 @@
             <a href="{{ url('/informasi') }}" class="btn btn-custom">Lihat Semua <i class="ti ti-arrow-right ms-1"></i></a>
         </div>
         <div class="row g-4">
-            @foreach ($heroberita ?? [] as $item)
+            @foreach ($beritaTerbaru  ?? [] as $item)
             <div class="col-md-6 col-lg-4">
                 <article class="news-card">
-                    <img src="{{ asset('storage/' . $item->thumbnail) }}" class="news-image" alt="Berita">
+                    @php $foto = $item->berkas->first(); @endphp
+                    @if ($foto)
+                        <img src="{{ storage_url($foto->berkas) }}" alt="{{ $item->title }}" class="news-image">
+                    @endif
                     <div class="p-4">
-                        <div class="news-category mb-2"> {{ $item->kategori->name ?? 'Umum' }} </div>
+                        <div class="news-category mb-2"> {{ $item->category->name ?? 'Umum' }} </div>
                         <h3 class="news-title"> <a href="{{ url('informasi', $item->slug) }}"> {{ $item->title ?? 'Judul tidak ditemukan' }} </a> </h3>
                         <small class="text-secondary"> <i class="ti ti-calendar me-1"></i> {{ optional($item->created_at)->translatedFormat('d F Y') }} </small>
                     </div>
@@ -184,7 +187,7 @@
             <a href="#" class="btn btn-custom"> Semua Inovasi <i class="ti ti-arrow-right ms-1"></i> </a>
         </div>
         <div class="row g-4">
-            @foreach ($inovasis ?? [] as $ivs)
+            @foreach ($inovasiAktif ?? [] as $ivs)
             <div class="col-lg-4">
                 <a href="#" class="text-decoration-none">
                     <div class="innovation-card">

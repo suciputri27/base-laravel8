@@ -4,20 +4,29 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\frontend\F_Informasi;
+use App\Services\PostService;
 use Illuminate\View\View;
 
 class F_InformasiController extends Controller
 {
-    public function index()
+    protected $postService;
+
+    public function __construct(PostService $postService)
     {
-        $infos = F_Informasi::with('kategori')->orderBy('created_at', 'desc')->get();
-        return view('frontend.informasi', compact('infos'));
+        $this->postService = $postService;
+    }
+
+    public function index(): View
+    {
+        $posts = $this->postService->getPublishedRecent(10); // atau pakai pagination kalau perlu
+
+        return view('frontend.informasi', compact('posts'));
     }
 
     public function show(string $slug): View
     {
-        $infos = F_Informasi::with('kategori')->where('slug', $slug)->firstOrFail();
+        $post = $this->postService->findPublishedBySlug($slug);
 
-        return view('frontend.detail-info', compact('infos'));
+        return view('frontend.detail-info', compact('post'));
     }
 }

@@ -164,4 +164,25 @@ class PostService extends BaseService
             return $this->repository->delete($id);
         });
     }
+
+    public function getPublishedRecent(int $limit = 3)
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas', 'category'])
+            ->where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function findPublishedBySlug(string $slug)
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas', 'category'])
+            ->where('status', 'published')
+            ->where('slug', $slug)
+            ->firstOrFail();
+    }
+
+
 }
