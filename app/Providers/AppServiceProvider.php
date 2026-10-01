@@ -25,7 +25,6 @@ use App\Repositories\Eloquent\UserRepository;
 use App\View\Composers\SidebarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use App\Models\frontend\F_Profil;
 use App\Repositories\Contracts\BerkasInovasiRepositoryInterface;
 use App\Repositories\Contracts\BerkasPostRepositoryInterface;
 use App\Repositories\Contracts\InovasiRepositoryInterface;
