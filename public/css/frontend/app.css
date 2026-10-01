@@ -162,6 +162,7 @@ label,
 /* ========================= SECTION (utility umum, dipakai banyak halaman) ========================= */
 .section {
     padding: 70px 0;
+    min-height: 100vh !important;
 }
 .section-title {
     font-weight: 800;

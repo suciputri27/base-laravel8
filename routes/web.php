@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\F_PersyaratanController;
 use App\Http\Controllers\Frontend\F_StrukturOrganisasiController;
 use App\Http\Controllers\Frontend\F_PublikasiController;
 use App\Http\Controllers\Frontend\F_ProfilController;
+use App\Http\Controllers\Frontend\F_InovasiController;
 use App\Http\Controllers\InovasiController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JadwalLayananController;
@@ -50,16 +51,19 @@ Route::middleware('track.visitor')->group(function () {
     Route::get('/formulir', [F_PersyaratanController::class, 'formulir'])->name('persyaratan.formulir');
     Route::get('/formulir/data', [F_PersyaratanController::class, 'formulir_data'])->name('persyaratan.formulir_data');
     Route::get('/publikasi', [F_PublikasiController::class, 'index'])->name('publikasi');
-    Route::get('/publikasi/data', [F_PublikasiController::class, 'data'])->name('publikasi.data');
+    Route::get('/publikasi/data', [F_PublikasiController::class, 'publikasi_data'])->name('publikasi.publikasidata');
+    Route::get('/inovasi', [F_InovasiController::class, 'index'])->name('inovasi');
+    Route::get('/inovasi/data', [F_InovasiController::class, 'data'])->name('inovasi.data');
+    Route::get('/inovasi/{slug}', [F_InovasiController::class, 'show'])->name('inovsi.show');
 });
 
 Route::middleware('guest')->group(function () {
-        Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [AuthController::class, 'login'])
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])
         ->name('login.submit')
         ->middleware('recaptcha:0.5');
-        Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-        Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 });
 
 Route::prefix('admin')->middleware('auth')->group(function () {

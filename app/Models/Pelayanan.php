@@ -11,7 +11,7 @@ class Pelayanan extends Model
 {
     use HasFactory, EncryptableIdTrait, SoftDeletes;
 
-    protected $table = 'pelayanan'; 
+    protected $table = 'pelayanan';
 
     protected $fillable = [
         'nama_pelayanan',
@@ -34,5 +34,18 @@ class Pelayanan extends Model
     public function detail_pesyaratan()
     {
         return $this->hasMany(Detail_persyaratan::class);
+    }
+
+    public function persyaratans()
+    {
+        return $this->belongsToMany(
+            Persyaratan::class,
+            'detail_persyaratan',
+            'pelayanan_id',
+            'persyaratan_id',
+        )->withPivot([
+            'berkas',
+            'is_active'
+        ]);
     }
 }

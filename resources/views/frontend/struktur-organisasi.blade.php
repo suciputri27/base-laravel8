@@ -22,7 +22,7 @@
             <img src="{{ asset('storage/' . $item->berkas) }}" alt="">
         </div>
         @empty
-        <p class="text-secondary text-center">Alur Pengaduan belum tersedia.</p>
+        <p class="text-secondary text-center">Struktur Organisasi belum tersedia.</p>
         @endforelse
     </div>
 </section>

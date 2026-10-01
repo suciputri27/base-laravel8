@@ -23,9 +23,11 @@ class F_BerandaController extends Controller
     public function index(): View
     {
         $beritaTerbaru = $this->postService->getPublishedRecent(3);
-        $inovasiAktif = $this->inovasiService->all();
+        $inovasiAktif = $this->inovasiService->getPublishedRecent(3);
 
-        return view('frontend.beranda', compact('beritaTerbaru', 'inovasiAktif'
+        return view('frontend.beranda', compact(
+            'beritaTerbaru',
+            'inovasiAktif'
         ));
     }
 }

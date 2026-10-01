@@ -6,6 +6,8 @@ use App\Helpers\FileUploadHelper;
 use App\Repositories\Contracts\PublikasiRepositoryInterface;
 use App\Services\ActivityLogger;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PublikasiService extends BaseService
 {
@@ -19,7 +21,7 @@ class PublikasiService extends BaseService
         if (isset($data['berkas']) && $data['berkas'] instanceof UploadedFile) {
             $data['berkas'] = FileUploadHelper::upload($data['berkas'], 'publikasi');
         }
-        
+
         $publikasi = $this->repository->create($data);
 
         ActivityLogger::log('Admin menambahkan Publikasi "' . $publikasi->judul . '".', $publikasi);
@@ -91,5 +93,97 @@ class PublikasiService extends BaseService
         })->values();
 
         return $result;
+    }
+
+    public function publikasi_data(Request $request): JsonResponse
+    {
+        $perPage = (int) $request->input('per_page', 6);
+        $search  = trim((string) $request->input('search', ''));
+
+        $query = $this->repository->newQuery()
+            ->where('jenis_dokumen', 5);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
+        }
+
+        $publikasi = $query->latest()->paginate($perPage);
+
+        return response()->json([
+            'success'      => true,
+            'data'         => $publikasi->items(),
+            'current_page' => $publikasi->currentPage(),
+            'last_page'    => $publikasi->lastPage(),
+            'total'        => $publikasi->total(),
+        ]);
+    }
+
+    public function getMaklumat()
+    {
+        return $this->repository->newQuery()
+            ->where('jenis_dokumen', 1)
+            ->get();
+    }
+
+    public function standar_pelayanan_data(Request $request): JsonResponse
+    {
+        $perPage = (int) $request->input('per_page', 6);
+        $search  = trim((string) $request->input('search', ''));
+
+        $query = $this->repository->newQuery()
+            ->where('jenis_dokumen', 2);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
+        }
+
+        $publikasi = $query->latest()->paginate($perPage);
+
+        return response()->json([
+            'success'      => true,
+            'data'         => $publikasi->items(),
+            'current_page' => $publikasi->currentPage(),
+            'last_page'    => $publikasi->lastPage(),
+            'total'        => $publikasi->total(),
+        ]);
+    }
+
+    public function sop_data(Request $request): JsonResponse
+    {
+        $perPage = (int) $request->input('per_page', 6);
+        $search  = trim((string) $request->input('search', ''));
+
+        $query = $this->repository->newQuery()
+            ->where('jenis_dokumen', 3);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
+        }
+
+        $publikasi = $query->latest()->paginate($perPage);
+
+        return response()->json([
+            'success'      => true,
+            'data'         => $publikasi->items(),
+            'current_page' => $publikasi->currentPage(),
+            'last_page'    => $publikasi->lastPage(),
+            'total'        => $publikasi->total(),
+        ]);
+    }
+
+    public function getAlurPengaduan()
+    {
+        return $this->repository->newQuery()
+            ->where('jenis_dokumen', 4)
+            ->get();
     }
 }

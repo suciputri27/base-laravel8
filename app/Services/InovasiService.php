@@ -68,9 +68,9 @@ class InovasiService extends BaseService
 
         while (
             $this->repository->newQuery()
-                ->where('slug', $slug)
-                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
-                ->exists()
+            ->where('slug', $slug)
+            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
+            ->exists()
         ) {
             $slug = $original . '-' . $count;
             $count++;
@@ -101,7 +101,7 @@ class InovasiService extends BaseService
 
     public function paginate(array $options = []): array
     {
-        $options['search_columns'] = ['judul', 'deskripsi','jenis'];
+        $options['search_columns'] = ['judul', 'deskripsi', 'jenis'];
 
         $result = parent::paginate($options);
 
@@ -113,12 +113,12 @@ class InovasiService extends BaseService
                 'deskripsi' => $inovasi->deskripsi,
                 'is_active' => (bool) $inovasi->is_active,
                 'berkas' => $this->berkasRepository->getByInovasiId($inovasi->id)
-                ->filter(fn ($b) => !empty($b->berkas))
-                ->map(fn ($b) => [
+                    ->filter(fn($b) => !empty($b->berkas))
+                    ->map(fn($b) => [
                         'encrypted_id' => id_encode((int) $b->id),
                         'url' => storage_url($b->berkas),
-                ])
-                ->values(),
+                    ])
+                    ->values(),
             ];
         })->values();
 
@@ -129,8 +129,8 @@ class InovasiService extends BaseService
     {
         return $this->repository->newQuery()->where('is_active', true)->orderBy('judul')->get();
     }
-    
-    public function delete(int $id) :bool
+
+    public function delete(int $id): bool
     {
         return DB::transaction(function () use ($id) {
             $berkasList = $this->berkasRepository->getByInovasiId($id);
@@ -144,5 +144,24 @@ class InovasiService extends BaseService
             // row berkas_inovasi otomatis ikut terhapus lewat cascadeOnDelete
             return $this->repository->delete($id);
         });
+    }
+
+    public function getPublishedRecent(int $limit = 3)
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas'])
+            ->where('is_active', 1)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function getBySlug(string $slug)
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas'])
+            ->where('is_active', 1)
+            ->where('slug', $slug)
+            ->firstOrFail();
     }
 }

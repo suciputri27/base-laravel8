@@ -37,4 +37,8 @@ class Inovasi extends Model
     {
         return $this->hasMany(Berkas_inovasi::class, 'inovasi_id');
     }
+    public function berkasUtama()
+    {
+        return $this->hasOne(Berkas_inovasi::class, 'inovasi_id')->latestOfMany();
+    }
 }

@@ -157,12 +157,12 @@
             <a href="{{ url('/informasi') }}" class="btn btn-custom">Lihat Semua <i class="ti ti-arrow-right ms-1"></i></a>
         </div>
         <div class="row g-4">
-            @foreach ($beritaTerbaru  ?? [] as $item)
+            @foreach ($beritaTerbaru ?? [] as $item)
             <div class="col-md-6 col-lg-4">
                 <article class="news-card">
                     @php $foto = $item->berkas->first(); @endphp
                     @if ($foto)
-                        <img src="{{ storage_url($foto->berkas) }}" alt="{{ $item->title }}" class="news-image">
+                    <img src="{{ storage_url($foto->berkas) }}" alt="{{ $item->title }}" class="news-image">
                     @endif
                     <div class="p-4">
                         <div class="news-category mb-2"> {{ $item->category->name ?? 'Umum' }} </div>
@@ -174,7 +174,7 @@
             @endforeach
         </div>
     </div>
-    
+
 </section>
 
 <!-- ===================================================== INOVASI ===================================================== -->
@@ -185,18 +185,18 @@
                 <h2 class="section-title"> Inovasi Pelayanan </h2>
                 <p class="section-description mb-0"> Inovasi untuk memberikan pelayanan yang lebih mudah dan cepat. </p>
             </div>
-            <a href="#" class="btn btn-custom"> Semua Inovasi <i class="ti ti-arrow-right ms-1"></i> </a>
+            <a href="{{ url('/inovasi') }}" class="btn btn-custom"> Semua Inovasi <i class="ti ti-arrow-right ms-1"></i> </a>
         </div>
         <div class="row g-4">
             @foreach ($inovasiAktif ?? [] as $ivs)
             <div class="col-lg-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{ url('inovasi', $ivs->slug) }}" class="text-decoration-none">
                     <div class="innovation-card">
-                        <img src="{{ asset('storage/' . $ivs->berkas) }}" alt="Inovasi">
+                        <img src="{{ storage_url($ivs->berkas->first()->berkas ?? '') }}" alt="Inovasi">
                         <div class="innovation-content">
                             <small> INOVASI </small>
                             <h4 class="fw-bold"> {{ $ivs->judul ?? 'Judul tidak ditemukan' }} </h4>
-                            <p class="mb-0 small"> Kemudahan akses layanan administrasi kependudukan secara digital. </p>
+                            <!-- <p class="mb-0 small"> Kemudahan akses layanan administrasi kependudukan secara digital. </p> -->
                         </div>
                     </div>
                 </a>

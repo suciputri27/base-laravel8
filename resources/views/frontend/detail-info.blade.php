@@ -30,9 +30,31 @@
                     <i class="ti ti-arrow-left me-1"></i> Kembali ke Berita
                 </a>
 
-                @php $foto = $post->berkas->first(); @endphp
-                @if ($foto)
-                <img src="{{ storage_url($foto->berkas) }}" alt="{{ $post->title }}" class="berita-detail-img">
+                @php
+                $fotos = $post->berkas ?? collect();
+                $fotoUtama = asset('storage/'. optional($fotos->first())->berkas);
+                @endphp
+
+
+
+                {{-- Gambar utama --}}
+                <img id="infos-main-image"
+                    src="{{ $fotoUtama ? asset($fotoUtama) : '' }}"
+                    alt="{{ $post->title }}"
+                    class="infos-detail-main">
+
+                {{-- Strip thumbnail, klik buat ganti gambar utama --}}
+                @if ($fotos->count() > 1)
+                <div class="infos-detail-thumbs justify-content-center">
+                    @foreach ($fotos as $i => $foto)
+                    <img src="{{ asset('storage/'. $foto->berkas) }}"
+                        alt="{{ $post->title }} - foto {{ $i + 1 }}"
+                        class="{{ $i === 0 ? 'active' : '' }}"
+                        onclick="document.getElementById('infos-main-image').src = this.src;
+                                              document.querySelectorAll('.infos-detail-thumbs img').forEach(el => el.classList.remove('active'));
+                                              this.classList.add('active');">
+                    @endforeach
+                </div>
                 @endif
 
                 <div class="berita-detail-meta">
@@ -57,5 +79,6 @@
             </div>
         </div>
     </div>
+</section>
 
 @endsection

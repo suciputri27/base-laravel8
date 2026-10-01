@@ -3,19 +3,28 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\frontend\F_Pelayanan;
-use App\Models\frontend\F_Persyaratan;
+use App\Services\PelayananService;
+use App\Services\PersyaratanService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class F_PersyaratanController extends Controller
 {
-    public function index()
+    protected $pelayananservice;
+    protected $persyaratanservice;
+
+    public function __construct(PelayananService $pelayananservice, PersyaratanService $persyaratanservice)
     {
-        $pelayanans = F_Pelayanan::with('persyaratans')->get();
-        return view('frontend.persyaratan', compact('pelayanans'));
+        $this->pelayananservice = $pelayananservice;
+        $this->persyaratanservice = $persyaratanservice;
     }
+
+    // public function index()
+    // {
+    //     $pelayanans = $this->pelayananservice->getAll();
+    //     return view('frontend.persyaratan', compact('pelayanans'));
+    // }
 
     public function formulir()
     {
@@ -25,27 +34,6 @@ class F_PersyaratanController extends Controller
 
     public function formulir_data(Request $request): JsonResponse
     {
-        $perPage = (int) $request->input('per_page', 6);
-        $search  = trim((string) $request->input('search', ''));
-
-        $query = F_Persyaratan::where('cekdokumen', 1)
-            ->with('detailPersyaratans');
-
-        if ($search !== '') {
-            $query->where(function ($q) use ($search) {
-                $q->where('judul', 'like', "%{$search}%")
-                    ->orWhere('deskripsi', 'like', "%{$search}%");
-            });
-        }
-
-        $formulir = $query->latest()->paginate($perPage);
-
-        return response()->json([
-            'success'      => true,
-            'data'         => $formulir->items(),
-            'current_page' => $formulir->currentPage(),
-            'last_page'    => $formulir->lastPage(),
-            'total'        => $formulir->total(),
-        ]);
+        return $this->persyaratanservice->formulir_data($request);
     }
 }

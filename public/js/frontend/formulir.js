@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     "</h5>" +
                     "</div>" +
                     '<a href="storage/' +
-                    item.detail_persyaratans[0].berkas +
+                    item.detail_persyaratan[0].berkas +
                     '" class="btn btn-custom mt-auto" download>' +
                     '<i class="ti ti-download me-1"></i> Unduh Formulir' +
                     "</a>" +
