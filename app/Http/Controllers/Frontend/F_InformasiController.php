@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\frontend\F_Informasi;
 use App\Services\PostService;
 use Illuminate\View\View;
 
