@@ -96,7 +96,7 @@
             </div>
             <!-- SILetON -->
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="#" class="service-card">
+                <a href="https://sileton.agamkab.go.id" class="service-card">
                     <div class="service-icon"> <i class="ti ti-world"></i> </div>
                     <h5> Layanan Online SILetON </h5>
                     <p> Ajukan layanan administrasi kependudukan secara online. </p>
@@ -112,7 +112,7 @@
             </div>
             <!-- Jadwal -->
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="#" class="service-card">
+                <a href="{{ url('/jadwal') }}" class="service-card">
                     <div class="service-icon"> <i class="ti ti-calendar"></i> </div>
                     <h5> Jadwal Layanan </h5>
                     <p> Jadwal layanan keliling dan layanan rutin. </p>
@@ -120,7 +120,7 @@
             </div>
             <!-- Data -->
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="#" class="service-card">
+                <a href="{{ url('/under-construction') }}" class="service-card">
                     <div class="service-icon"> <i class="ti ti-chart-bar"></i> </div>
                     <h5> Data Agregat </h5>
                     <p> Informasi data agregat kependudukan Kabupaten Agam. </p>
@@ -128,7 +128,7 @@
             </div>
             <!-- Inovasi -->
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="#" class="service-card">
+                <a href="{{ url('/inovasi') }}" class="service-card">
                     <div class="service-icon"> <i class="ti ti-bulb"></i> </div>
                     <h5> Inovasi </h5>
                     <p> Berbagai inovasi pelayanan Disdukcapil. </p>
@@ -136,7 +136,7 @@
             </div>
             <!-- Info Pelayanan -->
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="#" class="service-card">
+                <a href="{{ url('/jadwal') }}" class="service-card">
                     <div class="service-icon"> <i class="ti ti-info-circle"></i> </div>
                     <h5> Info Pelayanan </h5>
                     <p> Informasi lengkap mengenai pelayanan. </p>

@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--light-bg) 0%, #ffffff 100%);
+    font-family: "Urbanist", sans-serif;
+    padding: 1.5rem;
+}
+
+.uc-wrapper {
+    text-align: center;
+    max-width: 520px;
+}
+
+.uc-logo {
+    width: 140px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    animation: uc-float 3s ease-in-out infinite;
+}
+
+@keyframes uc-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.uc-icon {
+    font-size: 2.2rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+.uc-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+}
+
+.uc-description {
+    color: #6b7280;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.uc-btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary) !important;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.uc-btn-back:hover {
+    background: var(--primary-dark) !important;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.uc-footer-text {
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+@media (max-width: 480px) {
+    .uc-logo {
+        width: 110px;
+    }
+    .uc-title {
+        font-size: 1.4rem;
+    }
+}

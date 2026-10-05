@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\EncryptableIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Jadwal_layanan extends Model
 {
-    use HasFactory;
+    use HasFactory, EncryptableIdTrait;
 
     protected $table = 'jadwal_layanan';
 

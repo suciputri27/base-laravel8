@@ -22,8 +22,8 @@ use App\Http\Controllers\Frontend\F_StrukturOrganisasiController;
 use App\Http\Controllers\Frontend\F_PublikasiController;
 use App\Http\Controllers\Frontend\F_ProfilController;
 use App\Http\Controllers\Frontend\F_InovasiController;
+use App\Http\Controllers\Frontend\F_JadwalController;
 use App\Http\Controllers\InovasiController;
-use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JadwalLayananController;
 
 Route::get('/', function () {
@@ -55,6 +55,9 @@ Route::middleware('track.visitor')->group(function () {
     Route::get('/inovasi', [F_InovasiController::class, 'index'])->name('inovasi');
     Route::get('/inovasi/data', [F_InovasiController::class, 'data'])->name('inovasi.data');
     Route::get('/inovasi/{slug}', [F_InovasiController::class, 'show'])->name('inovsi.show');
+    Route::view('/under-construction', 'frontend.under-construction')->name('under-construction');
+    Route::get('/jadwal', [F_JadwalController::class, 'index'])->name('jadwal');
+    Route::get('/jadwal/keliling', [F_JadwalController::class, 'keliling'])->name('jadwal.keliling');
 });
 
 Route::middleware('guest')->group(function () {

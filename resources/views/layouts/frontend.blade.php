@@ -7,7 +7,7 @@
 
     <title>@yield('title', 'DISDUKCAPIL Kabupaten Agam')</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('img/logo-only-capil-black.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo-only-capil.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/apple-touch-icon.png') }}">
@@ -116,7 +116,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="ti ti-chart-bar"></i> Data Penduduk</a>
+                            <a class="nav-link" href="{{ url('under-construction') }}"><i class="ti ti-chart-bar"></i> Data Penduduk</a>
                         </li>
 
                         <li class="nav-item">

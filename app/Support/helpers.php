@@ -77,3 +77,20 @@ if (! function_exists('menu_is_active')) {
         return false;
     }
 }
+
+if (! function_exists('nama_hari')) {
+    function nama_hari($angka): string
+    {
+        $hari = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu',
+            7 => 'Minggu',
+        ];
+
+        return $hari[(int) $angka] ?? 'Tidak diketahui';
+    }
+}

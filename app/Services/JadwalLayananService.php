@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Repositories\Contracts\JadwallayananRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class JadwalLayananService extends BaseService
 {
@@ -32,9 +34,9 @@ class JadwalLayananService extends BaseService
     {
         return DB::transaction(function () use ($id, $data) {
             $jadwal = $this->repository->update($id, $data);
-    
+
             ActivityLogger::log('Admin memperbarui Jadwal.', $jadwal);
-    
+
             return $jadwal;
         });
     }
@@ -59,5 +61,35 @@ class JadwalLayananService extends BaseService
         })->values();
 
         return $result;
+    }
+
+    protected array $urutanHari = [
+        1 => 'Senin',
+        2 => 'Selasa',
+        3 => 'Rabu',
+        4 => 'Kamis',
+        5 => 'Jumat',
+        6 => 'Sabtu',
+        7 => 'Minggu',
+    ];
+
+    public function getJadwalRutin(): Collection
+    {
+        return $this->repository->newQuery()
+            ->where('jenis', 1)
+            ->get()
+            ->sortBy(function ($item) {
+                $posisi = array_search($item->day, $this->urutanHari);
+                return $posisi === false ? 99 : $posisi;
+            })
+            ->values();
+    }
+
+    public function getJadwalKeliling(int $perPage = 6): LengthAwarePaginator
+    {
+        return $this->repository->newQuery()
+            ->where('jenis', 2)
+            ->orderBy('tanggal', 'asc')
+            ->paginate($perPage);
     }
 }
