@@ -34,4 +34,28 @@ class IndonesianDateHelper
 
         return self::date($date) . ', ' . $date->format('H:i') . ' WIB';
     }
+
+    public static function day($day): string
+    {
+        $days = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu',
+            7 => 'Minggu',
+        ];
+
+        return $days[(int) $day] ?? '-';
+    }
+
+    public static function fullDate($value): string
+    {
+        $date = $value instanceof Carbon
+            ? $value
+            : Carbon::parse($value);
+
+        return self::day($date->dayOfWeekIso) . ', ' . self::date($date);
+    }
 }

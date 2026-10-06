@@ -148,20 +148,10 @@
             2: 'Layanan Keliling'
         };
 
-        var dayLabel = {
-            1: 'Senin',
-            2: 'Selasa',
-            3: 'Rabu',
-            4: 'Kamis',
-            5: 'Jumat',
-            6: 'Sabtu',
-            7: 'Minggu'
-        };
-
         function jadwalRow(item) {
             var rowNumber = document.querySelectorAll('#jadwalTableBody tr').length + 1;
             var jenisText = jenisLabel[item.jenis] || '-';
-            var dayOrTanggal = item.jenis == 2 ? item.tanggal_formatted : dayLabel[item.day];
+            var dayOrTanggal = item.jenis == 2 ? item.tanggal_formatted : item.day_label;
             var lokasiText = item.tempat || 'Kantor Disdukcapil Agam Lubuk Basung,<br>Kantor Pelayanan Bersama Belakang Balok Bukittingi,<br>Kantor Camat Ampek Angkek,<br>Kantor Walinagari Matua Mudiak';
 
             return '<tr>' +

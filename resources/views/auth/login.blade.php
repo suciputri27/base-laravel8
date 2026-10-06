@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden !important;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -51,8 +56,12 @@
 
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
-
                 <p class="auth-footer">Belum punya akun? <a href="{{ route('register') }}">Register</a></p>
+                <!-- <p style="font-size: 12px; color: #6b7280; text-align: center;">
+                    This site is protected by reCAPTCHA and the Google
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.
+                </p> -->
             </div>
         </div>
     </div>
