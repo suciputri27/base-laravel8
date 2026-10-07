@@ -41,17 +41,13 @@ class SkmService
             $payload = array_merge($data, [
                 'kode_instansi' => $this->kodeInstansi,
             ]);
-
-            // Diasumsikan format form-urlencoded (umum dipakai endpoint
-            // ajax CodeIgniter). Kalau API-nya ternyata minta JSON,
-            // ganti ->asForm() jadi hapus baris itu (default Http::post
-            // kirim JSON).
             $response = Http::timeout(10)->asForm()->post(
                 "{$this->baseUrl}/ajaxInsertPenilaian",
                 $payload
             );
+            $result = $response->json();
 
-            return $response->body();
+            return ($result['success'] ?? false) === true;
         } catch (\Throwable $e) {
             Log::error('SkmService::insertPenilaian gagal: ' . $e->getMessage());
             return false;

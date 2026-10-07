@@ -8,6 +8,8 @@ use App\Services\SkmService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class F_SkmController extends Controller
 {
@@ -43,20 +45,22 @@ class F_SkmController extends Controller
             'ruangan'        => 'nullable|string',
             'jawaban'        => 'required|array|min:1',
             'jawaban.*'      => 'required|numeric|min:1|max:4',
+            'recaptcha_token' => 'required|string',
         ]);
 
         $berhasil = $this->skmService->insertPenilaian([
-            'username'      => $validated['username'],
-            'usia'          => $validated['usia'],
-            'jenis_kelamin' => $validated['jenis_kelamin'],
-            'pendidikan'    => $validated['pendidikan'],
-            'pekerjaan'     => $validated['pekerjaan'],
-            'kode_instansi' => $validated['kode_instansi'],
-            'ruangan'       => $validated['ruangan'] ?? '',
-            'nilai'         => $validated['jawaban'],
+            'username'       => $validated['username'],
+            'usia'           => $validated['usia'],
+            'jenis_kelamin'  => $validated['jenis_kelamin'],
+            'pendidikan'     => $validated['pendidikan'],
+            'pekerjaan'      => $validated['pekerjaan'],
+            'kode_instansi'  => $validated['kode_instansi'],
+            'ruangan'        => $validated['ruangan'] ?? '',
+            'nilai'          => $validated['jawaban'],
+            'recaptcha_token' => $validated['recaptcha_token'],
         ]);
 
-        if (! $berhasil) {
+        if (!$berhasil) {
             return response()->json([
                 'success' => false,
                 'message' => 'Gagal mengirim survey. Silakan coba lagi.',

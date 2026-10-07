@@ -45,6 +45,7 @@
                 <div class="skm-section-label"><i class="ti ti-user"></i> Data Diri</div>
 
                 <div class="row g-3 mb-3">
+                    <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                     <input type="hidden" name="kode_instansi" value="{{ $kode_instansi ?? '' }}">
                     <div class="col-md-6">
                         <label class="form-label">Nama</label>
@@ -139,7 +140,9 @@
 @endsection
 
 @push('js')
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key_skm') }}" async defer></script>
 <script>
+    const RECAPTCHA_SITE_KEY_SKM = "{{ config('services.recaptcha.site_key_skm') }}";
     document.addEventListener('DOMContentLoaded', function() {
         // Kasih feedback visual (border highlight) begitu pertanyaan dijawab
         document.querySelectorAll('.skm-question').forEach(function(q) {
@@ -161,45 +164,67 @@
 
             const formData = new FormData(form);
 
-            fetch("{{ url('skm/submit') }}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                        'Accept': 'application/json',
-                    },
-                    body: formData,
-                })
-                .then(function(res) {
-                    return res.json().then(function(data) {
-                        return {
-                            status: res.status,
-                            body: data
-                        };
-                    });
-                })
-                .then(function(result) {
-                    console.log(result);
-                    if (result.body.success) {
 
-                        showToast('success', result.body.message || 'Survei berhasil dikirim!');
-                        document.getElementById('skm-form-wrapper').classList.add('d-none');
-                        document.getElementById('skm-success').classList.remove('d-none');
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        showToast('error', result.body.message || 'Terjadi kesalahan. Silakan coba lagi.');
+            grecaptcha.ready(function() {
+                grecaptcha.execute(RECAPTCHA_SITE_KEY_SKM, {
+                        action: 'ikm_submit'
+                    })
+                    .then(function(token) {
+                        document.getElementById('recaptcha_token').value = token;
+                        kirimForm();
+                    })
+                    .catch(function(err) {
+                        console.error('Gagal generate token reCAPTCHA:', err);
+                        showToast('error', 'Verifikasi keamanan gagal. Silakan coba lagi.');
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
-                    }
-                })
-                .catch(function(err) {
-                    console.error('Gagal submit SKM:', err);
-                    showToast('error', 'Terjadi kesalahan jaringan. Silakan coba lagi.');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
-                });
+                    });
+            });
+
+            // ===== LANGKAH 2: baru submit form (setelah token didapat) =====
+            function kirimForm() {
+                submitBtn.innerHTML = '<i class="ti ti-loader-2"></i> Mengirim...';
+
+                const formData = new FormData(form);
+
+                fetch("{{ url('skm/submit') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json',
+                        },
+                        body: formData,
+                    })
+                    .then(function(res) {
+                        return res.json().then(function(data) {
+                            return {
+                                status: res.status,
+                                body: data
+                            };
+                        });
+                    })
+                    .then(function(result) {
+                        if (result.body.success) {
+                            showToast('success', result.body.message || 'Survei berhasil dikirim!');
+                            document.getElementById('skm-form-wrapper').classList.add('d-none');
+                            document.getElementById('skm-success').classList.remove('d-none');
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            showToast('error', result.body.message || 'Terjadi kesalahan. Silakan coba lagi.');
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
+                        }
+                    })
+                    .catch(function(err) {
+                        console.error('Gagal submit SKM:', err);
+                        showToast('error', 'Terjadi kesalahan jaringan. Silakan coba lagi.');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
+                    });
+            }
         });
     });
 </script>
