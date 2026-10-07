@@ -87,7 +87,7 @@ class JadwalLayananService extends BaseService
     {
         $result = $this->repository->newQuery()
             ->where('jenis', 2)
-            ->orderBy('tanggal', 'asc')
+            ->orderBy('tanggal', 'desc')
             ->paginate($perPage);
 
         $result->getCollection()->transform(function ($jadwal) {

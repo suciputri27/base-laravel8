@@ -36,5 +36,4 @@ return [
         'site_key_skm' => env('RECAPTCHA_SITE_KEY_SKM'),
         'secret_key_skm' => env('RECAPTCHA_SECRET_KEY_SKM'),
     ],
-
 ];
