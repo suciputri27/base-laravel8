@@ -46,7 +46,6 @@ class SkmService
                 $payload
             );
             $result = $response->json();
-
             return ($result['success'] ?? false) === true;
         } catch (\Throwable $e) {
             Log::error('SkmService::insertPenilaian gagal: ' . $e->getMessage());
