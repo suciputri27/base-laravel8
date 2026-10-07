@@ -10,6 +10,7 @@
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/frontend/jadwal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/maklumat.css') }}">
 @endpush
 
 @section('content')
@@ -41,9 +42,9 @@
         {{-- ================= JADWAL RUTIN ================= --}}
         <div id="jadwal-rutin" class="jadwal-panel">
             <div class="text-center mb-4">
-                <h2 class="section-title">Pelayanan Rutin Mingguan</h2>
+                <h2 class="section-title">Jadwal Pelayanan</h2>
                 <p class="section-description">
-                    Jadwal buka-tutup layanan di kantor Disdukcapil, berulang tiap minggu.
+                    Jadwal pelayanan harian Dinas Dukcapil Kabupaten Agam
                 </p>
             </div>
 
@@ -79,6 +80,27 @@
 
                 @endforelse
             </div>
+
+            <div class="text-center mt-4">
+                <h2 class="section-title">Lokasi Layanan</h2>
+                <p class="section-description">
+                    Lokasi layanan ada di 4 Kantor berikut:
+                </p>
+            </div>
+
+            <div class="maklumat-box mx-auto" style="max-width: 700px;">
+                <i class="ti ti-map-pin-check"></i>               
+            <div class="maklumat-sign mt-3">
+                <p>
+                    - Kantor Dinas Dukcapil Kabupaten Agam (Lubuk Basung)<br>
+                    - Kantor Pelayanan Bersama Belakang Balok (Kota Bukittinggi)<br>
+                    - Kantor Camat Ampek Angkek (Ampek Angkek)<br>
+                    - Kantor Wali Nagari Matua Mudiak (Matur)
+                </p>
+                </div>
+            </div>
+
+
         </div>
 
         {{-- ================= JADWAL KELILING ================= --}}

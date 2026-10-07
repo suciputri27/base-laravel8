@@ -63,6 +63,7 @@ class PersyaratanService extends BaseService
         $query = $this->repository->newQuery()
             ->where('cekdokumen', 1)
             ->with('detail_persyaratan');
+        dd($query->toSql());
 
         if ($search !== '') {
             $query->where(function ($q) use ($search) {
