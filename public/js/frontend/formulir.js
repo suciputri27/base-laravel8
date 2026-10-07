@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCards(items) {
         container.innerHTML = items
             .map(function (item) {
+                var detail = item.detail_persyaratan && item.detail_persyaratan.length > 0
+                    ? item.detail_persyaratan[0]
+                    : null;
+    
+                var downloadButton = detail
+                    ? '<a href="storage/' + detail.berkas + '" class="btn btn-custom mt-auto" download>' +
+                    '<i class="ti ti-download me-1"></i> Unduh Formulir</a>'
+                    : '<span class="text-muted">Berkas belum tersedia</span>';
+    
                 return (
                     '<div class="col-12">' +
                     '<div class="publikasi-card">' +
@@ -39,11 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     escapeHtml(item.nama_persyaratan) +
                     "</h5>" +
                     "</div>" +
-                    '<a href="storage/' +
-                    item.detail_persyaratan[0].berkas +
-                    '" class="btn btn-custom mt-auto" download>' +
-                    '<i class="ti ti-download me-1"></i> Unduh Formulir' +
-                    "</a>" +
+                    downloadButton +
                     "</div>" +
                     "</div>"
                 );
