@@ -90,7 +90,7 @@
                                 <li><a class="dropdown-item" href="{{ url('profil/standar_pelayanan') }}"><i class="ti ti-award color-primary"></i> Standar Pelayanan Publik</a></li>
                                 <li><a class="dropdown-item" href="{{ url('profil/sop') }}"><i class="ti ti-file-description color-primary"></i> SOP</a></li>
                                 <li><a class="dropdown-item" href="{{ url('profil/alur_pengaduan') }}"><i class="ti ti-alert-triangle color-primary"></i> Alur Pengaduan</a></li>
-                                <li><a class="dropdown-item" href="{{ url('/skm') }}"><i class="ti ti-mood-smile-beam color-primary"></i> Survey Kepuasan Masyarakat</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/skm/hasil') }}"><i class="ti ti-mood-smile-beam color-primary"></i> Survey Kepuasan Masyarakat</a></li>
                             </ul>
                         </li>
 
@@ -185,6 +185,7 @@
     <script src="{{ asset('js/frontend/parallax.js') }}"></script>
 
     <!-- JS khusus halaman ini, ditambahkan lewat @push('js') di masing-masing view -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container" style="z-index: 1080;"></div>
     @stack('js')
 </body>
 

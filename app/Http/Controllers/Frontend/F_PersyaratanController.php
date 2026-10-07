@@ -20,11 +20,11 @@ class F_PersyaratanController extends Controller
         $this->persyaratanservice = $persyaratanservice;
     }
 
-    // public function index()
-    // {
-    //     $pelayanans = $this->pelayananservice->getAll();
-    //     return view('frontend.persyaratan', compact('pelayanans'));
-    // }
+    public function index()
+    {
+        $pelayanans = $this->pelayananservice->all();
+        return view('frontend.persyaratan', compact('pelayanans'));
+    }
 
     public function formulir()
     {

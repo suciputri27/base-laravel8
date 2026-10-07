@@ -1,0 +1,352 @@
+.hasil-score-card {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.hasil-score-card .score-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.hasil-score-card .score-label {
+    opacity: 0.9;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.hasil-score-card .score-kategori {
+    display: inline-block;
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 1.25rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.hasil-panel {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 18px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+.hasil-panel h5 {
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.unsur-bar-item {
+    margin-bottom: 1.1rem;
+}
+.unsur-bar-item .unsur-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.35rem;
+}
+.unsur-bar-item .unsur-track {
+    background: var(--light-bg);
+    border-radius: 50px;
+    height: 10px;
+    overflow: hidden;
+}
+.unsur-bar-item .unsur-fill {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+}
+
+.demografi-bar-item {
+    margin-bottom: 0.9rem;
+}
+.demografi-bar-item .demo-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.3rem;
+}
+.demografi-bar-item .demo-track {
+    background: var(--light-bg);
+    border-radius: 50px;
+    height: 8px;
+    overflow: hidden;
+}
+.demografi-bar-item .demo-fill {
+    height: 100%;
+    border-radius: 50px;
+    background: #4fc3f7;
+}
+
+.hasil-responden-count {
+    text-align: center;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+}
+.hasil-responden-count .angka {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+.hasil-responden-count .label {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.unsur-bar-item {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid #f1f3f5;
+}
+.unsur-bar-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.unsur-bar-item .unsur-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+.unsur-bar-item .unsur-label .unsur-teks {
+    flex: 1;
+    min-width: 0;
+}
+.unsur-bar-item .unsur-nilai-wrap {
+    flex-shrink: 0;
+    text-align: right;
+    white-space: nowrap;
+}
+.unsur-bar-item .unsur-angka {
+    font-weight: 800;
+    font-size: 0.95rem;
+}
+
+.unsur-track {
+    background: var(--light-bg);
+    border-radius: 50px;
+    height: 12px;
+    overflow: hidden;
+}
+.unsur-fill {
+    height: 100%;
+    border-radius: 50px;
+    transition: width 0.6s ease;
+}
+
+/* Warna berdasarkan kategori nilai (sama skala sama konversi skor utama) */
+.unsur-fill.kategori-a,
+.unsur-angka.kategori-a {
+    color: #2e7d32;
+}
+.unsur-fill.kategori-a {
+    background: linear-gradient(90deg, #66bb6a, #2e7d32);
+}
+
+.unsur-fill.kategori-b,
+.unsur-angka.kategori-b {
+    color: #558b2f;
+}
+.unsur-fill.kategori-b {
+    background: linear-gradient(90deg, #9ccc65, #558b2f);
+}
+
+.unsur-fill.kategori-c,
+.unsur-angka.kategori-c {
+    color: #e65100;
+}
+.unsur-fill.kategori-c {
+    background: linear-gradient(90deg, #ffb74d, #e65100);
+}
+
+.unsur-fill.kategori-d,
+.unsur-angka.kategori-d {
+    color: #c62828;
+}
+.unsur-fill.kategori-d {
+    background: linear-gradient(90deg, #ef5350, #c62828);
+}
+
+.badge-kategori-mini {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    margin-top: 0.15rem;
+}
+.badge-kategori-mini.kategori-a {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.badge-kategori-mini.kategori-b {
+    background: #f1f8e9;
+    color: #558b2f;
+}
+.badge-kategori-mini.kategori-c {
+    background: #fff3e0;
+    color: #e65100;
+}
+.badge-kategori-mini.kategori-d {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Ringkasan kecil di atas daftar unsur */
+.unsur-summary {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.unsur-summary .summary-chip {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+.unsur-summary .summary-chip .chip-angka {
+    font-size: 1.4rem;
+    display: block;
+}
+.unsur-summary .summary-chip.chip-baik {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.unsur-summary .summary-chip.chip-kurang {
+    background: #ffebee;
+    color: #c62828;
+}
+/* Tambahkan ke public/css/frontend/skm/hasil.css */
+
+.cta-survey-banner {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Lingkaran dekoratif, biar nggak flat */
+.cta-survey-banner::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    top: -80px;
+    right: -60px;
+}
+.cta-survey-banner::after {
+    content: "";
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    bottom: -60px;
+    left: -40px;
+}
+
+.cta-survey-banner .cta-icon {
+    font-size: 2.2rem;
+    color: var(--primary-light);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-survey-banner h4 {
+    color: #fff;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-survey-banner p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-cta-survey {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    animation: cta-pulse 2.2s ease-in-out infinite;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.btn-cta-survey:hover {
+    background: #fff;
+    color: #0d47a1;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+    animation-play-state: paused;
+}
+
+.btn-cta-survey i {
+    font-size: 1.2rem;
+}
+
+@keyframes cta-pulse {
+    0%,
+    100% {
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.25),
+            0 0 0 0 rgba(255, 213, 79, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.25),
+            0 0 0 12px rgba(255, 213, 79, 0);
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-survey-banner {
+        padding: 1.5rem 1rem;
+    }
+    .btn-cta-survey {
+        padding: 0.8rem 1.75rem;
+        font-size: 0.95rem;
+    }
+}

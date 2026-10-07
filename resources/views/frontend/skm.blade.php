@@ -1,9 +1,14 @@
+{{--
+    KONTRAK DATA:
+    - Controller: App\Http\Controllers\Frontend\SkmController::index()
+    - Variabel: $pertanyaans -> array hasil decode JSON dari API ajaxGetSurvei,
+      tiap item: {id_survei, pertanyaan, pilihan: [{pilihan, pilihan_nilai, icon}]}
+--}}
 @extends('layouts.frontend')
 
-@section('title', 'Survey Kepuasan Masyarakat - DISDUKCAPIL Kabupaten Agam')
+@section('title', 'Survei Kepuasan Masyarakat - DISDUKCAPIL Kabupaten Agam')
 
 @push('css')
-{{-- CSS khusus halaman ini, hanya termuat saat halaman SKM dibuka --}}
 <link rel="stylesheet" href="{{ asset('css/frontend/skm.css') }}">
 @endpush
 
@@ -11,186 +16,191 @@
 
 <div class="page-hero">
     <div class="page-hero-content">
-        <h1>Survey Kepuasan Masyarakat (SKM)</h1>
-        <p><a href="index.php" class="text-decoration-none color-primary"><i class="ti ti-home"></i> Beranda</a> / Profil / Survey Kepuasan Masyarakat (SKM)</p>
+        <h1>Survei Kepuasan Masyarakat</h1>
+        <p>
+            <a href="{{ url('beranda') }}" class="text-decoration-none color-primary">
+                <i class="ti ti-home"></i> Beranda
+            </a> / SKM
+        </p>
     </div>
 </div>
-<section class="section">
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
 
-                <!-- Contoh ringkasan skor SKM periode berjalan. Ganti angka dengan hasil rekap asli. -->
-                <div class="skm-summary-card">
-                    <div>
-                        <div class="skm-score-label">NILAI SKM TRIWULAN INI</div>
-                        <div class="skm-score">88,4 <small style="font-size:1rem;">/ 100</small></div>
+<section class="section">
+    <div class="container">
+
+        <div class="skm-intro">
+            <h2><i class="ti ti-heart-handshake"></i> Pendapat Anda Sangat Berarti</h2>
+            <p>
+                Bantu kami meningkatkan kualitas pelayanan dengan mengisi survei singkat ini.
+                Hanya butuh waktu kurang dari 2 menit.
+            </p>
+        </div>
+
+        {{-- ====== FORM (disembunyikan setelah sukses submit) ====== --}}
+        <div id="skm-form-wrapper" class="skm-form-card">
+
+            <form id="form-skm">
+                @csrf
+
+                <div class="skm-section-label"><i class="ti ti-user"></i> Data Diri</div>
+
+                <div class="row g-3 mb-3">
+                    <input type="hidden" name="kode_instansi" value="{{ $kode_instansi ?? '' }}">
+                    <div class="col-md-6">
+                        <label class="form-label">Nama</label>
+                        <input type="text" name="username" class="form-control" required>
                     </div>
-                    <div class="text-end">
-                        <div class="skm-score-label">KATEGORI</div>
-                        <div class="fs-5 fw-bold">Sangat Baik (A)</div>
+                    <div class="col-md-6">
+                        <label class="form-label">Usia</label>
+                        <input type="number" name="usia" class="form-control" min="1" max="120" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Jenis Kelamin</label>
+                        <select name="jenis_kelamin" class="form-select" required>
+                            <option value="" selected disabled>-- Pilih --</option>
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Pendidikan Terakhir</label>
+                        <select name="pendidikan" class="form-select" required>
+                            <option value="" selected disabled>-- Pilih --</option>
+                            <option value="SD">SD</option>
+                            <option value="SMP">SMP</option>
+                            <option value="SMA">SMA</option>
+                            <option value="D1">D1</option>
+                            <option value="D3">D3</option>
+                            <option value="D4">D4</option>
+                            <option value="S1">S1</option>
+                            <option value="S2">S2</option>
+                            <option value="S3">S3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Pekerjaan</label>
+                        <select name="pekerjaan" class="form-select" required>
+                            <option value="" selected disabled>-- Pilih --</option>
+                            <option value="Masyarakat">Masyarakat</option>
+                            <option value="Pelaku Usaha">Pelaku Usaha</option>
+                            <option value="OPD">OPD</option>
+                            <option value="PPK">PPK</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Ruangan/Loket (opsional)</label>
+                        <input type="text" name="ruangan" class="form-control">
                     </div>
                 </div>
 
-                <div id="skm-alert" class="alert d-none"></div>
+                <div class="skm-section-label"><i class="ti ti-clipboard-check"></i> Penilaian Pelayanan</div>
 
-                <!--
-                    CATATAN: masih HTML statis, belum ada backend.
-                    Ganti action="#" dengan endpoint backend kamu, contoh:
-                    action="proses-skm.php" method="post"
-                -->
-                <form id="form-skm" action="#" method="post" novalidate>
+                @forelse ($pertanyaans ?? [] as $i => $p)
+                <div class="skm-question" data-question-index="{{ $i }}">
+                    <p class="q-text"><span class="q-number">{{ $i + 1 }}</span>{{ $p['pertanyaan'] }}</p>
 
-                    <div class="mb-3">
-                        <label class="form-label">Nama (opsional)</label>
-                        <input type="text" name="nama" class="form-control">
+                    <div class="skm-options">
+                        @foreach ($p['pilihan'] as $j => $opt)
+                        <input type="radio"
+                            id="q{{ $i }}-opt{{ $j }}"
+                            name="jawaban[{{ $i }}]"
+                            value="{{ $opt['pilihan_nilai'] }}"
+                            required>
+                        <label for="q{{ $i }}-opt{{ $j }}">
+                            <span class="opt-icon">{{ $opt['icon'] ?? '⭐' }}</span>
+                            {{ $opt['pilihan'] }}
+                        </label>
+                        @endforeach
                     </div>
+                </div>
+                @empty
+                <p class="text-secondary text-center">Pertanyaan survei belum tersedia. Coba muat ulang halaman.</p>
+                @endforelse
 
-                    <div class="mb-3">
-                        <label class="form-label required">Jenis Layanan yang Diterima</label>
-                        <select name="jenis_layanan" class="form-select" required>
-                            <option value="" selected disabled>-- Pilih jenis layanan --</option>
-                            <option value="ktp">KTP-el</option>
-                            <option value="kk">Kartu Keluarga</option>
-                            <option value="akta_lahir">Akta Kelahiran</option>
-                            <option value="akta_mati">Akta Kematian</option>
-                            <option value="pindah">Pindah Datang</option>
-                            <option value="lainnya">Lainnya</option>
-                        </select>
-                    </div>
-
-                    <hr class="my-4">
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">1. Persyaratan pelayanan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u1" id="u1-1" value="1" required><label for="u1-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u1" id="u1-2" value="2"><label for="u1-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u1" id="u1-3" value="3"><label for="u1-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u1" id="u1-4" value="4"><label for="u1-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">2. Sistem, mekanisme, dan prosedur pelayanan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u2" id="u2-1" value="1" required><label for="u2-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u2" id="u2-2" value="2"><label for="u2-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u2" id="u2-3" value="3"><label for="u2-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u2" id="u2-4" value="4"><label for="u2-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">3. Waktu penyelesaian pelayanan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u3" id="u3-1" value="1" required><label for="u3-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u3" id="u3-2" value="2"><label for="u3-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u3" id="u3-3" value="3"><label for="u3-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u3" id="u3-4" value="4"><label for="u3-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">4. Biaya/tarif pelayanan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u4" id="u4-1" value="1" required><label for="u4-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u4" id="u4-2" value="2"><label for="u4-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u4" id="u4-3" value="3"><label for="u4-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u4" id="u4-4" value="4"><label for="u4-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">5. Produk spesifikasi jenis pelayanan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u5" id="u5-1" value="1" required><label for="u5-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u5" id="u5-2" value="2"><label for="u5-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u5" id="u5-3" value="3"><label for="u5-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u5" id="u5-4" value="4"><label for="u5-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">6. Kompetensi pelaksana</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u6" id="u6-1" value="1" required><label for="u6-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u6" id="u6-2" value="2"><label for="u6-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u6" id="u6-3" value="3"><label for="u6-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u6" id="u6-4" value="4"><label for="u6-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">7. Perilaku pelaksana</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u7" id="u7-1" value="1" required><label for="u7-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u7" id="u7-2" value="2"><label for="u7-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u7" id="u7-3" value="3"><label for="u7-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u7" id="u7-4" value="4"><label for="u7-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">8. Penanganan pengaduan, saran, dan masukan</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u8" id="u8-1" value="1" required><label for="u8-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u8" id="u8-2" value="2"><label for="u8-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u8" id="u8-3" value="3"><label for="u8-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u8" id="u8-4" value="4"><label for="u8-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="skm-unsur-card">
-                        <div class="unsur-title">9. Kualitas sarana dan prasarana</div>
-                        <div class="skm-rating-group">
-                            <div class="skm-rating-option"><input type="radio" name="u9" id="u9-1" value="1" required><label for="u9-1">Tidak Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u9" id="u9-2" value="2"><label for="u9-2">Kurang Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u9" id="u9-3" value="3"><label for="u9-3">Baik</label></div>
-                            <div class="skm-rating-option"><input type="radio" name="u9" id="u9-4" value="4"><label for="u9-4">Sangat Baik</label></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Saran/Masukan (opsional)</label>
-                        <textarea name="saran" class="form-control" rows="3"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-custom w-100">
-                        <i class="ti ti-send"></i> Kirim Survei
-                    </button>
-
-                </form>
-
-            </div>
+                <button type="submit" class="skm-btn-submit" id="skm-submit-btn">
+                    <i class="ti ti-send"></i> Kirim Survei
+                </button>
+            </form>
         </div>
+
+        {{-- ====== TAMPILAN SUKSES (muncul setelah submit berhasil) ====== --}}
+        <div id="skm-success" class="skm-form-card skm-success d-none">
+            <i class="ti ti-circle-check"></i>
+            <h3>Terima Kasih!</h3>
+            <p class="text-secondary">Survei Anda berhasil dikirim dan sangat berarti bagi kami.</p>
+            <a href="{{ url('skm/hasil') }}" class="btn btn-custom mt-2">
+                <i class="ti ti-chart-bar"></i> Lihat Hasil Rekap SKM
+            </a>
+        </div>
+
     </div>
 </section>
-<script src="js/include.js"></script>
 
+@endsection
+
+@push('js')
 <script>
-    document.getElementById('form-skm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var form = e.target;
-        var alertBox = document.getElementById('skm-alert');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Kasih feedback visual (border highlight) begitu pertanyaan dijawab
+        document.querySelectorAll('.skm-question').forEach(function(q) {
+            q.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    q.classList.add('answered');
+                });
+            });
+        });
 
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
+        const form = document.getElementById('form-skm');
+        const submitBtn = document.getElementById('skm-submit-btn');
 
-        // TODO: kirim ke backend, contoh dengan fetch:
-        // const formData = new FormData(form);
-        // fetch('proses-skm.php', { method: 'POST', body: formData });
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        alertBox.className = 'alert alert-success';
-        alertBox.innerHTML = '<i class="ti ti-circle-check"></i> Terima kasih, survei Anda berhasil dikirim (simulasi). Hubungkan form ini ke backend untuk menyimpan data dan menghitung skor SKM sesungguhnya.';
-        alertBox.classList.remove('d-none');
-        form.reset();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="ti ti-loader-2"></i> Mengirim...';
+
+            const formData = new FormData(form);
+
+            fetch("{{ url('skm/submit') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                    },
+                    body: formData,
+                })
+                .then(function(res) {
+                    return res.json().then(function(data) {
+                        return {
+                            status: res.status,
+                            body: data
+                        };
+                    });
+                })
+                .then(function(result) {
+                    console.log(result);
+                    if (result.body.success) {
+
+                        showToast('success', result.body.message || 'Survei berhasil dikirim!');
+                        document.getElementById('skm-form-wrapper').classList.add('d-none');
+                        document.getElementById('skm-success').classList.remove('d-none');
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        showToast('error', result.body.message || 'Terjadi kesalahan. Silakan coba lagi.');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Gagal submit SKM:', err);
+                    showToast('error', 'Terjadi kesalahan jaringan. Silakan coba lagi.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="ti ti-send"></i> Kirim Survei';
+                });
         });
     });
 </script>
-@endsection
+@endpush

@@ -50,32 +50,32 @@
             <div class="rutin-grid">
                 @forelse ($jadwalRutin ?? [] as $i => $jadwal)
 
-                    <div class="rutin-card day-{{ $i % 7 }}">
+                <div class="rutin-card day-{{ $i % 7 }}">
 
-                        @if ($jadwal->is_today)
-                            <span class="badge-hari-ini">Hari Ini</span>
-                        @endif
+                    @if ($jadwal->is_today)
+                    <span class="badge-hari-ini">Hari Ini</span>
+                    @endif
 
-                        <div class="hari-icon">
-                            <i class="ti ti-calendar-event"></i>
-                        </div>
-
-                        <div class="hari-nama">
-                            {{ $jadwal->day_label }}
-                        </div>
-
-                        <div class="jam-wrapper">
-                            {{ \Illuminate\Support\Str::limit($jadwal->open, 5, '') }}
-                            &ndash;
-                            {{ \Illuminate\Support\Str::limit($jadwal->close, 5, '') }}
-                            <span class="jam-label">WIB</span>
-                        </div>
-
+                    <div class="hari-icon">
+                        <i class="ti ti-calendar-event"></i>
                     </div>
+
+                    <div class="hari-nama">
+                        {{ $jadwal->day_label }}
+                    </div>
+
+                    <div class="jam-wrapper">
+                        {{ \Illuminate\Support\Str::limit($jadwal->open, 5, '') }}
+                        &ndash;
+                        {{ \Illuminate\Support\Str::limit($jadwal->close, 5, '') }}
+                        <span class="jam-label">WIB</span>
+                    </div>
+
+                </div>
                 @empty
-                    <p class="text-secondary text-center">
-                        Jadwal rutin belum tersedia.
-                    </p>
+                <p class="text-secondary text-center">
+                    Jadwal rutin belum tersedia.
+                </p>
 
                 @endforelse
             </div>
@@ -94,76 +94,75 @@
 
                 @forelse ($jadwalKeliling ?? [] as $jadwal)
 
-                    <div class="keliling-item">
+                <div class="keliling-item">
 
-                        <div class="keliling-date-box">
-                            <div class="tanggal-angka">
-                                {{ $jadwal->tanggal_angka }}
-                            </div>
-
-                            <div class="tanggal-bulan">
-                                {{ $jadwal->tanggal_bulan }}
-                            </div>
-
-                            <div class="tanggal-hari">
-                                {{ $jadwal->day_label }}
-                            </div>
+                    <div class="keliling-date-box">
+                        <div class="tanggal-angka">
+                            {{ $jadwal->tanggal_angka }}
                         </div>
 
-                        <div class="keliling-info">
-
-                            <div class="tempat-nama">
-                                <i class="ti ti-map-pin"></i>
-                                {{ $jadwal->tempat }}
-                            </div>
-
-                            <div class="jam-info">
-                                <i class="ti ti-clock"></i>
-                                {{ \Illuminate\Support\Str::limit($jadwal->open, 5, '') }}
-                                &ndash;
-                                {{ \Illuminate\Support\Str::limit($jadwal->close, 5, '') }}
-                                WIB
-                            </div>
-
+                        <div class="tanggal-bulan">
+                            {{ $jadwal->tanggal_bulan }}
                         </div>
 
-                        @if ($jadwal->status === 'lewat')
-                            <span class="badge-lewat">
-                                {{ $jadwal->status_label }}
-                            </span>
+                        <div class="tanggal-hari">
+                            {{ $jadwal->day_label }}
+                        </div>
+                    </div>
 
-                        @elseif ($jadwal->status === 'hari_ini')
+                    <div class="keliling-info">
 
-                            <span class="badge-sekarang">
-                                {{ $jadwal->status_label }}
-                            </span>
+                        <div class="tempat-nama">
+                            <i class="ti ti-map-pin"></i>
+                            {{ $jadwal->tempat }}
+                        </div>
 
-                        @elseif ($jadwal->status === 'segera')
-
-                            <span class="badge-segera">
-                                {{ $jadwal->status_label }}
-                            </span>
-
-                        @endif
+                        <div class="jam-info">
+                            <i class="ti ti-clock"></i>
+                            {{ \Illuminate\Support\Str::limit($jadwal->open, 5, '') }}
+                            &ndash;
+                            {{ \Illuminate\Support\Str::limit($jadwal->close, 5, '') }}
+                            WIB
+                        </div>
 
                     </div>
+
+                    @if ($jadwal->status === 'lewat')
+                    <span class="badge-lewat">
+                        {{ $jadwal->status_label }}
+                    </span>
+
+                    @elseif ($jadwal->status === 'hari_ini')
+
+                    <span class="badge-sekarang">
+                        {{ $jadwal->status_label }}
+                    </span>
+
+                    @elseif ($jadwal->status === 'segera')
+
+                    <span class="badge-segera">
+                        {{ $jadwal->status_label }}
+                    </span>
+
+                    @endif
+
+                </div>
                 @empty
-                    <p class="text-secondary text-center">Jadwal keliling belum tersedia.</p>
+                <p class="text-secondary text-center">Jadwal keliling belum tersedia.</p>
                 @endforelse
             </div>
 
             @if ($jadwalKeliling && $jadwalKeliling->hasMorePages())
-                <div class="text-center mt-3">
-                    <button
-                        type="button"
-                        id="btn-muat-keliling"
-                        class="btn btn-custom"
-                        data-next-page="2"
-                    >
-                        <i class="ti ti-chevron-down"></i>
-                        Muat Lebih Banyak
-                    </button>
-                </div>
+            <div class="text-center mt-3">
+                <button
+                    type="button"
+                    id="btn-muat-keliling"
+                    class="btn btn-custom"
+                    data-next-page="2">
+                    <i class="ti ti-chevron-down"></i>
+                    Muat Lebih Banyak
+                </button>
+            </div>
             @endif
         </div>
 
@@ -219,7 +218,7 @@
                 const diffDays = Math.round((tanggal - now) / (1000 * 60 * 60 * 24));
 
                 if (diffDays < 0) return '<span class="badge-lewat">Sudah Lewat</span>';
-                if (diffDays === 0) return '<span class="badge-segera">Hari Ini</span>';
+                if (diffDays === 0) return '<span class="badge-sekarang">Hari Ini</span>';
                 if (diffDays <= 7) return '<span class="badge-segera">Segera</span>';
                 return '';
             }

@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\F_PublikasiController;
 use App\Http\Controllers\Frontend\F_ProfilController;
 use App\Http\Controllers\Frontend\F_InovasiController;
 use App\Http\Controllers\Frontend\F_JadwalController;
+use App\Http\Controllers\Frontend\F_SkmController;
 use App\Http\Controllers\InovasiController;
 use App\Http\Controllers\JadwalLayananController;
 
@@ -58,6 +59,9 @@ Route::middleware('track.visitor')->group(function () {
     Route::view('/under-construction', 'frontend.under-construction')->name('under-construction');
     Route::get('/jadwal', [F_JadwalController::class, 'index'])->name('jadwal');
     Route::get('/jadwal/keliling', [F_JadwalController::class, 'keliling'])->name('jadwal.keliling');
+    Route::get('/skm', [F_SkmController::class, 'index'])->name('skm');
+    Route::post('/skm/submit', [F_SkmController::class, 'store'])->name('skm.submit');
+    Route::get('/skm/hasil', [F_SkmController::class, 'hasil'])->name('skm.hasil');
 });
 
 Route::middleware('guest')->group(function () {
