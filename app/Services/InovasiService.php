@@ -151,6 +151,7 @@ class InovasiService extends BaseService
         return $this->repository->newQuery()
             ->with(['berkas'])
             ->where('is_active', 1)
+            ->where('jenis', 1)
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
