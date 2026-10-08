@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,11 +8,11 @@
     <title>@yield('title', 'DISDUKCAPIL')</title>
 
     <meta name="description" content="Website resmi Dinas Kependudukan dan Pencatatan Sipil Kabupaten Agam">
-    <meta name="author" content="Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam"/>
-    <meta name="programmers" content="Yuli Resmawati, Reza Fahmi"/>
-    <meta name="company" content="Disdukcapil"/>
-    <meta name="powered_by" content="DISKOMINFO AGAM"/>
-    <meta name="regency" content="Kabupaten Agam"/>
+    <meta name="author" content="Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam" />
+    <meta name="programmers" content="Yuli Resmawati, M. Reza Fahmi" />
+    <meta name="company" content="Disdukcapil" />
+    <meta name="powered_by" content="DISKOMINFO AGAM" />
+    <meta name="regency" content="Kabupaten Agam" />
 
     <link rel="icon" type="image/png" href="{{ asset('images/logo-only-capil.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('styles')
 </head>
+
 <body>
     <div class="app-wrapper">
         @include('partials.sidebar')
@@ -40,9 +42,9 @@
                     <a href="{{ route('dashboard') }}">Dashboard</a>
                     <span class="separator"><i class="fas fa-chevron-right"></i></span>
                     @hasSection('breadcrumb')
-                        @yield('breadcrumb')
+                    @yield('breadcrumb')
                     @else
-                        <span class="current">@yield('page-title', 'Dashboard')</span>
+                    <span class="current">@yield('page-title', 'Dashboard')</span>
                     @endif
                 </nav>
 
@@ -56,24 +58,27 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
-        NProgress.configure({ showSpinner: false });
+        NProgress.configure({
+            showSpinner: false
+        });
         NProgress.start();
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
             NProgress.done();
         });
 
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
             document.body.classList.add('sidebar-open');
         });
 
-        document.getElementById('sidebarClose').addEventListener('click', function () {
+        document.getElementById('sidebarClose').addEventListener('click', function() {
             document.body.classList.remove('sidebar-open');
         });
 
-        document.getElementById('sidebarOverlay').addEventListener('click', function () {
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
             document.body.classList.remove('sidebar-open');
         });
     </script>
     @stack('scripts')
 </body>
+
 </html>

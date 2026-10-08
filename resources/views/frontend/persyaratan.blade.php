@@ -33,7 +33,6 @@
 
 <section class="section">
     <div class="container">
-        <!-- <h1 class="mb-4">Persyaratan Layanan</h1> -->
         <p class="text-secondary mb-4">
             Berikut persyaratan dokumen untuk masing-masing jenis layanan administrasi kependudukan
             dan pencatatan sipil. Klik jenis layanan untuk melihat detail persyaratannya.

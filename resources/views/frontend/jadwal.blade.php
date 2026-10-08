@@ -48,7 +48,7 @@
                 </p>
             </div>
 
-            <div class="rutin-grid">
+            <div class="rutin-grid mb-4">
                 @forelse ($jadwalRutin ?? [] as $i => $jadwal)
 
                 <div class="rutin-card day-{{ $i % 7 }}">
@@ -80,7 +80,7 @@
 
                 @endforelse
             </div>
-
+            <hr>
             <div class="text-center mt-4">
                 <h2 class="section-title">Lokasi Layanan</h2>
                 <p class="section-description">
@@ -89,14 +89,14 @@
             </div>
 
             <div class="maklumat-box mx-auto" style="max-width: 700px;">
-                <i class="ti ti-map-pin-check"></i>               
-            <div class="maklumat-sign mt-3">
-                <p>
-                    - Kantor Dinas Dukcapil Kabupaten Agam (Lubuk Basung)<br>
-                    - Kantor Pelayanan Bersama Belakang Balok (Kota Bukittinggi)<br>
-                    - Kantor Camat Ampek Angkek (Ampek Angkek)<br>
-                    - Kantor Wali Nagari Matua Mudiak (Matur)
-                </p>
+                <i class="ti ti-map-pin-check"></i>
+                <div class="maklumat-sign mt-3">
+                    <p>
+                        - Kantor Dinas Dukcapil Kabupaten Agam (Lubuk Basung)<br>
+                        - Kantor Pelayanan Bersama Belakang Balok (Kota Bukittinggi)<br>
+                        - Kantor Camat Ampek Angkek (Ampek Angkek)<br>
+                        - Kantor Nagari Matua Mudiak (Matur)
+                    </p>
                 </div>
             </div>
 

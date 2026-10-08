@@ -62,6 +62,7 @@ Route::middleware('track.visitor')->group(function () {
     Route::get('/skm', [F_SkmController::class, 'index'])->name('skm');
     Route::post('/skm/submit', [F_SkmController::class, 'store'])->name('skm.submit');
     Route::get('/skm/hasil', [F_SkmController::class, 'hasil'])->name('skm.hasil');
+    Route::get('/layanan-jemput-bola', [F_InovasiController::class, 'jemput_bola'])->name('inovasi.jemput-bola');
 });
 
 Route::middleware('guest')->group(function () {

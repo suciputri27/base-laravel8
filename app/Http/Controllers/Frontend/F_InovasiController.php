@@ -9,6 +9,7 @@ use Illuminate\View\View;
 class F_InovasiController extends Controller
 {
     protected $inovasiservice;
+    protected const SILETON_URL = 'https://sileton.agamkab.go.id';
 
     public function __construct(InovasiService $inovasiservice)
     {
@@ -17,8 +18,15 @@ class F_InovasiController extends Controller
 
     public function index()
     {
-        $inovasis = $this->inovasiservice->all();
+        $inovasis = $this->inovasiservice->getInovasi();
         return view('frontend.inovasi', compact('inovasis'));
+    }
+
+    public function jemput_bola()
+    {
+        $layanans = $this->inovasiservice->getJemputBola();
+        $siletonUrl = self::SILETON_URL;
+        return view('frontend.jemput-bola', compact('layanans', 'siletonUrl'));
     }
 
     public function show(string $slug): View

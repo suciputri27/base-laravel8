@@ -164,4 +164,22 @@ class InovasiService extends BaseService
             ->where('slug', $slug)
             ->firstOrFail();
     }
+
+    public function getInovasi()
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas'])
+            ->where('is_active', true)
+            ->where('jenis', 1)
+            ->get();
+    }
+
+    public function getJemputBola()
+    {
+        return $this->repository->newQuery()
+            ->with(['berkas'])
+            ->where('is_active', true)
+            ->where('jenis', 2)
+            ->get();
+    }
 }

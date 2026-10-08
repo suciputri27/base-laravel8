@@ -30,12 +30,6 @@
 <section class="section">
     <div class="container">
 
-        <div class="inovasi-filter" id="inovasi-filter">
-            <button type="button" class="btn btn-custom active" data-filter="semua">Semua</button>
-            <button type="button" class="btn btn-custom" data-filter="1">Inovasi</button>
-            <button type="button" class="btn btn-custom" data-filter="2">Layanan Jemput Bola</button>
-        </div>
-
         <div class="row g-4" id="inovasi-container">
             @forelse ($inovasis ?? [] as $item)
             @php
@@ -69,35 +63,3 @@
 </section>
 
 @endsection
-
-@push('js')
-<script>
-    // Filter kategori sederhana, murni client-side (data sudah ada semua
-    // di DOM, tinggal disembunyikan/ditampilkan -- tidak perlu fetch ulang).
-    document.addEventListener('DOMContentLoaded', function() {
-        const buttons = document.querySelectorAll('#inovasi-filter button');
-        const items = document.querySelectorAll('.inovasi-item');
-        const emptyMsg = document.getElementById('inovasi-empty-filter');
-
-        buttons.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                buttons.forEach(function(b) {
-                    b.classList.remove('active');
-                });
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-                let visibleCount = 0;
-
-                items.forEach(function(item) {
-                    const match = filter === 'semua' || item.getAttribute('data-jenis') === filter;
-                    item.style.display = match ? '' : 'none';
-                    if (match) visibleCount++;
-                });
-
-                emptyMsg.classList.toggle('d-none', visibleCount > 0);
-            });
-        });
-    });
-</script>
-@endpush

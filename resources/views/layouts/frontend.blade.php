@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="description" content="Website resmi Dinas Kependudukan dan Pencatatan Sipil Kabupaten Agam">
+    <meta name="author" content="Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam" />
+    <meta name="programmers" content="Yuli Resmawati, M. Reza Fahmi" />
+    <meta name="company" content="Disdukcapil" />
+    <meta name="powered_by" content="DISKOMINFO AGAM" />
+    <meta name="regency" content="Kabupaten Agam" />
+
     <title>@yield('title', 'DISDUKCAPIL Kabupaten Agam')</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo-only-capil.png') }}">
@@ -151,18 +158,18 @@
                     <h6 class="fw-bold"> Menu </h6>
                     <ul class="list-unstyled mt-3">
                         <li class="mb-2"> <a href="{{ url('beranda') }}">Beranda</a> </li>
-                        <li class="mb-2"> <a href="{{ url('/tentang') }}">Profil</a> </li>
-                        <li class="mb-2"> <a href="{{ url('/persyaratan') }}">Layanan</a> </li>
+                        <li class="mb-2"> <a href="{{ url('profil/tentang') }}">Profil</a> </li>
                         <li class="mb-2"> <a href="{{ url('informasi') }}">Informasi</a> </li>
+                        <li class="mb-2"> <a href="{{ url('publikasi') }}">Publikasi</a> </li>
                     </ul>
                 </div>
                 <div class="col-4 col-lg-2">
                     <h6 class="fw-bold"> Layanan </h6>
                     <ul class="list-unstyled mt-3">
-                        <li class="mb-2"> <a href="{{ url('/formulir') }}">Formulir</a> </li>
-                        <li class="mb-2"> <a href="{{ url('/persyaratan') }}">Persyaratan</a> </li>
+                        <li class="mb-2"> <a href="{{ url('formulir') }}">Formulir</a> </li>
+                        <li class="mb-2"> <a href="{{ url('persyaratan') }}">Persyaratan</a> </li>
                         <li class="mb-2"> <a href="https://sileton.agamkab.go.id" target="_blank">Layanan Online</a> </li>
-                        <li class="mb-2"> <a href="{{ url('/skm') }}">Survey</a> </li>
+                        <li class="mb-2"> <a href="{{ url('skm') }}">Survey</a> </li>
                     </ul>
                 </div>
                 <div class="col-4 col-lg-2">
