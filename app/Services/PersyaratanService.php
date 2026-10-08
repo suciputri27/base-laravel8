@@ -55,6 +55,32 @@ class PersyaratanService extends BaseService
         return $this->repository->newQuery()->where('is_active', true)->orderBy('nama_persyaratan')->get();
     }
 
+    // public function formulir_data(Request $request): JsonResponse
+    // {
+    //     $perPage = (int) $request->input('per_page', 6);
+    //     $search  = trim((string) $request->input('search', ''));
+
+    //     $query = $this->repository->newQuery()
+    //         ->where('cekdokumen', 1)
+    //         ->with('detail_persyaratan');
+
+    //     if ($search !== '') {
+    //         $query->where(function ($q) use ($search) {
+    //             $q->where('judul', 'like', "%{$search}%")
+    //                 ->orWhere('deskripsi', 'like', "%{$search}%");
+    //         });
+    //     }
+
+    //     $formulir = $query->latest()->paginate($perPage);
+
+    //     return response()->json([
+    //         'success'      => true,
+    //         'data'         => $formulir->items(),
+    //         'current_page' => $formulir->currentPage(),
+    //         'last_page'    => $formulir->lastPage(),
+    //         'total'        => $formulir->total(),
+    //     ]);
+    // }
     public function formulir_data(Request $request): JsonResponse
     {
         $perPage = (int) $request->input('per_page', 6);
@@ -73,9 +99,33 @@ class PersyaratanService extends BaseService
 
         $formulir = $query->latest()->paginate($perPage);
 
+        $data = collect($formulir->items())->map(function ($item) {
+
+            $item->detail_persyaratan = collect($item->detail_persyaratan)
+                ->map(function ($detail) {
+
+                    unset(
+                        $detail->pelayanan_id,
+                        $detail->persyaratan_id,
+                        $detail->created_at,
+                        $detail->created_by,
+                        $detail->deleted_at,
+                        $detail->deleted_by,
+                        $detail->updated_at,
+                        $detail->updated_by,
+                        $detail->encrypted_id,
+                    );
+
+                    return $detail;
+                })
+                ->values();
+
+            return $item;
+        });
+
         return response()->json([
             'success'      => true,
-            'data'         => $formulir->items(),
+            'data'         => $data,
             'current_page' => $formulir->currentPage(),
             'last_page'    => $formulir->lastPage(),
             'total'        => $formulir->total(),
